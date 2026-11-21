@@ -1,0 +1,5 @@
+# Source photos and build intermediates stay local (index.html already has the images inlined)
+Photos/
+assets/
+.DS_Store
+.claude/
