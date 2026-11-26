@@ -588,11 +588,10 @@ address{font-style:normal}
             <tr><th scope="row">Income counted a month</th><td id="a-inc">–</td></tr>
             <tr><th scope="row">TDSR limit (55%), after existing repayments</th><td id="a-tdsr">–</td></tr>
             <tr id="a-msr-row"><th scope="row">MSR limit (30%), after existing home loans</th><td id="a-msr">–</td></tr>
-            <tr><th scope="row">Available for the new loan a month</th><td id="a-avail">–</td></tr>
-            <tr><th scope="row">Interest rate banks assess at</th><td id="a-stress">–</td></tr>
+            <tr><th scope="row">Available for mortgage</th><td id="a-avail">–</td></tr>
+            <tr><th scope="row">Banks' stress test rate</th><td id="a-stress">–</td></tr>
             <tr><th scope="row" id="a-ten-label">Loan tenure</th><td id="a-ten">–</td></tr>
             <tr><th scope="row">Loan-to-value applied</th><td id="a-ltv-out">–</td></tr>
-            <tr><th scope="row" id="a-cash-label">Minimum cash downpayment</th><td id="a-cash">–</td></tr>
             <tr class="total"><th scope="row">Monthly instalment at your rate</th><td id="a-pay">–</td></tr>
           </table>
           <p class="calc-note" id="a-why"></p>
@@ -1043,8 +1042,6 @@ address{font-style:normal}
     $('a-stress').textContent = stress.toFixed(2).replace(/\.?0+$/, '') + '%';
     $('a-ten').textContent = ten + ' years';
     $('a-ltv-out').textContent = Math.round(ltv * 100) + '%';
-    $('a-cash-label').textContent = 'Minimum cash downpayment (' + Math.round(cashPct * 100) + '%)';
-    $('a-cash').textContent = money(price * cashPct);
     $('a-pay').textContent = money(pmt(loan, rate, ten));
     $('a-why').textContent = why.join(' ');
     $('a-why').hidden = !why.length;
