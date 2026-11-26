@@ -19,7 +19,7 @@ Website: https://www.esthertxe.com/
 - Lifestyle planning: location, space and timing weighed alongside the numbers.
 
 ## Free calculators on the site (planning only)
-- Stamp duty on a purchase: Buyer's Stamp Duty plus Additional Buyer's Stamp Duty for one individual buyer (rates checked against IRAS on 26 November 2026).
+- Stamp duty on a purchase: residential (Buyer's Stamp Duty plus Additional Buyer's Stamp Duty for one individual buyer) or commercial and industrial (Buyer's Stamp Duty only, top rate 5%). Rates checked against IRAS on 26 November 2026.
 - Monthly instalment with a rate-rise test: the instalment at your rate and at a higher test rate.
 - Sale proceeds: cash in hand after the loan, selling costs, Seller's Stamp Duty and any early-repayment penalty, with the CPF refund shown separately.
 - Rental yield: gross and net yield after yearly costs and vacant months.

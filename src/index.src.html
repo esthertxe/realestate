@@ -266,6 +266,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 .f input,.f select{width:100%;background:transparent;border:0;border-bottom:1px solid var(--muted);border-radius:0;padding:.45rem 0;font-size:1.1rem;font-variant-numeric:tabular-nums;color:var(--ink)}
 .f select{appearance:none;-webkit-appearance:none;padding-right:1.4rem;cursor:pointer}
 .f select option{color:#34321f;background:#f8f3ed}
+.f select:disabled{opacity:.4;cursor:not-allowed}
+.calc-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.6rem}
+.calc-status{font-size:.85rem;color:var(--muted)}
 .sel{position:relative;display:block}
 .sel::after{content:"";position:absolute;right:.25rem;top:50%;width:.45rem;height:.45rem;border-right:1.3px solid currentColor;border-bottom:1.3px solid currentColor;transform:translateY(-75%) rotate(45deg);pointer-events:none}
 .res{width:100%;border-collapse:collapse;margin-top:1.75rem;font-variant-numeric:tabular-nums}
@@ -442,19 +445,25 @@ address{font-style:normal}
         <p>Whether you are buying, selling, upgrading or investing, a good decision starts with a few honest figures. Try one here, run the rest below, or bring them to me and we will go through them together.</p>
         <p>Every figure I give you comes with the working behind it, so you can check it yourself.</p>
       </div>
-      <form class="calc" id="duty" aria-labelledby="duty-h" onsubmit="return false">
+      <form class="calc" id="duty" aria-labelledby="duty-h">
         <p class="eyebrow" id="duty-h">Try one number: stamp duty on a purchase</p>
         <div class="fields">
+          <div class="f"><label for="d-type">Property type</label><span class="sel"><select id="d-type"><option value="res">Residential</option><option value="non">Commercial or industrial</option></select></span></div>
           <div class="f"><label for="d-price">Purchase price (S$)</label><input id="d-price" inputmode="numeric" autocomplete="off" value="1,500,000"></div>
-          <div class="f"><label for="d-buyer">Buyer</label><span class="sel"><select id="d-buyer"><option value="sc">Singapore citizen</option><option value="pr">Permanent resident</option><option value="fr">Foreigner</option></select></span></div>
-          <div class="f"><label for="d-count">Homes owned after this purchase</label><span class="sel"><select id="d-count"><option value="1">1 (this is the first)</option><option value="2">2</option><option value="3">3 or more</option></select></span></div>
+          <div class="f res-only"><label for="d-buyer">Buyer</label><span class="sel"><select id="d-buyer"><option value="sc">Singapore citizen</option><option value="pr">Permanent resident</option><option value="fr">Foreigner</option></select></span></div>
+          <div class="f res-only"><label for="d-count">Homes owned after this purchase</label><span class="sel"><select id="d-count"><option value="1">1 (this is the first)</option><option value="2">2</option><option value="3">3 or more</option></select></span></div>
         </div>
-        <table class="res" aria-live="polite">
+        <div class="calc-actions">
+          <button class="btn btn-olive" type="submit">Calculate</button>
+          <p class="calc-status" id="d-status" aria-live="polite">Figures also update as you change any option.</p>
+        </div>
+        <table class="res">
           <tr><th scope="row">Buyer's Stamp Duty (BSD)</th><td id="d-bsd">–</td></tr>
           <tr><th scope="row" id="d-absd-label">Additional Buyer's Stamp Duty (ABSD)</th><td id="d-absd">–</td></tr>
           <tr class="total"><th scope="row">Total stamp duty</th><td id="d-total">–</td></tr>
         </table>
-        <p class="calc-note">For one individual buying residential property. Rates checked against <a href="https://www.iras.gov.sg/taxes/stamp-duty/for-property/buying-or-acquiring-property" rel="noopener">IRAS</a> on 26 November 2026. Joint buyers with different profiles, entities and some HDB cases are treated differently, so confirm your own case with your lawyer before you sign.</p>
+        <p class="calc-note" id="d-note">For one individual buyer. Rates checked against <a href="https://www.iras.gov.sg/taxes/stamp-duty/for-property/buying-or-acquiring-property" rel="noopener">IRAS</a> on 26 November 2026. Joint buyers with different profiles, entities, mixed-use property and some HDB cases are treated differently, so confirm your own case with your lawyer before you sign.</p>
+        <p class="calc-note" id="d-note-non" hidden>Commercial and industrial property pays Buyer's Stamp Duty only, with a top rate of 5%; ABSD does not apply. GST may also be payable if the seller is GST-registered, so check with the seller and your lawyer.</p>
       </form>
     </div>
   </section>
@@ -795,23 +804,44 @@ address{font-style:normal}
     var v = num(el); if (el.value.trim() !== '') el.value = Math.round(v).toLocaleString('en-SG');
   }
   function wire(form, fn){
-    form.addEventListener('input', fn);
-    form.addEventListener('change', fn);
+    form.addEventListener('input', function(){ fn(); });
+    form.addEventListener('change', function(){ fn(); });
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      Array.prototype.forEach.call(form.querySelectorAll('input'), tidy);
+      fn(true);
+    });
     form.addEventListener('focusout', function(e){ if (e.target.tagName === 'INPUT') tidy(e.target); });
     fn();
   }
 
   // Stamp duty (IRAS rates checked 26 Nov 2026: BSD from 15 Feb 2023, ABSD from 27 Apr 2023)
-  var BSD = [[180000,.01],[180000,.02],[640000,.03],[500000,.04],[1500000,.05],[Infinity,.06]];
+  // Residential tops out at 6%; commercial and industrial at 5% on the amount above S$1M, with no ABSD.
+  var BSD = {
+    res: [[180000,.01],[180000,.02],[640000,.03],[500000,.04],[1500000,.05],[Infinity,.06]],
+    non: [[180000,.01],[180000,.02],[640000,.03],[500000,.04],[Infinity,.05]]
+  };
   var ABSD = { sc:[0,.20,.30], pr:[.05,.30,.35], fr:[.60,.60,.60] };
-  function bsd(p){ var d = 0, left = p; for (var i = 0; i < BSD.length && left > 0; i++){ var b = Math.min(left, BSD[i][0]); d += b * BSD[i][1]; left -= b; } return Math.floor(d); }
-  wire($('duty'), function(){
-    var p = num($('d-price')), rate = ABSD[$('d-buyer').value][+$('d-count').value - 1];
-    var b = bsd(p), a = Math.floor(p * rate);
+  var BUYER = { sc:'Singapore citizen', pr:'permanent resident', fr:'foreigner' };
+  function bsd(p, tiers){ var d = 0, left = p; for (var i = 0; i < tiers.length && left > 0; i++){ var b = Math.min(left, tiers[i][0]); d += b * tiers[i][1]; left -= b; } return Math.floor(d); }
+  wire($('duty'), function(fromButton){
+    var res = $('d-type').value === 'res', p = num($('d-price'));
+    $('d-buyer').disabled = $('d-count').disabled = !res;
+    $('d-note').hidden = !res; $('d-note-non').hidden = res;
+    var rate = res ? ABSD[$('d-buyer').value][+$('d-count').value - 1] : 0;
+    var b = bsd(p, BSD[$('d-type').value]), a = Math.floor(p * rate);
     $('d-bsd').textContent = money(b);
-    $('d-absd-label').textContent = "Additional Buyer's Stamp Duty (ABSD) at " + Math.round(rate * 100) + '%';
+    $('d-absd-label').textContent = res ? "Additional Buyer's Stamp Duty (ABSD) at " + Math.round(rate * 100) + '%' : "Additional Buyer's Stamp Duty (ABSD): not applicable";
     $('d-absd').textContent = money(a);
     $('d-total').textContent = money(b + a);
+    var st = $('d-status');
+    if (fromButton){
+      st.textContent = 'Total stamp duty: ' + money(b + a) + (res ? ', residential, ' + BUYER[$('d-buyer').value] + '.' : ', commercial or industrial.');
+      st.setAttribute('data-set', '1');
+    } else if (st.hasAttribute('data-set')){
+      st.textContent = 'Figures also update as you change any option.';
+      st.removeAttribute('data-set');
+    }
   });
 
   // Monthly instalment with a rate-rise test
