@@ -498,7 +498,7 @@ address{font-style:normal}
         </div>
         <button class="btn btn-outline pdf-btn" type="button" id="pdf-btn" aria-describedby="pdf-hint">Download both as PDF</button>
       </div>
-      <p class="pdf-hint" id="pdf-hint">Saves both calculations, with your figures, in one document. In the print window, choose “Save as PDF”.</p>
+      <p class="pdf-hint" id="pdf-hint" aria-live="polite">Downloads one PDF with both calculations and your figures.</p>
 
       <form class="calc tool" role="tabpanel" id="duty" aria-labelledby="tab-duty">
         <div>
@@ -1087,56 +1087,167 @@ address{font-style:normal}
     $('y-inc').textContent = money(inc);
   });
 
-  // Combined PDF: builds a printable report of both quick checks, then opens the print window
+  // Combined PDF of both quick checks.
+  // Builds a real PDF file with jsPDF (loaded from cdnjs only when the calculators come into view),
+  // so it downloads in browsers that ignore the print window. Falls back to the print window if it can't load.
   function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function inputsOf(form){
-    var rows = '';
+    var rows = [];
     Array.prototype.forEach.call(form.querySelectorAll('.f'), function(f){
       var h = f.closest('[hidden]');
       if (h && h !== form && form.contains(h)) return; // skip fields hidden inside the form, not the hidden tab itself
       var el = f.querySelector('input,select'); if (!el || el.disabled) return;
-      var label = f.querySelector('label').textContent;
       var legend = f.closest('fieldset') ? f.closest('fieldset').querySelector('legend').textContent + ': ' : '';
-      var val = el.tagName === 'SELECT' ? el.options[el.selectedIndex].text : el.value;
-      rows += '<tr><th>' + esc(legend + label) + '</th><td>' + esc(val) + '</td></tr>';
+      rows.push([legend + f.querySelector('label').textContent, el.tagName === 'SELECT' ? el.options[el.selectedIndex].text : el.value]);
     });
-    return '<table>' + rows + '</table>';
+    return rows;
   }
   function resultsOf(table){
-    var rows = '';
-    Array.prototype.forEach.call(table.rows, function(r){
-      if (r.hidden) return;
-      rows += '<tr' + (r.className ? ' class="' + r.className + '"' : '') + '><th>' + esc(r.cells[0].textContent) + '</th><td>' + esc(r.cells[1].textContent) + '</td></tr>';
-    });
-    return '<table>' + rows + '</table>';
+    var rows = [];
+    Array.prototype.forEach.call(table.rows, function(r){ if (!r.hidden) rows.push([r.cells[0].textContent, r.cells[1].textContent, r.className === 'total']); });
+    return rows;
   }
-  function visibleNotes(ids){ return ids.map(function(id){ var n = $(id); return n && !n.hidden && n.textContent.trim() ? '<p class="pr-note">' + esc(n.textContent.trim()) + '</p>' : ''; }).join(''); }
-  var CONTACT = '<address class="pr-contact"><strong>Esther Txe</strong><br>CEA R060284E<br>esthertxe@gmail.com<br>(65) 8800 8787</address>';
-  $('pdf-btn').addEventListener('click', function(){
+  function notesOf(ids){ return ids.map(function(id){ var n = $(id); return n && !n.hidden ? n.textContent.trim() : ''; }).filter(Boolean); }
+  var CONTACT_LINES = ['Esther Txe', 'CEA R060284E', 'esthertxe@gmail.com', '(65) 8800 8787'];
+  var DISCLAIMER = 'Information in this document is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding.';
+  var BANK = 'Estimate only. The final loan amount and purchase price are subject to the bank\'s approval, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included in the loan figures. MAS rules and IRAS rates checked on 26 November 2026.';
+
+  function reportData(){
     Array.prototype.forEach.call(document.querySelectorAll('#duty input, #afford input'), tidy);
     $('duty').dispatchEvent(new Event('change')); $('afford').dispatchEvent(new Event('change'));
-    var today = new Date().toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' });
+    var now = new Date();
+    return {
+      today: now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' }),
+      iso: now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2),
+      sections: [
+        { title: '1. Stamp duty on a purchase', key: [['Total stamp duty', $('d-total').textContent]],
+          inputs: inputsOf($('duty')), results: resultsOf($('duty').querySelector('table')), notes: notesOf(['d-note', 'd-note-non']) },
+        { title: '2. How much I can borrow', key: [['Loan you may be eligible for', $('a-loan').textContent], [$('a-price-label').textContent, $('a-price').textContent]],
+          inputs: inputsOf($('afford')), results: resultsOf($('afford').querySelector('table')), notes: notesOf(['a-why']), bank: true }
+      ]
+    };
+  }
+
+  // Fallback: the print window, for when jsPDF cannot load
+  function printReport(d){
+    var contact = '<address class="pr-contact"><strong>' + esc(CONTACT_LINES[0]) + '</strong><br>' + CONTACT_LINES.slice(1).map(esc).join('<br>') + '</address>';
+    function table(rows){ return '<table>' + rows.map(function(r){ return '<tr' + (r[2] ? ' class="total"' : '') + '><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</table>'; }
     $('print-report').innerHTML =
-      '<div class="pr-head"><div><h1>Know the numbers <em>before you commit</em></h1>' +
-      '<p class="pr-date">Prepared on ' + esc(today) + ' with the calculators at www.esthertxe.com</p></div>' +
-      CONTACT + '</div>' +
-      '<div class="pr-sec"><h2>1. Stamp duty on a purchase</h2>' +
-        '<div class="pr-key"><p>Total stamp duty<strong>' + esc($('d-total').textContent) + '</strong></p></div>' +
-        '<h3>Your inputs</h3>' + inputsOf($('duty')) +
-        '<h3>Results</h3>' + resultsOf($('duty').querySelector('table')) +
-        visibleNotes(['d-note', 'd-note-non']) + '</div>' +
-      '<div class="pr-sec"><h2>2. How much I can borrow</h2>' +
-        '<div class="pr-key"><p>Loan you may be eligible for<strong>' + esc($('a-loan').textContent) + '</strong></p><p>' + esc($('a-price-label').textContent) + '<strong>' + esc($('a-price').textContent) + '</strong></p></div>' +
-        '<h3>Your inputs</h3>' + inputsOf($('afford')) +
-        '<h3>Results</h3>' + resultsOf($('afford').querySelector('table')) +
-        visibleNotes(['a-why']) +
-        '<p class="pr-note"><strong>Estimate only. The final loan amount and purchase price are subject to the bank\'s approval</strong>, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included in the loan figures. MAS rules and IRAS rates checked on 26 November 2026.</p></div>' +
-      '<div class="pr-foot"><p>Information in this document is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding.</p>' +
-      '<p class="pr-cta">To go through these numbers together, contact me:</p>' + CONTACT + '</div>';
+      '<div class="pr-head"><div><h1>Know the numbers <em>before you commit</em></h1><p class="pr-date">Prepared on ' + esc(d.today) + ' with the calculators at www.esthertxe.com</p></div>' + contact + '</div>' +
+      d.sections.map(function(s){
+        return '<div class="pr-sec"><h2>' + esc(s.title) + '</h2><div class="pr-key">' + s.key.map(function(k){ return '<p>' + esc(k[0]) + '<strong>' + esc(k[1]) + '</strong></p>'; }).join('') + '</div>' +
+          '<h3>Your inputs</h3>' + table(s.inputs) + '<h3>Results</h3>' + table(s.results) +
+          s.notes.map(function(n){ return '<p class="pr-note">' + esc(n) + '</p>'; }).join('') +
+          (s.bank ? '<p class="pr-note"><strong>' + esc(BANK) + '</strong></p>' : '') + '</div>';
+      }).join('') +
+      '<div class="pr-foot"><p>' + esc(DISCLAIMER) + '</p><p class="pr-cta">To go through these numbers together, contact me:</p>' + contact + '</div>';
     var title = document.title;
-    document.title = 'Esther Txe - Stamp duty and borrowing - ' + today;
+    document.title = 'Esther Txe - Stamp duty and borrowing - ' + d.today;
     window.addEventListener('afterprint', function restore(){ document.title = title; window.removeEventListener('afterprint', restore); });
     window.print();
+  }
+
+  // Real PDF file with jsPDF
+  function plain(t){ // keep to characters the built-in PDF fonts can show
+    return String(t).replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/[–—−]/g, '-')
+      .replace(/…/g, '...').replace(/ /g, ' ').replace(/[^\x20-\x7E -ÿ]/g, '');
+  }
+  function buildPdf(d){
+    var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+    var X0 = 16, X1 = 194, BOTTOM = 282, y = 20;
+    var OLIVE = [93, 88, 57], INK = [34, 34, 34], GREY = [90, 90, 90], RULE = [200, 200, 200];
+    function font(style, size, color, family){ doc.setFont(family || 'helvetica', style); doc.setFontSize(size); doc.setTextColor.apply(doc, color); }
+    function rule(yy, color, w){ doc.setDrawColor.apply(doc, color); doc.setLineWidth(w || .2); doc.line(X0, yy, X1, yy); }
+    function room(h){ if (y + h > BOTTOM){ doc.addPage(); y = 20; } }
+    function para(text, size, color, style, lh){
+      font(style || 'normal', size, color);
+      var lines = doc.splitTextToSize(plain(text), X1 - X0);
+      lines.forEach(function(l){ room(lh); doc.text(l, X0, y); y += lh; });
+    }
+    function rows(list){
+      list.forEach(function(r){
+        font(r[2] ? 'bold' : 'normal', 9.5, INK);
+        var label = doc.splitTextToSize(plain(r[0]), X1 - X0 - 50), h = Math.max(1, label.length) * 4.2 + 2.6;
+        room(h);
+        rule(y, r[2] ? INK : RULE, r[2] ? .35 : .2);
+        doc.text(label, X0, y + 4.4);
+        doc.text(plain(r[1]), X1, y + 4.4, { align: 'right' });
+        y += h;
+      });
+    }
+    function contact(x, yy, align){
+      CONTACT_LINES.forEach(function(l, i){ font(i ? 'normal' : 'bold', 9.5, INK); doc.text(l, x, yy + i * 4.6, { align: align }); });
+    }
+
+    // Header: title and date on the left, contact block on the right
+    contact(X1, 18, 'right');
+    font('bold', 17, INK); doc.text('KNOW THE NUMBERS', X0, 27);
+    var tw = doc.getTextWidth('KNOW THE NUMBERS ');
+    font('italic', 17, OLIVE, 'times'); doc.text('before you commit', X0 + tw, 27);
+    font('normal', 9, GREY); doc.text(plain('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com'), X0, 33.5);
+    y = 37; rule(y, OLIVE, .5); y += 9;
+
+    d.sections.forEach(function(s, si){
+      if (si) room(60);
+      font('bold', 11.5, OLIVE); doc.text(plain(s.title).toUpperCase(), X0, y); y += 7;
+      // key figures side by side
+      room(14);
+      s.key.forEach(function(k, i){
+        var x = X0 + i * 75;
+        font('normal', 9, GREY); doc.text(plain(k[0]), x, y);
+        font('bolditalic', 17, OLIVE, 'times'); doc.text(plain(k[1]), x, y + 7.5);
+      });
+      y += 17;
+      font('bold', 8, GREY); room(8); doc.text('YOUR INPUTS', X0, y); y += 2.5; rows(s.inputs);
+      y += 4; font('bold', 8, GREY); room(8); doc.text('RESULTS', X0, y); y += 2.5; rows(s.results);
+      y += 3;
+      s.notes.forEach(function(n){ para(n, 8, GREY, 'normal', 3.6); y += 1.2; });
+      if (s.bank){ para(BANK, 8, INK, 'bold', 3.6); }
+      y += 8;
+    });
+
+    room(36);
+    rule(y, RULE, .2); y += 5;
+    para(DISCLAIMER, 8, GREY, 'normal', 3.6);
+    y += 2.5; room(26);
+    font('normal', 9, INK); doc.text('To go through these numbers together, contact me:', X0, y); y += 5.5;
+    contact(X0, y, 'left');
+    return doc;
+  }
+
+  var pdfLib = null;
+  function loadPdfLib(){
+    if (window.jspdf) return Promise.resolve();
+    if (!pdfLib) pdfLib = new Promise(function(resolve, reject){
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      s.async = true; s.crossOrigin = 'anonymous';
+      s.onload = function(){ window.jspdf ? resolve() : reject(); };
+      s.onerror = function(){ pdfLib = null; reject(); };
+      document.head.appendChild(s);
+    });
+    return pdfLib;
+  }
+  // Load the library ahead of time once the calculators are on screen, so the click downloads straight away
+  if ('IntersectionObserver' in window){
+    var pre = new IntersectionObserver(function(es){ if (es.some(function(e){ return e.isIntersecting; })){ loadPdfLib().catch(function(){}); pre.disconnect(); } }, { rootMargin: '400px' });
+    pre.observe($('numbers'));
+  }
+  var pdfBtn = $('pdf-btn'), pdfHint = $('pdf-hint');
+  pdfBtn.addEventListener('pointerenter', function(){ loadPdfLib().catch(function(){}); });
+  pdfBtn.addEventListener('click', function(){
+    var d = reportData();
+    function save(){
+      try {
+        buildPdf(d).save('Esther-Txe-stamp-duty-and-borrowing-' + d.iso + '.pdf');
+        pdfHint.textContent = 'Your PDF has been downloaded. If you cannot find it, check your Downloads folder.';
+      } catch (e) { printReport(d); }
+    }
+    if (window.jspdf) return save();
+    pdfBtn.disabled = true; pdfBtn.textContent = 'Preparing PDF…';
+    loadPdfLib().then(save, function(){ printReport(d); }).then(function(){
+      pdfBtn.disabled = false; pdfBtn.textContent = 'Download both as PDF';
+    });
   });
 
   // Chat nudge: shown between the hero and the contact section, can be closed for the visit
