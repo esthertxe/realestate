@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Esther Txe | Property Advisor, Singapore</title>
-<meta name="description" content="Esther Txe, CEA-registered property advisor in Singapore (R060284E). Clear figures on decoupling, rental yield, property gains and mortgage affordability.">
+<meta name="description" content="Esther Txe, CEA-registered property advisor in Singapore (R060284E). Free stamp duty, instalment, sale proceeds and rental yield calculators, explained.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="author" content="Esther Txe">
 <link rel="canonical" href="https://www.esthertxe.com/">
@@ -87,7 +87,7 @@
       "@type": "WebPage",
       "@id": "https://www.esthertxe.com/#webpage",
       "url": "https://www.esthertxe.com/",
-      "dateModified": "2026-11-21",
+      "dateModified": "2026-11-26",
       "name": "Esther Txe | Property Advisor, Singapore",
       "inLanguage": "en-SG",
       "about": {"@id": "https://www.esthertxe.com/#advisory"},
@@ -98,10 +98,12 @@
       "@id": "https://www.esthertxe.com/#faq",
       "mainEntity": [
         {"@type": "Question", "name": "What is decoupling, and who is it for?", "acceptedAnswer": {"@type": "Answer", "text": "Decoupling generally means one co-owner of a jointly owned property transferring their share to the other. Couples sometimes consider it when planning a further purchase. It carries loan, cash and duty implications that depend on your situation, so the legal steps should be confirmed with a conveyancing lawyer and your bank."}},
+        {"@type": "Question", "name": "Upgrading: should I sell first or buy first?", "acceptedAnswer": {"@type": "Answer", "text": "Selling first gives you certainty on your cash and loan before you commit, but may mean a temporary move. Buying first secures the next home, but can mean carrying two loans, possible extra stamp duty and a tighter timeline. Which suits you depends on your cash buffer, loan position and timing, so I map out both sequences side by side."}},
         {"@type": "Question", "name": "How much can I afford to borrow?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on your income, existing commitments, age, the property type and the lender's own assessment. I can give you an indicative figure to plan with; your bank confirms the actual amount when it assesses your loan application."}},
         {"@type": "Question", "name": "How do you compare rental yield?", "acceptedAnswer": {"@type": "Answer", "text": "I look at gross yield, which is annual rent against the price, and net yield after costs such as maintenance, tax, fees, vacancy and financing. Comparing net figures across options gives a more honest picture of what each property returns on what you put in."}},
         {"@type": "Question", "name": "What should I prepare for a first consultation?", "acceptedAnswer": {"@type": "Answer", "text": "A rough idea of your income, existing loans, CPF and cash savings, details of any property you own, and what you would like to achieve. Approximate figures are fine; we can refine them together."}},
         {"@type": "Question", "name": "What does a property advisor in Singapore do?", "acceptedAnswer": {"@type": "Answer", "text": "A property advisor helps you plan a purchase, sale or change of ownership by working through the numbers with you: costs, financing, cash flow and likely outcomes. I am registered with the Council for Estate Agencies (CEA) and focus on Singapore residential property."}},
+        {"@type": "Question", "name": "What should I ask before choosing a property advisor?", "acceptedAnswer": {"@type": "Answer", "text": "Ask for their CEA registration number and check it on the public register. Ask how they work out the figures they show you and what assumptions sit behind them, how they are paid, and which steps you will need a lawyer or bank for. A good advisor will happily walk you through the calculation."}},
         {"@type": "Question", "name": "How can I check your CEA registration?", "acceptedAnswer": {"@type": "Answer", "text": "Search my registration number, R060284E, on the Council for Estate Agencies (CEA) public register of salespersons at cea.gov.sg."}}
       ]
     }
@@ -205,7 +207,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .nav-meta{display:flex;flex-direction:column;align-items:flex-end;font-size:.8rem;line-height:1.3;text-align:right}
 .nav-meta a{text-decoration:none;font-weight:500}
 .nav-meta span{color:rgba(248,243,237,.75)}
-@media (max-width:999px){.nav-links{display:none}}
+@media (max-width:1179px){.nav-links{display:none}}
 @media (max-width:600px){.nav-meta .phone{display:none}.nav{gap:1rem}.nav-meta{font-size:.72rem;max-width:6rem}}
 
 .hero-body{margin-top:auto;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:2rem;align-items:end;padding:3rem clamp(1.1rem,2.6vw,2.4rem) 1.25rem}
@@ -251,29 +253,74 @@ button,input,select,textarea{font:inherit;color:inherit}
 .tab[aria-selected="true"]{background:var(--olive);color:var(--bg)}
 .tab:hover:not([aria-selected="true"]){background:var(--card)}
 
-.pcard{position:relative;min-height:36rem;padding:2.2rem;display:flex;flex-direction:column;color:var(--card-ink)}
-.pcard[hidden]{display:none}
-#panel-up{background:var(--g-up)}
-#panel-inv{background:var(--g-inv)}
-#panel-dec{background:var(--g-dec)}
-.pcard-img{position:absolute;top:2.2rem;right:2.2rem;width:36%;height:calc(100% - 10.6rem);object-fit:cover}
-.pcard-text{max-width:58%}
-.eyebrow{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--card-muted);margin-bottom:1.25rem}
-.pcard h3{font-weight:500;text-transform:uppercase;letter-spacing:-.015em;line-height:1;font-size:clamp(2.2rem,5vw,4.4rem)}
-.pcard-text > p:not(.eyebrow){margin-top:1.5rem;max-width:30rem;font-size:1.1rem;line-height:1.55}
-.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.6rem}
-.chips li{border:1px solid var(--card-line);padding:.4rem .75rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
-.pcard-foot{margin-top:auto;padding-top:2.2rem;display:flex;align-items:center;justify-content:space-between;gap:1.25rem;flex-wrap:wrap;border-top:1px solid var(--card-line);position:relative;top:0}
-.pcard-foot p{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.1}
-.pcard-foot{padding-top:1.4rem}
 @media (max-width:760px){
-  .pcard{padding:1.25rem;min-height:0}
-  .pcard-img{position:static;width:100%;height:15rem;margin-bottom:1.75rem}
-  .pcard-text{max-width:none}
-  .pcard-foot{margin-top:2.25rem}
   .tablist{width:100%}
   .tab{flex:1 1 0;padding-inline:.5rem}
 }
+.eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+
+/* ---------- CALCULATORS (shared) ---------- */
+.calc{background:var(--card);border-top:2px solid var(--olive);padding:clamp(1.25rem,3vw,2.25rem)}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:1.4rem 1.75rem}
+.f label{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.3rem;line-height:1.35}
+.f input,.f select{width:100%;background:transparent;border:0;border-bottom:1px solid var(--muted);border-radius:0;padding:.45rem 0;font-size:1.1rem;font-variant-numeric:tabular-nums;color:var(--ink)}
+.f select{appearance:none;-webkit-appearance:none;padding-right:1.4rem;cursor:pointer}
+.f select option{color:#34321f;background:#f8f3ed}
+.sel{position:relative;display:block}
+.sel::after{content:"";position:absolute;right:.25rem;top:50%;width:.45rem;height:.45rem;border-right:1.3px solid currentColor;border-bottom:1.3px solid currentColor;transform:translateY(-75%) rotate(45deg);pointer-events:none}
+.res{width:100%;border-collapse:collapse;margin-top:1.75rem;font-variant-numeric:tabular-nums}
+.res th,.res td{padding:.7rem 0;border-top:1px solid var(--line);text-align:left;font-weight:400}
+.res td{text-align:right;white-space:nowrap;padding-left:1rem}
+.res tr.total th,.res tr.total td{border-top:1px solid var(--ink);font-weight:600}
+.figure{font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(2.4rem,4.4vw,3.4rem);line-height:1;color:var(--olive);margin-top:.35rem;font-variant-numeric:lining-nums}
+.calc-note{font-size:.85rem;color:var(--muted);margin-top:1.25rem;max-width:36rem}
+.calc-note a,.text-link{color:var(--ink);text-underline-offset:3px}
+
+/* ---------- INTRO + QUICK CALC ---------- */
+.intro{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(2rem,6vw,6rem);align-items:start}
+.intro .hd{margin-bottom:1.75rem}
+.intro-copy p{font-size:clamp(1.1rem,1.5vw,1.3rem);line-height:1.55;max-width:32rem}
+.intro-copy p + p{margin-top:1rem;font-size:1rem;color:var(--muted)}
+.calc .eyebrow{margin-bottom:1.25rem;color:var(--olive);font-weight:600}
+@media (max-width:900px){.intro{grid-template-columns:1fr}}
+
+/* ---------- START: INTENTS ---------- */
+.intents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}
+.intent{background:var(--card);display:flex;flex-direction:column}
+.intent img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.intent-body{padding:1.5rem 1.5rem 1.75rem;display:flex;flex-direction:column;gap:.9rem;flex:1}
+.intent h3{font-weight:500;text-transform:uppercase;letter-spacing:-.015em;line-height:1;font-size:clamp(1.8rem,2.6vw,2.4rem)}
+.intent h3 em{font-family:var(--serif);font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;font-size:1.05em}
+.caveat{border-top:1px solid var(--line);padding-top:1rem;font-size:.95rem;color:var(--muted)}
+.caveat strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--olive);font-weight:600;margin-bottom:.3rem}
+.intent .btn{margin-top:auto;align-self:flex-start}
+.more{margin-top:clamp(2.5rem,5vw,4rem)}
+.more h3{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(1.6rem,2.4vw,2.1rem);margin-bottom:1rem}
+.more ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:2.5rem;border-bottom:1px solid var(--line)}
+.more a{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.05rem 0;border-top:1px solid var(--line);text-decoration:none;font-weight:500}
+.more a span{color:var(--olive)}
+.more a:hover{color:var(--olive)}
+@media (max-width:1000px){.intents{grid-template-columns:1fr 1fr}.intents .intent:last-child{grid-column:1/-1}.more ul{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.intents{grid-template-columns:1fr}.more ul{grid-template-columns:1fr}}
+
+/* ---------- TOOLS ---------- */
+.tool{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem)}
+.tool[hidden]{display:none}
+.tool-intro{margin-bottom:1.6rem;color:var(--muted);max-width:30rem}
+.tool .res{margin-top:1rem}
+.tools-foot{margin-top:1.25rem;font-size:.85rem;color:var(--muted);max-width:52rem}
+@media (max-width:860px){.tool{grid-template-columns:1fr}}
+
+/* ---------- CHAT NUDGE ---------- */
+.nudge{position:fixed;left:50%;bottom:calc(1rem + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;width:min(52rem,calc(100% - 2rem));background:#5d5839;color:#f8f3ed;display:flex;align-items:center;gap:1rem;padding:.65rem .65rem .65rem 1.25rem;box-shadow:0 12px 32px rgba(0,0,0,.28)}
+.nudge[hidden]{display:none}
+.nudge p{flex:1;font-size:.92rem;line-height:1.35}
+.nudge p strong{font-weight:600}
+.nudge .btn{min-height:2.6rem;padding:.6rem 1rem}
+.nudge-x{flex:none;width:2.4rem;height:2.4rem;border:0;background:transparent;color:#f8f3ed;font-size:1.4rem;line-height:1;cursor:pointer}
+.nudge :focus-visible{outline-color:#f8f3ed}
+.nudge .short{display:none}
+@media (max-width:560px){.nudge p span,.nudge .long{display:none}.nudge .short{display:inline}.nudge p{font-size:.88rem}.nudge{padding-left:1rem;gap:.5rem}}
 
 /* ---------- SERVICES ---------- */
 .services{border-bottom:1px solid var(--line)}
@@ -365,7 +412,8 @@ address{font-style:normal}
     <nav class="nav" aria-label="Main">
       <a class="brand" href="#main">Esther Txe</a>
       <ul class="nav-links">
-        <li><a href="#goals">Goals</a></li>
+        <li><a href="#start">Start here</a></li>
+        <li><a href="#tools">Calculators</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#process">Process</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -387,6 +435,168 @@ address{font-style:normal}
 
 <main id="main" tabindex="-1">
 
+  <section class="sec" id="numbers" aria-labelledby="numbers-h">
+    <div class="wrap intro">
+      <div class="intro-copy">
+        <h2 class="hd" id="numbers-h">Know the numbers <em>before you commit</em></h2>
+        <p>Whether you are buying, selling, upgrading or investing, a good decision starts with a few honest figures. Try one here, run the rest below, or bring them to me and we will go through them together.</p>
+        <p>Every figure I give you comes with the working behind it, so you can check it yourself.</p>
+      </div>
+      <form class="calc" id="duty" aria-labelledby="duty-h" onsubmit="return false">
+        <p class="eyebrow" id="duty-h">Try one number: stamp duty on a purchase</p>
+        <div class="fields">
+          <div class="f"><label for="d-price">Purchase price (S$)</label><input id="d-price" inputmode="numeric" autocomplete="off" value="1,500,000"></div>
+          <div class="f"><label for="d-buyer">Buyer</label><span class="sel"><select id="d-buyer"><option value="sc">Singapore citizen</option><option value="pr">Permanent resident</option><option value="fr">Foreigner</option></select></span></div>
+          <div class="f"><label for="d-count">Homes owned after this purchase</label><span class="sel"><select id="d-count"><option value="1">1 (this is the first)</option><option value="2">2</option><option value="3">3 or more</option></select></span></div>
+        </div>
+        <table class="res" aria-live="polite">
+          <tr><th scope="row">Buyer's Stamp Duty (BSD)</th><td id="d-bsd">–</td></tr>
+          <tr><th scope="row" id="d-absd-label">Additional Buyer's Stamp Duty (ABSD)</th><td id="d-absd">–</td></tr>
+          <tr class="total"><th scope="row">Total stamp duty</th><td id="d-total">–</td></tr>
+        </table>
+        <p class="calc-note">For one individual buying residential property. Rates checked against <a href="https://www.iras.gov.sg/taxes/stamp-duty/for-property/buying-or-acquiring-property" rel="noopener">IRAS</a> on 26 November 2026. Joint buyers with different profiles, entities and some HDB cases are treated differently, so confirm your own case with your lawyer before you sign.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec" id="start" aria-labelledby="start-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="hd" id="start-h">What are you <em>here to do?</em></h2>
+        <p class="desc">Pick a starting point</p>
+      </div>
+      <div class="intents">
+        <article class="intent">
+          <img src="assets/build/staircase.jpg" width="411" height="361" alt="Double-height living room with a sculptural dark timber staircase" loading="lazy">
+          <div class="intent-body">
+            <p class="eyebrow">I'm buying</p>
+            <h3>Buy <em>with a buffer</em></h3>
+            <p>Start with the monthly instalment you can live with, then test it at a higher rate before you settle on a budget.</p>
+            <p class="caveat"><strong>When buying may not suit you yet</strong>If the instalment only works at today's rate, or leaves no cash buffer after stamp duty and renovation.</p>
+            <a class="btn btn-olive" href="#tools" data-tool="tab-loan">Test my instalment</a>
+          </div>
+        </article>
+        <article class="intent">
+          <img src="assets/build/sepia-crop.jpg" width="800" height="800" alt="Sepia detail of clasped hands resting on an armchair" loading="lazy">
+          <div class="intent-body">
+            <p class="eyebrow">I'm selling</p>
+            <h3>Sell <em>knowing the net</em></h3>
+            <p>See what a sale actually leaves you after the loan, your CPF refund and selling costs, split into cash and CPF.</p>
+            <p class="caveat"><strong>When selling now may not suit you</strong>If you may still be within the Seller's Stamp Duty holding period, or the cash left over will not fund your next purchase.</p>
+            <a class="btn btn-olive" href="#tools" data-tool="tab-sale">Work out my proceeds</a>
+          </div>
+        </article>
+        <article class="intent">
+          <img src="assets/build/villa.jpg" width="339" height="496" alt="Open-plan house with a lit timber ceiling overlooking the sea at dusk" loading="lazy">
+          <div class="intent-body">
+            <p class="eyebrow">I'm investing</p>
+            <h3>Invest <em>on net yield</em></h3>
+            <p>Compare gross and net yield on the same basis, so you know what a property returns after costs and empty months.</p>
+            <p class="caveat"><strong>When a purchase may not suit you</strong>If the figures only work with no vacancy, or rely on prices rising to make sense.</p>
+            <a class="btn btn-olive" href="#tools" data-tool="tab-yield">Check the yield</a>
+          </div>
+        </article>
+      </div>
+
+      <nav class="more" aria-labelledby="more-h">
+        <h3 id="more-h">Or are you…</h3>
+        <ul>
+          <li><a href="#faq-upgrade">Upgrading: sell first or buy first? <span aria-hidden="true">→</span></a></li>
+          <li><a href="#faq-decouple">Thinking about decoupling <span aria-hidden="true">→</span></a></li>
+          <li><a href="#tools" data-tool="tab-yield">Letting out your property <span aria-hidden="true">→</span></a></li>
+          <li><a href="#faq-borrow">Checking what you can borrow <span aria-hidden="true">→</span></a></li>
+          <li><a href="#faq-choose">Choosing an advisor: what to ask <span aria-hidden="true">→</span></a></li>
+          <li><a href="#faq-cea">Checking my CEA registration <span aria-hidden="true">→</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <section class="sec" id="tools" aria-labelledby="tools-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="hd" id="tools-h">Run your <em>own numbers</em></h2>
+        <p class="desc">For planning only</p>
+      </div>
+
+      <div class="tablist" role="tablist" aria-label="Calculators">
+        <button class="tab" role="tab" id="tab-loan" aria-controls="panel-loan" aria-selected="true" tabindex="0">Instalment</button>
+        <button class="tab" role="tab" id="tab-sale" aria-controls="panel-sale" aria-selected="false" tabindex="-1">Sale proceeds</button>
+        <button class="tab" role="tab" id="tab-yield" aria-controls="panel-yield" aria-selected="false" tabindex="-1">Rental yield</button>
+      </div>
+
+      <form class="calc tool" role="tabpanel" id="panel-loan" aria-labelledby="tab-loan" onsubmit="return false">
+        <div>
+          <p class="tool-intro">Your monthly instalment at your rate, and again at a higher rate, so you can see how much room you have if rates rise.</p>
+          <div class="fields">
+            <div class="f"><label for="l-amt">Loan amount (S$)</label><input id="l-amt" inputmode="numeric" autocomplete="off" value="1,000,000"></div>
+            <div class="f"><label for="l-years">Loan tenure (years)</label><input id="l-years" inputmode="numeric" autocomplete="off" value="25"></div>
+            <div class="f"><label for="l-rate">Your interest rate (% a year)</label><input id="l-rate" inputmode="decimal" autocomplete="off" value="2.6"></div>
+            <div class="f"><label for="l-test">Test rate (% a year)</label><input id="l-test" inputmode="decimal" autocomplete="off" value="4"></div>
+          </div>
+        </div>
+        <div aria-live="polite">
+          <p class="eyebrow">Monthly instalment at your rate</p>
+          <p class="figure" id="l-pay">–</p>
+          <table class="res">
+            <tr><th scope="row">At the test rate</th><td id="l-test-pay">–</td></tr>
+            <tr><th scope="row">Extra each month</th><td id="l-diff">–</td></tr>
+            <tr class="total"><th scope="row">Total interest at your rate</th><td id="l-int">–</td></tr>
+          </table>
+          <p class="calc-note">Example figures; replace them with your own. Your bank decides how much it will lend and at what rate.</p>
+        </div>
+      </form>
+
+      <form class="calc tool" role="tabpanel" id="panel-sale" aria-labelledby="tab-sale" hidden onsubmit="return false">
+        <div>
+          <p class="tool-intro">What a sale leaves you after the loan and costs. CPF you used goes back to your CPF account, so it is shown apart from cash.</p>
+          <div class="fields">
+            <div class="f"><label for="s-price">Selling price (S$)</label><input id="s-price" inputmode="numeric" autocomplete="off" value="1,800,000"></div>
+            <div class="f"><label for="s-loan">Outstanding loan (S$)</label><input id="s-loan" inputmode="numeric" autocomplete="off" value="600,000"></div>
+            <div class="f"><label for="s-cpf">CPF to refund, with accrued interest (S$)</label><input id="s-cpf" inputmode="numeric" autocomplete="off" value="250,000"></div>
+            <div class="f"><label for="s-costs">Selling costs: fees, legal (S$)</label><input id="s-costs" inputmode="numeric" autocomplete="off" value="40,000"></div>
+            <div class="f"><label for="s-ssd">Seller's Stamp Duty, if any (S$)</label><input id="s-ssd" inputmode="numeric" autocomplete="off" value="0"></div>
+            <div class="f"><label for="s-penalty">Loan early-repayment penalty (S$)</label><input id="s-penalty" inputmode="numeric" autocomplete="off" value="0"></div>
+          </div>
+        </div>
+        <div aria-live="polite">
+          <p class="eyebrow">Cash in hand after the sale</p>
+          <p class="figure" id="s-cash">–</p>
+          <table class="res">
+            <tr><th scope="row">Selling price</th><td id="s-r-price">–</td></tr>
+            <tr><th scope="row">Less loan, costs, duty and penalty</th><td id="s-r-out">–</td></tr>
+            <tr><th scope="row">Returned to your CPF</th><td id="s-r-cpf">–</td></tr>
+            <tr class="total"><th scope="row">Cash in hand</th><td id="s-r-cash">–</td></tr>
+          </table>
+          <p class="calc-note" id="s-warn">Your CPF statement shows the exact refund, including accrued interest. Your bank can tell you any penalty for repaying early.</p>
+        </div>
+      </form>
+
+      <form class="calc tool" role="tabpanel" id="panel-yield" aria-labelledby="tab-yield" hidden onsubmit="return false">
+        <div>
+          <p class="tool-intro">Gross yield is rent against price. Net yield takes off yearly costs and the months the unit sits empty.</p>
+          <div class="fields">
+            <div class="f"><label for="y-price">Purchase price (S$)</label><input id="y-price" inputmode="numeric" autocomplete="off" value="1,200,000"></div>
+            <div class="f"><label for="y-rent">Monthly rent (S$)</label><input id="y-rent" inputmode="numeric" autocomplete="off" value="3,800"></div>
+            <div class="f"><label for="y-costs">Yearly costs: upkeep, tax, fees (S$)</label><input id="y-costs" inputmode="numeric" autocomplete="off" value="7,000"></div>
+            <div class="f"><label for="y-vac">Empty months a year</label><input id="y-vac" inputmode="decimal" autocomplete="off" value="1"></div>
+          </div>
+        </div>
+        <div aria-live="polite">
+          <p class="eyebrow">Net yield</p>
+          <p class="figure" id="y-net">–</p>
+          <table class="res">
+            <tr><th scope="row">Gross yield</th><td id="y-gross">–</td></tr>
+            <tr><th scope="row">Rent collected a year</th><td id="y-coll">–</td></tr>
+            <tr class="total"><th scope="row">Net income a year, before loan</th><td id="y-inc">–</td></tr>
+          </table>
+          <p class="calc-note">Financing costs are left out so properties compare on the same basis. Add your loan interest to see cash flow.</p>
+        </div>
+      </form>
+      <p class="tools-foot">All calculators are for planning only and are not financial advice. Loan amounts, rates and actual costs depend on your bank, income, age and the rules in force when you buy or sell.</p>
+    </div>
+  </section>
+
   <section class="sec" aria-labelledby="about-h">
     <div class="wrap about">
       <div class="sec-head">
@@ -402,63 +612,6 @@ address{font-style:normal}
       <figure class="portrait">
         <img src="assets/build/cutout.jpg" width="1000" height="1140" alt="Sepia portrait of Esther Txe, property advisor, seated in an armchair" loading="lazy">
       </figure>
-    </div>
-  </section>
-
-  <section class="sec" id="goals" aria-labelledby="goals-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2 class="hd" id="goals-h">Which path <em>is right for you?</em></h2>
-        <p class="desc">Three common starting points</p>
-      </div>
-
-      <div class="tablist" role="tablist" aria-label="Property goals">
-        <button class="tab" role="tab" id="tab-up" aria-controls="panel-up" aria-selected="true" tabindex="0">Upgrade</button>
-        <button class="tab" role="tab" id="tab-inv" aria-controls="panel-inv" aria-selected="false" tabindex="-1">Invest</button>
-        <button class="tab" role="tab" id="tab-dec" aria-controls="panel-dec" aria-selected="false" tabindex="-1">Decouple</button>
-      </div>
-
-      <div class="pcard" role="tabpanel" id="panel-up" aria-labelledby="tab-up">
-        <img class="pcard-img" src="assets/build/staircase.jpg" width="411" height="361" alt="Double-height living room with a sculptural dark timber staircase" loading="lazy">
-        <div class="pcard-text">
-          <p class="eyebrow">Home upgraders</p>
-          <h3>Family home</h3>
-          <p>Plan the sale of your current home and the purchase of the next as one decision, with the cash, loan and timing mapped out together.</p>
-          <ul class="chips" aria-label="Topics covered"><li>Mortgage affordability</li><li>Sale proceeds</li><li>Lifestyle planning</li></ul>
-        </div>
-        <div class="pcard-foot">
-          <p>for the life you are planning</p>
-          <a class="btn btn-white" href="#contact">Discuss upgrading</a>
-        </div>
-      </div>
-
-      <div class="pcard" role="tabpanel" id="panel-inv" aria-labelledby="tab-inv" hidden>
-        <img class="pcard-img" src="assets/build/villa.jpg" width="339" height="496" alt="Open-plan house with a lit timber ceiling overlooking the sea at dusk" loading="lazy">
-        <div class="pcard-text">
-          <p class="eyebrow">Property investors</p>
-          <h3>Rental portfolio</h3>
-          <p>Compare gross and net yields, financing costs and likely gains across options, measured against what you actually pay.</p>
-          <ul class="chips" aria-label="Topics covered"><li>Rental yield</li><li>Property gains</li><li>Cash flow</li></ul>
-        </div>
-        <div class="pcard-foot">
-          <p>returns measured honestly</p>
-          <a class="btn btn-white" href="#contact">Discuss investing</a>
-        </div>
-      </div>
-
-      <div class="pcard" role="tabpanel" id="panel-dec" aria-labelledby="tab-dec" hidden>
-        <img class="pcard-img" src="assets/build/sepia-crop.jpg" width="800" height="800" alt="Sepia detail of clasped hands resting on an armchair" loading="lazy">
-        <div class="pcard-text">
-          <p class="eyebrow">Couples and families</p>
-          <h3>Decoupling</h3>
-          <p>Understand the financial, loan and duty implications of changing ownership structure, so you can discuss it with your lawyer and bank.</p>
-          <ul class="chips" aria-label="Topics covered"><li>Ownership structure</li><li>Loan impact</li><li>Stamp duty</li></ul>
-        </div>
-        <div class="pcard-foot">
-          <p>structure with intent</p>
-          <a class="btn btn-white" href="#contact">Discuss decoupling</a>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -503,27 +656,35 @@ address{font-style:normal}
       <div class="faq">
         <img class="faq-img" src="assets/build/villa.jpg" width="339" height="496" alt="Glass-walled residence with a warmly lit living area at dusk" loading="lazy">
         <div class="acc">
-          <details open>
+          <details id="faq-decouple" open>
             <summary>What is decoupling, and who is it for?<span class="ico" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span></summary>
             <p>Decoupling generally means one co-owner of a jointly owned property transferring their share to the other. Couples sometimes consider it when planning a further purchase. It carries loan, cash and duty implications that depend on your situation, so the legal steps should be confirmed with a conveyancing lawyer and your bank.</p>
           </details>
-          <details>
+          <details id="faq-upgrade">
+            <summary>Upgrading: should I sell first or buy first?<span class="ico" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span></summary>
+            <p>Selling first gives you certainty on your cash and loan before you commit, but may mean a temporary move. Buying first secures the next home, but can mean carrying two loans, possible extra stamp duty and a tighter timeline. Which suits you depends on your cash buffer, loan position and timing, so I map out both sequences side by side.</p>
+          </details>
+          <details id="faq-borrow">
             <summary>How much can I afford to borrow?<span class="ico" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span></summary>
             <p>It depends on your income, existing commitments, age, the property type and the lender's own assessment. I can give you an indicative figure to plan with; your bank confirms the actual amount when it assesses your loan application.</p>
           </details>
-          <details>
+          <details id="faq-yield">
             <summary>How do you compare rental yield?<span class="ico" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span></summary>
             <p>I look at gross yield, which is annual rent against the price, and net yield after costs such as maintenance, tax, fees, vacancy and financing. Comparing net figures across options gives a more honest picture of what each property returns on what you put in.</p>
           </details>
-          <details>
+          <details id="faq-prepare">
             <summary>What should I prepare for a first consultation?<span class="ico" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span></summary>
             <p>A rough idea of your income, existing loans, CPF and cash savings, details of any property you own, and what you would like to achieve. Approximate figures are fine; we can refine them together.</p>
           </details>
-          <details>
+          <details id="faq-what">
             <summary>What does a property advisor in Singapore do?<span class="ico" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span></summary>
             <p>A property advisor helps you plan a purchase, sale or change of ownership by working through the numbers with you: costs, financing, cash flow and likely outcomes. I am registered with the Council for Estate Agencies (CEA) and focus on Singapore residential property.</p>
           </details>
-          <details>
+          <details id="faq-choose">
+            <summary>What should I ask before choosing a property advisor?<span class="ico" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span></summary>
+            <p>Ask for their CEA registration number and check it on the public register. Ask how they work out the figures they show you and what assumptions sit behind them, how they are paid, and which steps you will need a lawyer or bank for. A good advisor will happily walk you through the calculation.</p>
+          </details>
+          <details id="faq-cea">
             <summary>How can I check your CEA registration?<span class="ico" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span></summary>
             <p>Search my registration number, R060284E, on the Council for Estate Agencies (CEA) public register of salespersons at <a href="https://www.cea.gov.sg" rel="noopener">cea.gov.sg</a>.</p>
           </details>
@@ -574,12 +735,21 @@ address{font-style:normal}
       <p>Esther Txe · Property Advisor, Singapore · CEA Registration No. R060284E</p>
     </div>
     <p class="disc">Information on this site is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding.</p>
+    <p>Stamp duty rates last checked against IRAS: 26 November 2026.</p>
     <p>© 2026 Esther Txe</p>
   </div>
 </footer>
 
+<aside class="nudge" id="nudge" aria-label="Chat with Esther" hidden>
+  <p><strong class="long">Want a second pair of eyes on your numbers?</strong><strong class="short">Unsure about your numbers?</strong> <span>I'll go through them with you.</span></p>
+  <a class="btn btn-white" href="https://wa.me/6588008787" rel="noopener">Chat on WhatsApp</a>
+  <button class="nudge-x" type="button" aria-label="Close">×</button>
+</aside>
+
 <script>
 (function(){
+  var $ = function(id){ return document.getElementById(id); };
+
   // Tabs (WAI-ARIA tabs pattern, automatic activation)
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
   function select(tab, focus){
@@ -587,7 +757,7 @@ address{font-style:normal}
       var on = t === tab;
       t.setAttribute('aria-selected', on ? 'true' : 'false');
       t.tabIndex = on ? 0 : -1;
-      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      $(t.getAttribute('aria-controls')).hidden = !on;
     });
     if (focus) tab.focus();
   }
@@ -602,6 +772,99 @@ address{font-style:normal}
       if (n !== null){ e.preventDefault(); select(tabs[n], true); }
     });
   });
+  // Links that open a specific calculator
+  Array.prototype.forEach.call(document.querySelectorAll('[data-tool]'), function(a){
+    a.addEventListener('click', function(){ select($(a.getAttribute('data-tool')), false); });
+  });
+  // Links that open a specific FAQ answer
+  function openFaq(hash){
+    var d = hash && hash.indexOf('#faq-') === 0 ? $(hash.slice(1)) : null;
+    if (d && d.tagName === 'DETAILS') d.open = true;
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('a[href^="#faq-"]'), function(a){
+    a.addEventListener('click', function(){ openFaq(a.getAttribute('href')); });
+  });
+  openFaq(location.hash);
+
+  // Number helpers
+  function num(el){ var v = parseFloat(String(el.value).replace(/[^0-9.]/g, '')); return isFinite(v) ? v : 0; }
+  function money(v){ return (v < 0 ? '−S$' : 'S$') + Math.round(Math.abs(v)).toLocaleString('en-SG'); }
+  function pct(v){ return isFinite(v) ? v.toFixed(2) + '%' : '–'; }
+  function tidy(el){ // add thousands separators to whole-dollar fields
+    if (el.getAttribute('inputmode') !== 'numeric') return;
+    var v = num(el); if (el.value.trim() !== '') el.value = Math.round(v).toLocaleString('en-SG');
+  }
+  function wire(form, fn){
+    form.addEventListener('input', fn);
+    form.addEventListener('change', fn);
+    form.addEventListener('focusout', function(e){ if (e.target.tagName === 'INPUT') tidy(e.target); });
+    fn();
+  }
+
+  // Stamp duty (IRAS rates checked 26 Nov 2026: BSD from 15 Feb 2023, ABSD from 27 Apr 2023)
+  var BSD = [[180000,.01],[180000,.02],[640000,.03],[500000,.04],[1500000,.05],[Infinity,.06]];
+  var ABSD = { sc:[0,.20,.30], pr:[.05,.30,.35], fr:[.60,.60,.60] };
+  function bsd(p){ var d = 0, left = p; for (var i = 0; i < BSD.length && left > 0; i++){ var b = Math.min(left, BSD[i][0]); d += b * BSD[i][1]; left -= b; } return Math.floor(d); }
+  wire($('duty'), function(){
+    var p = num($('d-price')), rate = ABSD[$('d-buyer').value][+$('d-count').value - 1];
+    var b = bsd(p), a = Math.floor(p * rate);
+    $('d-bsd').textContent = money(b);
+    $('d-absd-label').textContent = "Additional Buyer's Stamp Duty (ABSD) at " + Math.round(rate * 100) + '%';
+    $('d-absd').textContent = money(a);
+    $('d-total').textContent = money(b + a);
+  });
+
+  // Monthly instalment with a rate-rise test
+  function pmt(L, ratePct, years){ var n = years * 12, r = ratePct / 1200; if (n <= 0) return 0; return r === 0 ? L / n : L * r / (1 - Math.pow(1 + r, -n)); }
+  wire($('panel-loan'), function(){
+    var L = num($('l-amt')), y = num($('l-years')), m = pmt(L, num($('l-rate')), y), t = pmt(L, num($('l-test')), y);
+    $('l-pay').textContent = money(m);
+    $('l-test-pay').textContent = money(t);
+    $('l-diff').textContent = money(t - m);
+    $('l-int').textContent = money(Math.max(0, m * y * 12 - L));
+  });
+
+  // Sale proceeds
+  wire($('panel-sale'), function(){
+    var p = num($('s-price')), out = num($('s-loan')) + num($('s-costs')) + num($('s-ssd')) + num($('s-penalty')), cpf = num($('s-cpf'));
+    var cash = p - out - cpf;
+    $('s-cash').textContent = money(cash);
+    $('s-r-price').textContent = money(p);
+    $('s-r-out').textContent = money(-out);
+    $('s-r-cpf').textContent = money(cpf);
+    $('s-r-cash').textContent = money(cash);
+    $('s-warn').textContent = cash < 0
+      ? 'The sale does not cover the loan, costs and CPF refund. You may need to top up the shortfall in cash; talk to your bank and CPF Board early.'
+      : 'Your CPF statement shows the exact refund, including accrued interest. Your bank can tell you any penalty for repaying early.';
+  });
+
+  // Rental yield
+  wire($('panel-yield'), function(){
+    var p = num($('y-price')), rent = num($('y-rent')), vac = Math.min(12, num($('y-vac'))), costs = num($('y-costs'));
+    var coll = rent * (12 - vac), inc = coll - costs;
+    $('y-gross').textContent = p ? pct(rent * 12 / p * 100) : '–';
+    $('y-net').textContent = p ? pct(inc / p * 100) : '–';
+    $('y-coll').textContent = money(coll);
+    $('y-inc').textContent = money(inc);
+  });
+
+  // Chat nudge: shown between the hero and the contact section, can be closed for the visit
+  var nudge = $('nudge'), closed = false;
+  try { closed = sessionStorage.getItem('nudgeClosed') === '1'; } catch (e) {}
+  nudge.querySelector('.nudge-x').addEventListener('click', function(){
+    closed = true; nudge.hidden = true;
+    try { sessionStorage.setItem('nudgeClosed', '1'); } catch (e) {}
+  });
+  if ('IntersectionObserver' in window){
+    var seen = {};
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ seen[en.target.id || 'hero'] = en.isIntersecting; });
+      nudge.hidden = closed || seen.hero || seen.contact || seen.foot;
+    });
+    io.observe(document.querySelector('.hero'));
+    io.observe($('contact'));
+    var ft = document.querySelector('.foot'); ft.id = 'foot'; io.observe(ft);
+  }
 
   // Enquiry form -> mailto
   var form = document.getElementById('enquiry');

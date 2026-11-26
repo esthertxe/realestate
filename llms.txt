@@ -18,6 +18,12 @@ Website: https://www.esthertxe.com/
 - Mortgage affordability: a comfortable loan amount based on income, commitments, cash and CPF, and how repayments fit the budget.
 - Lifestyle planning: location, space and timing weighed alongside the numbers.
 
+## Free calculators on the site (planning only)
+- Stamp duty on a purchase: Buyer's Stamp Duty plus Additional Buyer's Stamp Duty for one individual buyer (rates checked against IRAS on 26 November 2026).
+- Monthly instalment with a rate-rise test: the instalment at your rate and at a higher test rate.
+- Sale proceeds: cash in hand after the loan, selling costs, Seller's Stamp Duty and any early-repayment penalty, with the CPF refund shown separately.
+- Rental yield: gross and net yield after yearly costs and vacant months.
+
 ## Process
 1. Understand: goals, timeline, finances and current property position.
 2. Analyse: figures for each option, including costs, cash flow, loan and likely outcomes.
