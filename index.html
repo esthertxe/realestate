@@ -269,7 +269,6 @@ button,input,select,textarea{font:inherit;color:inherit}
 .f select:disabled{opacity:.4;cursor:not-allowed}
 .calc-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.6rem}
 .calc-status{font-size:.85rem;color:var(--muted)}
-.afford{margin-top:clamp(2.5rem,5vw,4rem)}
 .grp{border:0;padding:0;margin:1.75rem 0 0;min-width:0}
 .grp[hidden]{display:none}
 .grp legend{padding:0;margin-bottom:.9rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;font-weight:600;color:var(--olive)}
@@ -288,8 +287,37 @@ button,input,select,textarea{font:inherit;color:inherit}
 .calc-note a,.text-link{color:var(--ink);text-underline-offset:3px}
 
 /* ---------- INTRO + QUICK CALC ---------- */
-.intro{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(2rem,6vw,6rem);align-items:start}
-.intro .hd{margin-bottom:1.75rem}
+.intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5rem clamp(2rem,6vw,6rem);align-items:end;padding-bottom:clamp(2rem,4vw,3.25rem)}
+.tab-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 1.5rem;margin-bottom:.6rem}
+.tab-row .tablist{margin-bottom:0}
+.pdf-btn{color:var(--ink)}
+.pdf-btn:hover{background:var(--card)}
+.pdf-hint{font-size:.82rem;color:var(--muted);text-align:right;margin-bottom:1.5rem}
+@media (max-width:760px){.pdf-btn{width:100%}.pdf-hint{text-align:left}}
+
+/* ---------- PRINT / PDF REPORT ---------- */
+#print-report{display:none}
+@media print{
+  @page{size:A4;margin:16mm 14mm}
+  html,body{background:#fff!important;color:#222!important}
+  body > *:not(#print-report){display:none!important}
+  #print-report{display:block!important;font-family:var(--sans);font-size:10.5pt;line-height:1.45;color:#222}
+  #print-report h1{font-size:18pt;font-weight:500;text-transform:uppercase;letter-spacing:-.01em;margin:0}
+  #print-report h1 em{font-family:var(--serif);font-style:italic;text-transform:none;font-weight:500}
+  #print-report .pr-meta{color:#555;margin:.3rem 0 1rem;padding-bottom:.6rem;border-bottom:1.5px solid #5d5839}
+  #print-report h2{font-size:12pt;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#5d5839;margin:1.2rem 0 .4rem}
+  #print-report h3{font-size:9pt;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#555;margin:.7rem 0 .2rem}
+  #print-report table{width:100%;border-collapse:collapse}
+  #print-report th,#print-report td{padding:.28rem 0;border-top:1px solid #ccc;text-align:left;font-weight:400;vertical-align:top}
+  #print-report td{text-align:right;padding-left:1rem}
+  #print-report tr.total th,#print-report tr.total td{font-weight:600;border-top:1px solid #222}
+  #print-report .pr-key{display:flex;gap:2rem;margin:.3rem 0 .5rem}
+  #print-report .pr-key p{margin:0}
+  #print-report .pr-key strong{display:block;font-family:var(--serif);font-style:italic;font-size:17pt;color:#5d5839;font-weight:600}
+  #print-report .pr-note{font-size:8.5pt;color:#555;margin:.4rem 0 0}
+  #print-report .pr-sec{break-inside:avoid}
+  #print-report .pr-foot{margin-top:1.2rem;padding-top:.5rem;border-top:1px solid #ccc;font-size:8.5pt;color:#555}
+}
 .intro-copy p{font-size:clamp(1.1rem,1.5vw,1.3rem);line-height:1.55;max-width:32rem}
 .intro-copy p + p{margin-top:1rem;font-size:1rem;color:var(--muted)}
 .calc .eyebrow{margin-bottom:1.25rem;color:var(--olive);font-weight:600}
@@ -447,36 +475,52 @@ address{font-style:normal}
 <main id="main" tabindex="-1">
 
   <section class="sec" id="numbers" aria-labelledby="numbers-h">
-    <div class="wrap intro">
-      <div class="intro-copy">
-        <h2 class="hd" id="numbers-h">Know the numbers <em>before you commit</em></h2>
-        <p>Whether you are buying, selling, upgrading or investing, a good decision starts with a few honest figures. Try one here, run the rest below, or bring them to me and we will go through them together.</p>
-        <p>Every figure I give you comes with the working behind it, so you can check it yourself.</p>
-      </div>
-      <form class="calc" id="duty" aria-labelledby="duty-h">
-        <p class="eyebrow" id="duty-h">Try one number: stamp duty on a purchase</p>
-        <div class="fields">
-          <div class="f"><label for="d-type">Property type</label><span class="sel"><select id="d-type"><option value="res">Residential</option><option value="non">Commercial or industrial</option></select></span></div>
-          <div class="f"><label for="d-price">Purchase price (S$)</label><input id="d-price" inputmode="numeric" autocomplete="off" value="1,500,000"></div>
-          <div class="f res-only"><label for="d-buyer">Buyer</label><span class="sel"><select id="d-buyer"><option value="sc">Singapore citizen</option><option value="pr">Permanent resident</option><option value="fr">Foreigner</option></select></span></div>
-          <div class="f res-only"><label for="d-count">Homes owned after this purchase</label><span class="sel"><select id="d-count"><option value="1">1 (this is the first)</option><option value="2">2</option><option value="3">3 or more</option></select></span></div>
-        </div>
-        <div class="calc-actions">
-          <button class="btn btn-olive" type="submit">Calculate</button>
-          <p class="calc-status" id="d-status" aria-live="polite">Figures also update as you change any option.</p>
-        </div>
-        <table class="res">
-          <tr><th scope="row">Buyer's Stamp Duty (BSD)</th><td id="d-bsd">–</td></tr>
-          <tr><th scope="row" id="d-absd-label">Additional Buyer's Stamp Duty (ABSD)</th><td id="d-absd">–</td></tr>
-          <tr class="total"><th scope="row">Total stamp duty</th><td id="d-total">–</td></tr>
-        </table>
-        <p class="calc-note" id="d-note">For one individual buyer. Rates checked against <a href="https://www.iras.gov.sg/taxes/stamp-duty/for-property/buying-or-acquiring-property" rel="noopener">IRAS</a> on 26 November 2026. Joint buyers with different profiles, entities, mixed-use property and some HDB cases are treated differently, so confirm your own case with your lawyer before you sign.</p>
-        <p class="calc-note" id="d-note-non" hidden>Commercial and industrial property pays Buyer's Stamp Duty only, with a top rate of 5%; ABSD does not apply. GST may also be payable if the seller is GST-registered, so check with the seller and your lawyer.</p>
-      </form>
-    </div>
-
     <div class="wrap">
-      <form class="calc tool afford" id="afford" aria-labelledby="afford-h">
+      <div class="intro">
+        <h2 class="hd" id="numbers-h">Know the numbers <em>before you commit</em></h2>
+        <div class="intro-copy">
+          <p>Whether you are buying, selling, upgrading or investing, a good decision starts with a few honest figures. Start with these two, run the rest below, or bring them to me and we will go through them together.</p>
+          <p>Every figure I give you comes with the working behind it, so you can check it yourself.</p>
+        </div>
+      </div>
+
+      <div class="tab-row">
+        <div class="tablist" role="tablist" aria-label="Quick checks">
+          <button class="tab" role="tab" id="tab-duty" aria-controls="duty" aria-selected="true" tabindex="0">Stamp duty</button>
+          <button class="tab" role="tab" id="tab-afford" aria-controls="afford" aria-selected="false" tabindex="-1">How much I can borrow</button>
+        </div>
+        <button class="btn btn-outline pdf-btn" type="button" id="pdf-btn" aria-describedby="pdf-hint">Download both as PDF</button>
+      </div>
+      <p class="pdf-hint" id="pdf-hint">Saves both calculations, with your figures, in one document. In the print window, choose “Save as PDF”.</p>
+
+      <form class="calc tool" role="tabpanel" id="duty" aria-labelledby="tab-duty">
+        <div>
+          <p class="eyebrow" id="duty-h">Stamp duty on a purchase</p>
+          <div class="fields">
+            <div class="f"><label for="d-type">Property type</label><span class="sel"><select id="d-type"><option value="res">Residential</option><option value="non">Commercial or industrial</option></select></span></div>
+            <div class="f"><label for="d-price">Purchase price (S$)</label><input id="d-price" inputmode="numeric" autocomplete="off" value="1,500,000"></div>
+            <div class="f res-only"><label for="d-buyer">Buyer</label><span class="sel"><select id="d-buyer"><option value="sc">Singapore citizen</option><option value="pr">Permanent resident</option><option value="fr">Foreigner</option></select></span></div>
+            <div class="f res-only"><label for="d-count">Homes owned after this purchase</label><span class="sel"><select id="d-count"><option value="1">1 (this is the first)</option><option value="2">2</option><option value="3">3 or more</option></select></span></div>
+          </div>
+          <div class="calc-actions">
+            <button class="btn btn-olive" type="submit">Calculate</button>
+            <p class="calc-status" id="d-status" aria-live="polite">Figures also update as you change any option.</p>
+          </div>
+        </div>
+        <div>
+          <p class="eyebrow">Total stamp duty</p>
+          <p class="figure" id="d-total-fig">–</p>
+          <table class="res">
+            <tr><th scope="row">Buyer's Stamp Duty (BSD)</th><td id="d-bsd">–</td></tr>
+            <tr><th scope="row" id="d-absd-label">Additional Buyer's Stamp Duty (ABSD)</th><td id="d-absd">–</td></tr>
+            <tr class="total"><th scope="row">Total stamp duty</th><td id="d-total">–</td></tr>
+          </table>
+          <p class="calc-note" id="d-note">For one individual buyer. Rates checked against <a href="https://www.iras.gov.sg/taxes/stamp-duty/for-property/buying-or-acquiring-property" rel="noopener">IRAS</a> on 26 November 2026. Joint buyers with different profiles, entities, mixed-use property and some HDB cases are treated differently, so confirm your own case with your lawyer before you sign.</p>
+          <p class="calc-note" id="d-note-non" hidden>Commercial and industrial property pays Buyer's Stamp Duty only, with a top rate of 5%; ABSD does not apply. GST may also be payable if the seller is GST-registered, so check with the seller and your lawyer.</p>
+        </div>
+      </form>
+
+      <form class="calc tool" role="tabpanel" id="afford" aria-labelledby="tab-afford" hidden>
         <div>
           <p class="eyebrow" id="afford-h">How much can I borrow? Affordability with a bank loan</p>
           <div class="fields">
@@ -596,7 +640,7 @@ address{font-style:normal}
           <li><a href="#faq-upgrade">Upgrading: sell first or buy first? <span aria-hidden="true">→</span></a></li>
           <li><a href="#faq-decouple">Thinking about decoupling <span aria-hidden="true">→</span></a></li>
           <li><a href="#tools" data-tool="tab-yield">Letting out your property <span aria-hidden="true">→</span></a></li>
-          <li><a href="#afford">Checking what you can borrow <span aria-hidden="true">→</span></a></li>
+          <li><a href="#numbers" data-tool="tab-afford">Checking what you can borrow <span aria-hidden="true">→</span></a></li>
           <li><a href="#faq-choose">Choosing an advisor: what to ask <span aria-hidden="true">→</span></a></li>
           <li><a href="#faq-cea">Checking my CEA registration <span aria-hidden="true">→</span></a></li>
         </ul>
@@ -832,6 +876,8 @@ address{font-style:normal}
   </div>
 </footer>
 
+<div id="print-report" aria-hidden="true"></div>
+
 <aside class="nudge" id="nudge" aria-label="Chat with Esther" hidden>
   <p><strong class="long">Want a second pair of eyes on your numbers?</strong><strong class="short">Unsure about your numbers?</strong> <span>I'll go through them with you.</span></p>
   <a class="btn btn-white" href="https://wa.me/6588008787" rel="noopener">Chat on WhatsApp</a>
@@ -844,8 +890,9 @@ address{font-style:normal}
 
   // Tabs (WAI-ARIA tabs pattern, automatic activation)
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function groupOf(tab){ return Array.prototype.slice.call(tab.closest('[role="tablist"]').querySelectorAll('[role="tab"]')); }
   function select(tab, focus){
-    tabs.forEach(function(t){
+    groupOf(tab).forEach(function(t){
       var on = t === tab;
       t.setAttribute('aria-selected', on ? 'true' : 'false');
       t.tabIndex = on ? 0 : -1;
@@ -853,15 +900,15 @@ address{font-style:normal}
     });
     if (focus) tab.focus();
   }
-  tabs.forEach(function(tab, i){
+  tabs.forEach(function(tab){
     tab.addEventListener('click', function(){ select(tab, false); });
     tab.addEventListener('keydown', function(e){
-      var n = null;
-      if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
-      else if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      var g = groupOf(tab), i = g.indexOf(tab), n = null;
+      if (e.key === 'ArrowRight') n = (i + 1) % g.length;
+      else if (e.key === 'ArrowLeft') n = (i - 1 + g.length) % g.length;
       else if (e.key === 'Home') n = 0;
-      else if (e.key === 'End') n = tabs.length - 1;
-      if (n !== null){ e.preventDefault(); select(tabs[n], true); }
+      else if (e.key === 'End') n = g.length - 1;
+      if (n !== null){ e.preventDefault(); select(g[n], true); }
     });
   });
   // Links that open a specific calculator
@@ -917,6 +964,7 @@ address{font-style:normal}
     $('d-absd-label').textContent = res ? "Additional Buyer's Stamp Duty (ABSD) at " + Math.round(rate * 100) + '%' : "Additional Buyer's Stamp Duty (ABSD): not applicable";
     $('d-absd').textContent = money(a);
     $('d-total').textContent = money(b + a);
+    $('d-total-fig').textContent = money(b + a);
     var st = $('d-status');
     if (fromButton){
       st.textContent = 'Total stamp duty: ' + money(b + a) + (res ? ', residential, ' + BUYER[$('d-buyer').value] + '.' : ', commercial or industrial.');
@@ -1033,6 +1081,55 @@ address{font-style:normal}
     $('y-net').textContent = p ? pct(inc / p * 100) : '–';
     $('y-coll').textContent = money(coll);
     $('y-inc').textContent = money(inc);
+  });
+
+  // Combined PDF: builds a printable report of both quick checks, then opens the print window
+  function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function inputsOf(form){
+    var rows = '';
+    Array.prototype.forEach.call(form.querySelectorAll('.f'), function(f){
+      var h = f.closest('[hidden]');
+      if (h && h !== form && form.contains(h)) return; // skip fields hidden inside the form, not the hidden tab itself
+      var el = f.querySelector('input,select'); if (!el || el.disabled) return;
+      var label = f.querySelector('label').textContent;
+      var legend = f.closest('fieldset') ? f.closest('fieldset').querySelector('legend').textContent + ': ' : '';
+      var val = el.tagName === 'SELECT' ? el.options[el.selectedIndex].text : el.value;
+      rows += '<tr><th>' + esc(legend + label) + '</th><td>' + esc(val) + '</td></tr>';
+    });
+    return '<table>' + rows + '</table>';
+  }
+  function resultsOf(table){
+    var rows = '';
+    Array.prototype.forEach.call(table.rows, function(r){
+      if (r.hidden) return;
+      rows += '<tr' + (r.className ? ' class="' + r.className + '"' : '') + '><th>' + esc(r.cells[0].textContent) + '</th><td>' + esc(r.cells[1].textContent) + '</td></tr>';
+    });
+    return '<table>' + rows + '</table>';
+  }
+  function visibleNotes(ids){ return ids.map(function(id){ var n = $(id); return n && !n.hidden && n.textContent.trim() ? '<p class="pr-note">' + esc(n.textContent.trim()) + '</p>' : ''; }).join(''); }
+  $('pdf-btn').addEventListener('click', function(){
+    Array.prototype.forEach.call(document.querySelectorAll('#duty input, #afford input'), tidy);
+    $('duty').dispatchEvent(new Event('change')); $('afford').dispatchEvent(new Event('change'));
+    var today = new Date().toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' });
+    $('print-report').innerHTML =
+      '<h1>Know the numbers <em>before you commit</em></h1>' +
+      '<p class="pr-meta">Prepared on ' + esc(today) + ' with the calculators at www.esthertxe.com · Esther Txe, Property Advisor, Singapore · CEA Registration No. R060284E · +65 8800 8787</p>' +
+      '<div class="pr-sec"><h2>1. Stamp duty on a purchase</h2>' +
+        '<div class="pr-key"><p>Total stamp duty<strong>' + esc($('d-total').textContent) + '</strong></p></div>' +
+        '<h3>Your inputs</h3>' + inputsOf($('duty')) +
+        '<h3>Results</h3>' + resultsOf($('duty').querySelector('table')) +
+        visibleNotes(['d-note', 'd-note-non']) + '</div>' +
+      '<div class="pr-sec"><h2>2. How much I can borrow</h2>' +
+        '<div class="pr-key"><p>Loan you may be eligible for<strong>' + esc($('a-loan').textContent) + '</strong></p><p>' + esc($('a-price-label').textContent) + '<strong>' + esc($('a-price').textContent) + '</strong></p></div>' +
+        '<h3>Your inputs</h3>' + inputsOf($('afford')) +
+        '<h3>Results</h3>' + resultsOf($('afford').querySelector('table')) +
+        visibleNotes(['a-why']) +
+        '<p class="pr-note"><strong>Estimate only. The final loan amount and purchase price are subject to the bank\'s approval</strong>, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included in the loan figures. MAS rules and IRAS rates checked on 26 November 2026.</p></div>' +
+      '<p class="pr-foot">Information in this document is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding. To go through these numbers together, contact Esther Txe on +65 8800 8787 or WhatsApp wa.me/6588008787.</p>';
+    var title = document.title;
+    document.title = 'Esther Txe - Stamp duty and borrowing - ' + today;
+    window.addEventListener('afterprint', function restore(){ document.title = title; window.removeEventListener('afterprint', restore); });
+    window.print();
   });
 
   // Chat nudge: shown between the hero and the contact section, can be closed for the visit
