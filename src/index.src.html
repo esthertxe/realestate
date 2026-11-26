@@ -269,6 +269,14 @@ button,input,select,textarea{font:inherit;color:inherit}
 .f select:disabled{opacity:.4;cursor:not-allowed}
 .calc-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.6rem}
 .calc-status{font-size:.85rem;color:var(--muted)}
+.afford{margin-top:clamp(2.5rem,5vw,4rem)}
+.grp{border:0;padding:0;margin:1.75rem 0 0;min-width:0}
+.grp[hidden]{display:none}
+.grp legend{padding:0;margin-bottom:.9rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;font-weight:600;color:var(--olive)}
+.f[hidden]{display:none}
+.afford-gap{margin-top:1.6rem}
+.afford-disc{border-top:1px solid var(--line);padding-top:1rem}
+.afford-disc strong{color:var(--ink);font-weight:600}
 .sel{position:relative;display:block}
 .sel::after{content:"";position:absolute;right:.25rem;top:50%;width:.45rem;height:.45rem;border-right:1.3px solid currentColor;border-bottom:1.3px solid currentColor;transform:translateY(-75%) rotate(45deg);pointer-events:none}
 .res{width:100%;border-collapse:collapse;margin-top:1.75rem;font-variant-numeric:tabular-nums}
@@ -466,6 +474,81 @@ address{font-style:normal}
         <p class="calc-note" id="d-note-non" hidden>Commercial and industrial property pays Buyer's Stamp Duty only, with a top rate of 5%; ABSD does not apply. GST may also be payable if the seller is GST-registered, so check with the seller and your lawyer.</p>
       </form>
     </div>
+
+    <div class="wrap">
+      <form class="calc tool afford" id="afford" aria-labelledby="afford-h">
+        <div>
+          <p class="eyebrow" id="afford-h">How much can I borrow? Affordability with a bank loan</p>
+          <div class="fields">
+            <div class="f"><label for="a-type">Property type</label><span class="sel"><select id="a-type">
+              <option value="private">Private residential</option>
+              <option value="ec">Executive condominium (EC)</option>
+              <option value="hdb">HDB flat (bank loan)</option>
+              <option value="non">Commercial or industrial</option>
+            </select></span></div>
+            <div class="f"><label for="a-joint">Borrowers</label><span class="sel"><select id="a-joint"><option value="1">One borrower</option><option value="2">Two borrowers (joint)</option></select></span></div>
+          </div>
+
+          <fieldset class="grp">
+            <legend>Borrower 1</legend>
+            <div class="fields">
+              <div class="f"><label for="a-age1">Age</label><input id="a-age1" inputmode="numeric" autocomplete="off" value="35"></div>
+              <div class="f"><label for="a-fix1">Monthly salary, before CPF (S$)</label><input id="a-fix1" inputmode="numeric" autocomplete="off" value="8,000"></div>
+              <div class="f"><label for="a-var1">Variable income a month, e.g. bonus or commission (S$)</label><input id="a-var1" inputmode="numeric" autocomplete="off" value="0"></div>
+            </div>
+          </fieldset>
+          <fieldset class="grp" id="a-b2" hidden>
+            <legend>Borrower 2</legend>
+            <div class="fields">
+              <div class="f"><label for="a-age2">Age</label><input id="a-age2" inputmode="numeric" autocomplete="off" value="35"></div>
+              <div class="f"><label for="a-fix2">Monthly salary, before CPF (S$)</label><input id="a-fix2" inputmode="numeric" autocomplete="off" value="6,000"></div>
+              <div class="f"><label for="a-var2">Variable income a month, e.g. bonus or commission (S$)</label><input id="a-var2" inputmode="numeric" autocomplete="off" value="0"></div>
+            </div>
+          </fieldset>
+          <fieldset class="grp">
+            <legend>Existing monthly repayments</legend>
+            <div class="fields">
+              <div class="f"><label for="a-home">Home loans (S$)</label><input id="a-home" inputmode="numeric" autocomplete="off" value="0"></div>
+              <div class="f"><label for="a-car">Car loans (S$)</label><input id="a-car" inputmode="numeric" autocomplete="off" value="0"></div>
+              <div class="f"><label for="a-other">Credit cards and other loans (S$)</label><input id="a-other" inputmode="numeric" autocomplete="off" value="0"></div>
+              <div class="f" id="a-loans-f"><label for="a-loans">Home loans still outstanding</label><span class="sel"><select id="a-loans"><option value="0">None</option><option value="1">One</option><option value="2">Two or more</option></select></span></div>
+            </div>
+          </fieldset>
+          <fieldset class="grp">
+            <legend>The new loan</legend>
+            <div class="fields">
+              <div class="f"><label for="a-tenure">Loan tenure (years)</label><input id="a-tenure" inputmode="numeric" autocomplete="off" value="30"></div>
+              <div class="f"><label for="a-rate">Bank's interest rate (% a year)</label><input id="a-rate" inputmode="decimal" autocomplete="off" value="2.6"></div>
+              <div class="f" id="a-ltv-f" hidden><label for="a-ltv">Loan the bank offers (% of price)</label><input id="a-ltv" inputmode="decimal" autocomplete="off" value="80"></div>
+            </div>
+          </fieldset>
+          <div class="calc-actions">
+            <button class="btn btn-olive" type="submit">Calculate</button>
+            <p class="calc-status" id="a-status" aria-live="polite">Figures also update as you change any option.</p>
+          </div>
+        </div>
+
+        <div class="afford-out">
+          <p class="eyebrow">Loan you may be eligible for</p>
+          <p class="figure" id="a-loan">–</p>
+          <p class="eyebrow afford-gap" id="a-price-label">Maximum purchase price with a 75% loan</p>
+          <p class="figure" id="a-price">–</p>
+          <table class="res">
+            <tr><th scope="row">Income counted a month</th><td id="a-inc">–</td></tr>
+            <tr><th scope="row">TDSR limit (55%), after existing repayments</th><td id="a-tdsr">–</td></tr>
+            <tr id="a-msr-row"><th scope="row">MSR limit (30%), after existing home loans</th><td id="a-msr">–</td></tr>
+            <tr><th scope="row">Available for the new loan a month</th><td id="a-avail">–</td></tr>
+            <tr><th scope="row">Interest rate banks assess at</th><td id="a-stress">–</td></tr>
+            <tr><th scope="row" id="a-ten-label">Loan tenure</th><td id="a-ten">–</td></tr>
+            <tr><th scope="row">Loan-to-value applied</th><td id="a-ltv-out">–</td></tr>
+            <tr><th scope="row" id="a-cash-label">Minimum cash downpayment</th><td id="a-cash">–</td></tr>
+            <tr class="total"><th scope="row">Monthly instalment at your rate</th><td id="a-pay">–</td></tr>
+          </table>
+          <p class="calc-note" id="a-why"></p>
+          <p class="calc-note afford-disc"><strong>Estimate only. The final loan amount and purchase price are subject to the bank's approval</strong>, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included. Rules checked against <a href="https://www.mas.gov.sg/regulation/explainers/new-housing-loans" rel="noopener">MAS</a> on 26 November 2026.</p>
+        </div>
+      </form>
+    </div>
   </section>
 
   <section class="sec" id="start" aria-labelledby="start-h" style="padding-top:0">
@@ -513,7 +596,7 @@ address{font-style:normal}
           <li><a href="#faq-upgrade">Upgrading: sell first or buy first? <span aria-hidden="true">→</span></a></li>
           <li><a href="#faq-decouple">Thinking about decoupling <span aria-hidden="true">→</span></a></li>
           <li><a href="#tools" data-tool="tab-yield">Letting out your property <span aria-hidden="true">→</span></a></li>
-          <li><a href="#faq-borrow">Checking what you can borrow <span aria-hidden="true">→</span></a></li>
+          <li><a href="#afford">Checking what you can borrow <span aria-hidden="true">→</span></a></li>
           <li><a href="#faq-choose">Choosing an advisor: what to ask <span aria-hidden="true">→</span></a></li>
           <li><a href="#faq-cea">Checking my CEA registration <span aria-hidden="true">→</span></a></li>
         </ul>
@@ -846,6 +929,80 @@ address{font-style:normal}
 
   // Monthly instalment with a rate-rise test
   function pmt(L, ratePct, years){ var n = years * 12, r = ratePct / 1200; if (n <= 0) return 0; return r === 0 ? L / n : L * r / (1 - Math.pow(1 + r, -n)); }
+  function pv(M, ratePct, years){ var n = years * 12, r = ratePct / 1200; if (n <= 0 || M <= 0) return 0; return r === 0 ? M * n : M * (1 - Math.pow(1 + r, -n)) / r; }
+
+  // Affordability with a bank loan (MAS rules checked 26 Nov 2026):
+  // TDSR 55% of income for all debts; MSR 30% for property loans on HDB flats and ECs;
+  // repayments assessed at the higher of the bank's rate or 4% (residential) / 5% (non-residential);
+  // variable income counted at 70%; joint borrowers use income-weighted average age.
+  // LTV for individuals: 75%/55%, 45%/25%, 35%/15% by outstanding housing loans; the lower figure applies
+  // when tenure exceeds 30 years (25 for HDB flats) or runs past age 65. Max tenure 30 (HDB) / 35 years.
+  var LTV = [[.75,.55],[.45,.25],[.35,.15]], MINCASH = [[.05,.10],[.25,.25],[.25,.25]];
+  wire($('afford'), function(fromButton){
+    var type = $('a-type').value, res = type !== 'non', joint = $('a-joint').value === '2';
+    $('a-b2').hidden = !joint;
+    $('a-loans-f').hidden = !res; $('a-ltv-f').hidden = res;
+    $('a-msr-row').hidden = !(type === 'hdb' || type === 'ec');
+
+    var inc1 = num($('a-fix1')) + .7 * num($('a-var1'));
+    var inc2 = joint ? num($('a-fix2')) + .7 * num($('a-var2')) : 0;
+    var inc = inc1 + inc2;
+    var age = joint && inc > 0 ? (num($('a-age1')) * inc1 + num($('a-age2')) * inc2) / inc : num($('a-age1'));
+    var maxTen = type === 'hdb' ? 30 : type === 'non' ? 30 : 35;
+    var asked = num($('a-tenure')), ten = Math.min(asked, maxTen);
+    var home = num($('a-home')), debts = home + num($('a-car')) + num($('a-other'));
+    var tdsr = .55 * inc - debts, msr = .30 * inc - home;
+    var avail = Math.max(0, (type === 'hdb' || type === 'ec') ? Math.min(tdsr, msr) : tdsr);
+    var rate = num($('a-rate')), stress = Math.max(res ? 4 : 5, rate);
+    var loan = Math.floor(pv(avail, stress, ten) / 1000) * 1000;
+
+    var ltv, cashPct, why = [];
+    if (res){
+      var n = +$('a-loans').value, low = ten > (type === 'hdb' ? 25 : 30) || age + ten > 65;
+      ltv = LTV[n][low ? 1 : 0]; cashPct = MINCASH[n][low ? 1 : 0];
+      if (low){
+        why.push('The lower loan-to-value applies because the tenure is over ' + (type === 'hdb' ? 25 : 30) + ' years or the loan runs past age 65 (borrower age used: ' + Math.round(age) + ').');
+        var altTen = Math.min(type === 'hdb' ? 25 : 30, Math.floor(65 - age));
+        if (altTen >= 5){
+          var altLoan = Math.floor(pv(avail, stress, altTen) / 1000) * 1000;
+          why.push('For the higher ' + Math.round(LTV[n][0] * 100) + '% loan, choose a tenure of ' + altTen + ' years or less: you could then borrow up to ' + money(altLoan) + ' for a price up to ' + money(Math.floor(altLoan / LTV[n][0] / 1000) * 1000) + '.');
+        }
+      }
+      if (n > 0) why.push('With an existing home loan outstanding, the loan-to-value limit is lower and at least 25% must be paid in cash.');
+    } else {
+      ltv = Math.min(.95, Math.max(.05, num($('a-ltv')) / 100)); cashPct = 1 - ltv;
+      why.push('Banks set their own loan limits for commercial and industrial property; change the percentage to match your offer. CPF generally cannot be used, so the downpayment is shown in cash.');
+    }
+    if (asked > maxTen) why.push('Tenure capped at ' + maxTen + ' years' + (type === 'non' ? ' here; banks set their own limits.' : ', the maximum for this property type.'));
+    if (avail <= 0 && inc > 0) why.push('Existing repayments already use up the debt limit, so no new loan is shown.');
+    if (type === 'hdb' || type === 'ec') why.push('HDB flats and ECs bought from the developer have their own eligibility rules, such as income ceilings, which are not checked here. An HDB loan follows HDB\'s rules instead.');
+
+    var price = ltv > 0 ? Math.floor(loan / ltv / 1000) * 1000 : 0;
+    $('a-loan').textContent = money(loan);
+    $('a-price-label').textContent = 'Maximum purchase price with a ' + Math.round(ltv * 100) + '% loan';
+    $('a-price').textContent = money(price);
+    $('a-inc').textContent = money(inc);
+    $('a-tdsr').textContent = money(Math.max(0, tdsr));
+    $('a-msr').textContent = money(Math.max(0, msr));
+    $('a-avail').textContent = money(avail);
+    $('a-stress').textContent = stress.toFixed(2).replace(/\.?0+$/, '') + '%';
+    $('a-ten').textContent = ten + ' years';
+    $('a-ltv-out').textContent = Math.round(ltv * 100) + '%';
+    $('a-cash-label').textContent = 'Minimum cash downpayment (' + Math.round(cashPct * 100) + '%)';
+    $('a-cash').textContent = money(price * cashPct);
+    $('a-pay').textContent = money(pmt(loan, rate, ten));
+    $('a-why').textContent = why.join(' ');
+    $('a-why').hidden = !why.length;
+
+    var st = $('a-status');
+    if (fromButton){
+      st.textContent = 'Loan up to ' + money(loan) + '; purchase price up to ' + money(price) + ' with a ' + Math.round(ltv * 100) + '% loan.';
+      st.setAttribute('data-set', '1');
+    } else if (st.hasAttribute('data-set')){
+      st.textContent = 'Figures also update as you change any option.';
+      st.removeAttribute('data-set');
+    }
+  });
   wire($('panel-loan'), function(){
     var L = num($('l-amt')), y = num($('l-years')), m = pmt(L, num($('l-rate')), y), t = pmt(L, num($('l-test')), y);
     $('l-pay').textContent = money(m);
