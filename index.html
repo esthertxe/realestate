@@ -304,7 +304,14 @@ button,input,select,textarea{font:inherit;color:inherit}
   #print-report{display:block!important;font-family:var(--sans);font-size:10.5pt;line-height:1.45;color:#222}
   #print-report h1{font-size:18pt;font-weight:500;text-transform:uppercase;letter-spacing:-.01em;margin:0}
   #print-report h1 em{font-family:var(--serif);font-style:italic;text-transform:none;font-weight:500}
-  #print-report .pr-meta{color:#555;margin:.3rem 0 1rem;padding-bottom:.6rem;border-bottom:1.5px solid #5d5839}
+  #print-report .pr-head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1.5px solid #5d5839}
+  #print-report .pr-date{color:#555;margin:.3rem 0 0}
+  #print-report .pr-contact{font-style:normal;line-height:1.45;color:#222}
+  #print-report .pr-head .pr-contact{text-align:right;flex:none}
+  #print-report .pr-contact strong{font-weight:600}
+  #print-report .pr-foot p{margin:0}
+  #print-report .pr-cta{margin-top:.6rem!important;color:#222}
+  #print-report .pr-foot .pr-contact{margin-top:.25rem;font-size:9.5pt}
   #print-report h2{font-size:12pt;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#5d5839;margin:1.2rem 0 .4rem}
   #print-report h3{font-size:9pt;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#555;margin:.7rem 0 .2rem}
   #print-report table{width:100%;border-collapse:collapse}
@@ -1107,13 +1114,15 @@ address{font-style:normal}
     return '<table>' + rows + '</table>';
   }
   function visibleNotes(ids){ return ids.map(function(id){ var n = $(id); return n && !n.hidden && n.textContent.trim() ? '<p class="pr-note">' + esc(n.textContent.trim()) + '</p>' : ''; }).join(''); }
+  var CONTACT = '<address class="pr-contact"><strong>Esther Txe</strong><br>CEA R060284E<br>esthertxe@gmail.com<br>(65) 8800 8787</address>';
   $('pdf-btn').addEventListener('click', function(){
     Array.prototype.forEach.call(document.querySelectorAll('#duty input, #afford input'), tidy);
     $('duty').dispatchEvent(new Event('change')); $('afford').dispatchEvent(new Event('change'));
     var today = new Date().toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' });
     $('print-report').innerHTML =
-      '<h1>Know the numbers <em>before you commit</em></h1>' +
-      '<p class="pr-meta">Prepared on ' + esc(today) + ' with the calculators at www.esthertxe.com · Esther Txe, Property Advisor, Singapore · CEA Registration No. R060284E · +65 8800 8787</p>' +
+      '<div class="pr-head"><div><h1>Know the numbers <em>before you commit</em></h1>' +
+      '<p class="pr-date">Prepared on ' + esc(today) + ' with the calculators at www.esthertxe.com</p></div>' +
+      CONTACT + '</div>' +
       '<div class="pr-sec"><h2>1. Stamp duty on a purchase</h2>' +
         '<div class="pr-key"><p>Total stamp duty<strong>' + esc($('d-total').textContent) + '</strong></p></div>' +
         '<h3>Your inputs</h3>' + inputsOf($('duty')) +
@@ -1125,7 +1134,8 @@ address{font-style:normal}
         '<h3>Results</h3>' + resultsOf($('afford').querySelector('table')) +
         visibleNotes(['a-why']) +
         '<p class="pr-note"><strong>Estimate only. The final loan amount and purchase price are subject to the bank\'s approval</strong>, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included in the loan figures. MAS rules and IRAS rates checked on 26 November 2026.</p></div>' +
-      '<p class="pr-foot">Information in this document is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding. To go through these numbers together, contact Esther Txe on +65 8800 8787 or WhatsApp wa.me/6588008787.</p>';
+      '<div class="pr-foot"><p>Information in this document is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding.</p>' +
+      '<p class="pr-cta">To go through these numbers together, contact me:</p>' + CONTACT + '</div>';
     var title = document.title;
     document.title = 'Esther Txe - Stamp duty and borrowing - ' + today;
     window.addEventListener('afterprint', function restore(){ document.title = title; window.removeEventListener('afterprint', restore); });
