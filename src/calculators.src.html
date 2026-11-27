@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Property Calculators, Singapore | Esther Txe</title>
-<meta name="description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly instalment, sale proceeds and rental yield. Download results as a PDF.">
+<meta name="description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly rental cashflow, sale proceeds and rental yield. Download results as a PDF.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="author" content="Esther Txe">
 <link rel="canonical" href="https://www.esthertxe.com/calculators.html">
@@ -17,14 +17,14 @@
 <meta property="og:site_name" content="Esther Txe, Property Advisor">
 <meta property="og:locale" content="en_SG">
 <meta property="og:title" content="Property Calculators, Singapore | Esther Txe">
-<meta property="og:description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly instalment, sale proceeds and rental yield. Download results as a PDF.">
+<meta property="og:description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly rental cashflow, sale proceeds and rental yield. Download results as a PDF.">
 <meta property="og:image" content="https://www.esthertxe.com/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Sepia portrait of Esther Txe, property advisor in Singapore, seated in an armchair">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Property Calculators, Singapore | Esther Txe">
-<meta name="twitter:description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly instalment, sale proceeds and rental yield. Download results as a PDF.">
+<meta name="twitter:description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly rental cashflow, sale proceeds and rental yield. Download results as a PDF.">
 <meta name="twitter:image" content="https://www.esthertxe.com/og-image.jpg">
 <script type="application/ld+json">
 {
@@ -35,7 +35,7 @@
       "@id": "https://www.esthertxe.com/calculators.html#webpage",
       "url": "https://www.esthertxe.com/calculators.html",
       "name": "Property Calculators, Singapore | Esther Txe",
-      "description": "Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly instalment, sale proceeds and rental yield. Download results as a PDF.",
+      "description": "Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly rental cashflow, sale proceeds and rental yield. Download results as a PDF.",
       "inLanguage": "en-SG",
       "dateModified": "2026-11-27",
       "author": {"@id": "https://www.esthertxe.com/#esther-txe"},
@@ -56,7 +56,7 @@
       "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Stamp duty calculator (BSD and ABSD; residential, commercial and industrial)", "url": "https://www.esthertxe.com/calculators.html#stamp-duty"},
         {"@type": "ListItem", "position": 2, "name": "How much I can borrow (bank loan affordability: TDSR, MSR, loan-to-value)", "url": "https://www.esthertxe.com/calculators.html#borrow"},
-        {"@type": "ListItem", "position": 3, "name": "Monthly instalment with a rate-rise test", "url": "https://www.esthertxe.com/calculators.html#instalment"},
+        {"@type": "ListItem", "position": 3, "name": "Monthly cashflow on a rented property", "url": "https://www.esthertxe.com/calculators.html#cashflow"},
         {"@type": "ListItem", "position": 4, "name": "Sale proceeds after loan, costs and CPF refund", "url": "https://www.esthertxe.com/calculators.html#sale-proceeds"},
         {"@type": "ListItem", "position": 5, "name": "Rental yield, gross and net", "url": "https://www.esthertxe.com/calculators.html#rental-yield"}
       ]
@@ -95,7 +95,7 @@
     <div class="page-title">
       <p class="crumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Calculators</p>
       <h1>Property calculators <em>for Singapore</em></h1>
-      <p class="page-lead">Stamp duty, borrowing, instalments, sale proceeds and rental yield, with the working shown. For planning only: your bank and lawyer confirm the final figures.</p>
+      <p class="page-lead">Stamp duty, borrowing, rental cashflow, sale proceeds and rental yield, with the working shown. For planning only: your bank and lawyer confirm the final figures.</p>
       <p><span class="cea-chip">CEA Registration No. R060284E</span></p>
     </div>
   </div>
@@ -233,30 +233,34 @@
       </div>
 
       <div class="tablist" role="tablist" aria-label="Calculators">
-        <button class="tab" role="tab" id="tab-loan" aria-controls="panel-loan" aria-selected="true" tabindex="0">Instalment</button>
+        <button class="tab" role="tab" id="tab-cash" aria-controls="panel-cash" aria-selected="true" tabindex="0">Cashflow</button>
         <button class="tab" role="tab" id="tab-sale" aria-controls="panel-sale" aria-selected="false" tabindex="-1">Sale proceeds</button>
         <button class="tab" role="tab" id="tab-yield" aria-controls="panel-yield" aria-selected="false" tabindex="-1">Rental yield</button>
       </div>
 
-      <form class="calc tool" role="tabpanel" id="panel-loan" aria-labelledby="tab-loan" onsubmit="return false">
+      <form class="calc tool" role="tabpanel" id="panel-cash" aria-labelledby="tab-cash" onsubmit="return false">
         <div>
-          <p class="tool-intro">Your monthly instalment at your rate, and again at a higher rate, so you can see how much room you have if rates rise.</p>
+          <p class="tool-intro">What a rented property leaves you each month after the instalment, MCST and sinking fund fees and property tax.</p>
           <div class="fields">
-            <div class="f"><label for="l-amt">Loan amount (S$)</label><input id="l-amt" inputmode="numeric" autocomplete="off" value="1,000,000"></div>
-            <div class="f"><label for="l-years">Loan tenure (years)</label><input id="l-years" inputmode="numeric" autocomplete="off" value="25"></div>
-            <div class="f"><label for="l-rate">Your interest rate (% a year)</label><input id="l-rate" inputmode="decimal" autocomplete="off" value="2.6"></div>
-            <div class="f"><label for="l-test">Test rate (% a year)</label><input id="l-test" inputmode="decimal" autocomplete="off" value="4"></div>
+            <div class="f"><label for="c-rent">Monthly rental income (S$)</label><input id="c-rent" inputmode="numeric" autocomplete="off" value="3,800"></div>
+            <div class="f"><label for="c-loan">Loan amount (S$)</label><input id="c-loan" inputmode="numeric" autocomplete="off" value="900,000"></div>
+            <div class="f"><label for="c-years">Loan tenure (years)</label><input id="c-years" inputmode="numeric" autocomplete="off" value="30"></div>
+            <div class="f"><label for="c-rate">Interest rate (% a year)</label><input id="c-rate" inputmode="decimal" autocomplete="off" value="2.6"></div>
+            <div class="f"><label for="c-mcst">Monthly MCST &amp; sinking fund fees (S$)</label><input id="c-mcst" inputmode="numeric" autocomplete="off" value="350"></div>
+            <div class="f"><label for="c-tax">Monthly property tax (S$)</label><input id="c-tax" inputmode="numeric" autocomplete="off" value="300"></div>
           </div>
         </div>
         <div aria-live="polite">
-          <p class="eyebrow">Monthly instalment at your rate</p>
-          <p class="figure" id="l-pay">–</p>
+          <p class="eyebrow" id="c-label">Monthly cashflow</p>
+          <p class="figure" id="c-net">–</p>
           <table class="res">
-            <tr><th scope="row">At the test rate</th><td id="l-test-pay">–</td></tr>
-            <tr><th scope="row">Extra each month</th><td id="l-diff">–</td></tr>
-            <tr class="total"><th scope="row">Total interest at your rate</th><td id="l-int">–</td></tr>
+            <tr><th scope="row">Monthly rental income</th><td id="c-r-rent">–</td></tr>
+            <tr><th scope="row">Less monthly instalment</th><td id="c-r-pay">–</td></tr>
+            <tr><th scope="row">Less monthly MCST &amp; sinking fund fees</th><td id="c-r-mcst">–</td></tr>
+            <tr><th scope="row">Less monthly property tax</th><td id="c-r-tax">–</td></tr>
+            <tr class="total"><th scope="row" id="c-r-label">Cashflow a month</th><td id="c-r-net">–</td></tr>
           </table>
-          <p class="calc-note">Example figures; replace them with your own. Your bank decides how much it will lend and at what rate.</p>
+          <p class="calc-note" id="c-note">The principal part of each instalment is still being paid with the tenant's rent, and it reduces your loan amount.</p>
         </div>
       </form>
 
@@ -287,12 +291,13 @@
 
       <form class="calc tool" role="tabpanel" id="panel-yield" aria-labelledby="tab-yield" hidden onsubmit="return false">
         <div>
-          <p class="tool-intro">Gross yield is rent against price. Net yield takes off yearly costs and the months the unit sits empty.</p>
+          <p class="tool-intro">Gross yield is rent against price. Net yield takes off the yearly costs of holding the property.</p>
           <div class="fields">
             <div class="f"><label for="y-price">Purchase price (S$)</label><input id="y-price" inputmode="numeric" autocomplete="off" value="1,200,000"></div>
             <div class="f"><label for="y-rent">Monthly rent (S$)</label><input id="y-rent" inputmode="numeric" autocomplete="off" value="3,800"></div>
-            <div class="f"><label for="y-costs">Yearly costs: upkeep, tax, fees (S$)</label><input id="y-costs" inputmode="numeric" autocomplete="off" value="7,000"></div>
-            <div class="f"><label for="y-vac">Empty months a year</label><input id="y-vac" inputmode="decimal" autocomplete="off" value="1"></div>
+            <div class="f"><label for="y-mcst">Monthly MCST &amp; sinking fund fees (S$)</label><input id="y-mcst" inputmode="numeric" autocomplete="off" value="350"></div>
+            <div class="f"><label for="y-tax">Monthly property tax (S$)</label><input id="y-tax" inputmode="numeric" autocomplete="off" value="300"></div>
+            <div class="f"><label for="y-upkeep">Upkeep costs &amp; others, a year (S$)</label><input id="y-upkeep" inputmode="numeric" autocomplete="off" value="1,500"></div>
           </div>
         </div>
         <div aria-live="polite">
@@ -300,10 +305,13 @@
           <p class="figure" id="y-net">–</p>
           <table class="res">
             <tr><th scope="row">Gross yield</th><td id="y-gross">–</td></tr>
-            <tr><th scope="row">Rent collected a year</th><td id="y-coll">–</td></tr>
+            <tr><th scope="row">Rent a year</th><td id="y-coll">–</td></tr>
+            <tr><th scope="row">Less MCST &amp; sinking fund fees a year</th><td id="y-r-mcst">–</td></tr>
+            <tr><th scope="row">Less property tax a year</th><td id="y-r-tax">–</td></tr>
+            <tr><th scope="row">Less upkeep costs &amp; others</th><td id="y-r-upkeep">–</td></tr>
             <tr class="total"><th scope="row">Net income a year, before loan</th><td id="y-inc">–</td></tr>
           </table>
-          <p class="calc-note">Financing costs are left out so properties compare on the same basis. Add your loan interest to see cash flow.</p>
+          <p class="calc-note">Financing costs are left out so properties compare on the same basis. The Cashflow tab shows what is left after the instalment.</p>
         </div>
       </form>
       <p class="tools-foot">All calculators are for planning only and are not financial advice. Loan amounts, rates and actual costs depend on your bank, income, age and the rules in force when you buy or sell.</p>

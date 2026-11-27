@@ -29,7 +29,7 @@
     a.addEventListener('click', function(){ if ($(a.getAttribute('data-tool'))) select($(a.getAttribute('data-tool')), false); });
   });
   // Deep links from other pages, e.g. calculators.html#borrow, open that calculator's tab
-  var TOOL_HASH = { '#stamp-duty':'tab-duty', '#borrow':'tab-afford', '#instalment':'tab-loan', '#sale-proceeds':'tab-sale', '#rental-yield':'tab-yield' };
+  var TOOL_HASH = { '#stamp-duty':'tab-duty', '#borrow':'tab-afford', '#cashflow':'tab-cash', '#instalment':'tab-cash', '#sale-proceeds':'tab-sale', '#rental-yield':'tab-yield' };
   function openToolFromHash(){
     var t = $(TOOL_HASH[location.hash] || '');
     if (!t) return;
@@ -180,12 +180,21 @@
       st.removeAttribute('data-set');
     }
   });
-  wire($('panel-loan'), function(){
-    var L = num($('l-amt')), y = num($('l-years')), m = pmt(L, num($('l-rate')), y), t = pmt(L, num($('l-test')), y);
-    $('l-pay').textContent = money(m);
-    $('l-test-pay').textContent = money(t);
-    $('l-diff').textContent = money(t - m);
-    $('l-int').textContent = money(Math.max(0, m * y * 12 - L));
+  // Monthly cashflow on a rented property
+  wire($('panel-cash'), function(){
+    var rent = num($('c-rent')), L = num($('c-loan')), rate = num($('c-rate')), mcst = num($('c-mcst')), tax = num($('c-tax'));
+    var pay = Math.round(pmt(L, rate, num($('c-years')))), int1 = Math.min(pay, Math.round(L * rate / 1200)), prin = pay - int1;
+    var net = rent - pay - mcst - tax, word = net >= 0 ? 'Positive' : 'Negative';
+    $('c-label').textContent = word + ' cashflow a month';
+    $('c-r-label').textContent = word + ' cashflow a month';
+    $('c-net').textContent = money(net);
+    $('c-r-rent').textContent = money(rent);
+    $('c-r-pay').textContent = money(-pay);
+    $('c-r-mcst').textContent = money(-mcst);
+    $('c-r-tax').textContent = money(-tax);
+    $('c-r-net').textContent = money(net);
+    $('c-note').textContent = 'Of the ' + money(pay) + ' instalment, about ' + money(prin) + ' is principal (about ' + money(int1) +
+      ' is interest). The principal portion is still being paid by the tenant’s rent, and it reduces your loan amount, so part of the instalment builds your equity rather than being a cost.';
   });
 
   // Sale proceeds
@@ -204,11 +213,14 @@
 
   // Rental yield
   wire($('panel-yield'), function(){
-    var p = num($('y-price')), rent = num($('y-rent')), vac = Math.min(12, num($('y-vac'))), costs = num($('y-costs'));
-    var coll = rent * (12 - vac), inc = coll - costs;
+    var p = num($('y-price')), rent = num($('y-rent')), mcst = num($('y-mcst')) * 12, tax = num($('y-tax')) * 12, up = num($('y-upkeep'));
+    var coll = rent * 12, inc = coll - mcst - tax - up;
     $('y-gross').textContent = p ? pct(rent * 12 / p * 100) : '–';
     $('y-net').textContent = p ? pct(inc / p * 100) : '–';
     $('y-coll').textContent = money(coll);
+    $('y-r-mcst').textContent = money(-mcst);
+    $('y-r-tax').textContent = money(-tax);
+    $('y-r-upkeep').textContent = money(-up);
     $('y-inc').textContent = money(inc);
   });
 
