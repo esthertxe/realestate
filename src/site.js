@@ -29,7 +29,7 @@
     a.addEventListener('click', function(){ if ($(a.getAttribute('data-tool'))) select($(a.getAttribute('data-tool')), false); });
   });
   // Deep links from other pages, e.g. calculators.html#borrow, open that calculator's tab
-  var TOOL_HASH = { '#stamp-duty':'tab-duty', '#borrow':'tab-afford', '#cashflow':'tab-cash', '#instalment':'tab-cash', '#sale-proceeds':'tab-sale', '#rental-yield':'tab-yield' };
+  var TOOL_HASH = { '#stamp-duty':'tab-duty', '#borrow':'tab-afford', '#cashflow':'tab-cash', '#instalment':'tab-cash', '#sale-proceeds':'tab-sale', '#rental-yield':'tab-cash' };
   function openToolFromHash(){
     var t = $(TOOL_HASH[location.hash] || '');
     if (!t) return;
@@ -197,6 +197,18 @@
     $('c-r-net').textContent = money(net);
     $('c-note').textContent = 'Of the ' + money(pay) + ' instalment, about ' + money(prin) + ' is principal (about ' + money(int1) +
       ' is interest). The principal portion is still being paid by the tenant’s rent, and it reduces your loan amount, so part of the instalment builds your equity rather than being a cost.';
+
+    // Rental yield from the same figures (before the loan)
+    var p = num($('c-price')), up = num($('c-upkeep'));
+    var coll = rent * 12, inc = coll - mcst * 12 - tax * 12 - up;
+    mcst *= 12; tax *= 12;
+    $('y-gross').textContent = p ? pct(rent * 12 / p * 100) : '–';
+    $('y-net').textContent = p ? pct(inc / p * 100) : '–';
+    $('y-coll').textContent = money(coll);
+    $('y-r-mcst').textContent = money(-mcst);
+    $('y-r-tax').textContent = money(-tax);
+    $('y-r-upkeep').textContent = money(-up);
+    $('y-inc').textContent = money(inc);
   });
 
   // Sale proceeds
@@ -211,22 +223,10 @@
     $('s-warn').textContent = cash < 0
       ? 'The sale does not cover the loan, costs and CPF refund. You may need to top up the shortfall in cash; talk to your bank and CPF Board early.'
       : 'Your CPF statement shows the exact refund, including accrued interest. Your bank can tell you any penalty for repaying early.';
+
   });
 
-  // Rental yield
-  wire($('panel-yield'), function(){
-    var p = num($('y-price')), rent = num($('y-rent')), mcst = num($('y-mcst')) * 12, tax = num($('y-tax')) * 12, up = num($('y-upkeep'));
-    var coll = rent * 12, inc = coll - mcst - tax - up;
-    $('y-gross').textContent = p ? pct(rent * 12 / p * 100) : '–';
-    $('y-net').textContent = p ? pct(inc / p * 100) : '–';
-    $('y-coll').textContent = money(coll);
-    $('y-r-mcst').textContent = money(-mcst);
-    $('y-r-tax').textContent = money(-tax);
-    $('y-r-upkeep').textContent = money(-up);
-    $('y-inc').textContent = money(inc);
-  });
-
-  // Combined PDF: stamp duty, borrowing and rental cashflow.
+  // PDF reports: stamp duty and borrowing; rental cashflow and yield.
   // Builds a real PDF file with jsPDF (loaded from cdnjs only when the calculators come into view),
   // so it downloads in browsers that ignore the print window. Falls back to the print window if it can't load.
   function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -251,22 +251,35 @@
   var DISCLAIMER = 'Information in this document is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding.';
   var BANK = 'Estimate only. The final loan amount and purchase price are subject to the bank\'s approval, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included in the loan figures. MAS rules and IRAS rates checked on 26 November 2026.';
 
-  function reportData(){
-    Array.prototype.forEach.call(document.querySelectorAll('#duty input, #afford input, #panel-cash input:not([readonly])'), tidy);
-    ['duty', 'afford', 'panel-cash'].forEach(function(id){ $(id).dispatchEvent(new Event('change')); });
-    var now = new Date();
-    return {
+  // Two separate reports: 'numbers' (stamp duty and borrowing) and 'own' (rental cashflow and yield)
+  function reportData(kind){
+    var forms = kind === 'own' ? ['panel-cash'] : ['duty', 'afford'];
+    forms.forEach(function(id){
+      Array.prototype.forEach.call($(id).querySelectorAll('input:not([readonly])'), tidy);
+      $(id).dispatchEvent(new Event('change'));
+    });
+    var now = new Date(), d = {
       today: now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' }),
-      iso: now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2),
-      sections: [
+      iso: now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
+    };
+    if (kind === 'own'){
+      d.head = ['Run your', 'own numbers']; d.file = 'rental-cashflow-and-yield'; d.name = 'Rental cashflow and yield';
+      d.sections = [
+        { title: '1. Monthly cashflow on a rented property', key: [[$('c-label').textContent, $('c-net').textContent]],
+          inputs: inputsOf($('panel-cash')), results: resultsOf($('c-table')), notes: notesOf(['c-note']) },
+        { title: '2. Rental yield', key: [['Gross rental yield', $('y-gross').textContent], ['Net rental yield', $('y-net').textContent]],
+          inputs: [], results: resultsOf($('y-table')), notes: notesOf(['y-note']) }
+      ];
+    } else {
+      d.head = ['Know the numbers', 'before you commit']; d.file = 'stamp-duty-and-borrowing'; d.name = 'Stamp duty and borrowing';
+      d.sections = [
         { title: '1. Stamp duty on a purchase', key: [['Total stamp duty', $('d-total').textContent]],
           inputs: inputsOf($('duty')), results: resultsOf($('duty').querySelector('table')), notes: notesOf(['d-note', 'd-note-non']) },
         { title: '2. How much I can borrow', key: [['Loan you may be eligible for', $('a-loan').textContent], [$('a-price-label').textContent, $('a-price').textContent]],
-          inputs: inputsOf($('afford')), results: resultsOf($('afford').querySelector('table')), notes: notesOf(['a-why']), bank: true },
-        { title: '3. Monthly cashflow on a rented property', key: [[$('c-label').textContent, $('c-net').textContent]],
-          inputs: inputsOf($('panel-cash')), results: resultsOf($('panel-cash').querySelector('table')), notes: notesOf(['c-note']) }
-      ]
-    };
+          inputs: inputsOf($('afford')), results: resultsOf($('afford').querySelector('table')), notes: notesOf(['a-why']), bank: true }
+      ];
+    }
+    return d;
   }
 
   // Fallback: the print window, for when jsPDF cannot load
@@ -274,16 +287,16 @@
     var contact = '<address class="pr-contact"><strong>' + esc(CONTACT_LINES[0]) + '</strong><br>' + CONTACT_LINES.slice(1).map(esc).join('<br>') + '</address>';
     function table(rows){ return '<table>' + rows.map(function(r){ return '<tr' + (r[2] ? ' class="total"' : '') + '><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</table>'; }
     $('print-report').innerHTML =
-      '<div class="pr-head"><div><h1>Know the numbers <em>before you commit</em></h1><p class="pr-date">Prepared on ' + esc(d.today) + ' with the calculators at www.esthertxe.com</p></div>' + contact + '</div>' +
+      '<div class="pr-head"><div><h1>' + esc(d.head[0]) + ' <em>' + esc(d.head[1]) + '</em></h1><p class="pr-date">Prepared on ' + esc(d.today) + ' with the calculators at www.esthertxe.com</p></div>' + contact + '</div>' +
       d.sections.map(function(s){
         return '<div class="pr-sec"><h2>' + esc(s.title) + '</h2><div class="pr-key">' + s.key.map(function(k){ return '<p>' + esc(k[0]) + '<strong>' + esc(k[1]) + '</strong></p>'; }).join('') + '</div>' +
-          '<h3>Your inputs</h3>' + table(s.inputs) + '<h3>Results</h3>' + table(s.results) +
+          (s.inputs.length ? '<h3>Your inputs</h3>' + table(s.inputs) : '') + '<h3>Results</h3>' + table(s.results) +
           s.notes.map(function(n){ return '<p class="pr-note">' + esc(n) + '</p>'; }).join('') +
           (s.bank ? '<p class="pr-note"><strong>' + esc(BANK) + '</strong></p>' : '') + '</div>';
       }).join('') +
       '<div class="pr-foot"><p>' + esc(DISCLAIMER) + '</p><p class="pr-cta">To go through these numbers together, contact me:</p>' + contact + '</div>';
     var title = document.title;
-    document.title = 'Esther Txe - Property calculations - ' + d.today;
+    document.title = 'Esther Txe - ' + d.name + ' - ' + d.today;
     window.addEventListener('afterprint', function restore(){ document.title = title; window.removeEventListener('afterprint', restore); });
     window.print();
   }
@@ -322,9 +335,9 @@
 
     // Header: title and date on the left, contact block on the right
     contact(X1, 18, 'right');
-    font('bold', 17, INK); doc.text('KNOW THE NUMBERS', X0, 27);
-    var tw = doc.getTextWidth('KNOW THE NUMBERS ');
-    font('italic', 17, OLIVE, 'times'); doc.text('before you commit', X0 + tw, 27);
+    font('bold', 17, INK); var h0 = d.head[0].toUpperCase(); doc.text(h0, X0, 27);
+    var tw = doc.getTextWidth(h0 + ' ');
+    font('italic', 17, OLIVE, 'times'); doc.text(d.head[1], X0 + tw, 27);
     font('normal', 9, GREY); doc.text(plain('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com'), X0, 33.5);
     y = 37; rule(y, OLIVE, .5); y += 9;
 
@@ -339,8 +352,8 @@
         font('bolditalic', 17, OLIVE, 'times'); doc.text(plain(k[1]), x, y + 7.5);
       });
       y += 17;
-      font('bold', 8, GREY); room(8); doc.text('YOUR INPUTS', X0, y); y += 2.5; rows(s.inputs);
-      y += 4; font('bold', 8, GREY); room(8); doc.text('RESULTS', X0, y); y += 2.5; rows(s.results);
+      if (s.inputs.length){ font('bold', 8, GREY); room(8); doc.text('YOUR INPUTS', X0, y); y += 2.5; rows(s.inputs); y += 4; }
+      font('bold', 8, GREY); room(8); doc.text('RESULTS', X0, y); y += 2.5; rows(s.results);
       y += 3;
       s.notes.forEach(function(n){ para(n, 8, GREY, 'normal', 3.6); y += 1.2; });
       if (s.bank){ para(BANK, 8, INK, 'bold', 3.6); }
@@ -379,10 +392,10 @@
     var pdfHint = $(pdfBtn.getAttribute('aria-describedby')), label = pdfBtn.textContent;
     pdfBtn.addEventListener('pointerenter', function(){ loadPdfLib().catch(function(){}); });
     pdfBtn.addEventListener('click', function(){
-      var d = reportData();
+      var d = reportData(pdfBtn.getAttribute('data-pdf'));
       function save(){
         try {
-          buildPdf(d).save('Esther-Txe-property-calculations-' + d.iso + '.pdf');
+          buildPdf(d).save('Esther-Txe-' + d.file + '-' + d.iso + '.pdf');
           if (pdfHint) pdfHint.textContent = 'Your PDF has been downloaded. If you cannot find it, check your Downloads folder.';
         } catch (e) { printReport(d); }
       }

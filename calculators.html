@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Property Calculators, Singapore | Esther Txe</title>
-<meta name="description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly rental cashflow, sale proceeds and rental yield. Download results as a PDF.">
+<meta name="description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, rental cashflow and yield, and sale proceeds. Download results as a PDF.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="author" content="Esther Txe">
 <link rel="canonical" href="https://www.esthertxe.com/calculators.html">
@@ -17,14 +17,14 @@
 <meta property="og:site_name" content="Esther Txe, Property Advisor">
 <meta property="og:locale" content="en_SG">
 <meta property="og:title" content="Property Calculators, Singapore | Esther Txe">
-<meta property="og:description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly rental cashflow, sale proceeds and rental yield. Download results as a PDF.">
+<meta property="og:description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, rental cashflow and yield, and sale proceeds. Download results as a PDF.">
 <meta property="og:image" content="https://www.esthertxe.com/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Sepia portrait of Esther Txe, property advisor in Singapore, seated in an armchair">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Property Calculators, Singapore | Esther Txe">
-<meta name="twitter:description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly rental cashflow, sale proceeds and rental yield. Download results as a PDF.">
+<meta name="twitter:description" content="Free Singapore property calculators: stamp duty, how much a bank may lend you, rental cashflow and yield, and sale proceeds. Download results as a PDF.">
 <meta name="twitter:image" content="https://www.esthertxe.com/og-image.jpg">
 <script type="application/ld+json">
 {
@@ -35,7 +35,7 @@
       "@id": "https://www.esthertxe.com/calculators.html#webpage",
       "url": "https://www.esthertxe.com/calculators.html",
       "name": "Property Calculators, Singapore | Esther Txe",
-      "description": "Free Singapore property calculators: stamp duty, how much a bank may lend you, monthly rental cashflow, sale proceeds and rental yield. Download results as a PDF.",
+      "description": "Free Singapore property calculators: stamp duty, how much a bank may lend you, rental cashflow and yield, and sale proceeds. Download results as a PDF.",
       "inLanguage": "en-SG",
       "dateModified": "2026-11-27",
       "author": {"@id": "https://www.esthertxe.com/#esther-txe"},
@@ -56,9 +56,8 @@
       "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Stamp duty calculator (BSD and ABSD; residential, commercial and industrial)", "url": "https://www.esthertxe.com/calculators.html#stamp-duty"},
         {"@type": "ListItem", "position": 2, "name": "How much I can borrow (bank loan affordability: TDSR, MSR, loan-to-value)", "url": "https://www.esthertxe.com/calculators.html#borrow"},
-        {"@type": "ListItem", "position": 3, "name": "Monthly cashflow on a rented property", "url": "https://www.esthertxe.com/calculators.html#cashflow"},
-        {"@type": "ListItem", "position": 4, "name": "Sale proceeds after loan, costs and CPF refund", "url": "https://www.esthertxe.com/calculators.html#sale-proceeds"},
-        {"@type": "ListItem", "position": 5, "name": "Rental yield, gross and net", "url": "https://www.esthertxe.com/calculators.html#rental-yield"}
+        {"@type": "ListItem", "position": 3, "name": "Monthly cashflow and rental yield (gross and net) on a rented property", "url": "https://www.esthertxe.com/calculators.html#cashflow"},
+        {"@type": "ListItem", "position": 4, "name": "Sale proceeds after loan, costs and CPF refund", "url": "https://www.esthertxe.com/calculators.html#sale-proceeds"}
       ]
     }
   ]
@@ -453,7 +452,7 @@ address{font-style:normal}
     <div class="page-title">
       <p class="crumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Calculators</p>
       <h1>Property calculators <em>for Singapore</em></h1>
-      <p class="page-lead">Stamp duty, borrowing, rental cashflow, sale proceeds and rental yield, with the working shown. For planning only: your bank and lawyer confirm the final figures.</p>
+      <p class="page-lead">Stamp duty, borrowing, rental cashflow and yield, and sale proceeds, with the working shown. For planning only: your bank and lawyer confirm the final figures.</p>
       <p><span class="cea-chip">CEA Registration No. R060284E</span></p>
     </div>
   </div>
@@ -476,9 +475,9 @@ address{font-style:normal}
           <button class="tab" role="tab" id="tab-duty" aria-controls="duty" aria-selected="true" tabindex="0">Stamp duty</button>
           <button class="tab" role="tab" id="tab-afford" aria-controls="afford" aria-selected="false" tabindex="-1">How much I can borrow</button>
         </div>
-        <button class="btn btn-outline pdf-btn" type="button" id="pdf-btn" data-pdf aria-describedby="pdf-hint">Download as PDF</button>
+        <button class="btn btn-outline pdf-btn" type="button" id="pdf-btn" data-pdf="numbers" aria-describedby="pdf-hint">Download both as PDF</button>
       </div>
-      <p class="pdf-hint" id="pdf-hint" aria-live="polite">Downloads one PDF with your stamp duty, borrowing and rental cashflow figures.</p>
+      <p class="pdf-hint" id="pdf-hint" aria-live="polite">Downloads one PDF with both calculations and your figures.</p>
 
       <form class="calc tool" role="tabpanel" id="duty" aria-labelledby="tab-duty">
         <div>
@@ -591,14 +590,13 @@ address{font-style:normal}
       </div>
 
       <div class="tablist" role="tablist" aria-label="Calculators">
-        <button class="tab" role="tab" id="tab-cash" aria-controls="panel-cash" aria-selected="true" tabindex="0">Cashflow</button>
+        <button class="tab" role="tab" id="tab-cash" aria-controls="panel-cash" aria-selected="true" tabindex="0">Cashflow &amp; yield</button>
         <button class="tab" role="tab" id="tab-sale" aria-controls="panel-sale" aria-selected="false" tabindex="-1">Sale proceeds</button>
-        <button class="tab" role="tab" id="tab-yield" aria-controls="panel-yield" aria-selected="false" tabindex="-1">Rental yield</button>
       </div>
 
       <form class="calc tool" role="tabpanel" id="panel-cash" aria-labelledby="tab-cash" onsubmit="return false">
         <div>
-          <p class="tool-intro">What a rented property leaves you each month after the instalment, MCST and sinking fund fees and property tax.</p>
+          <p class="tool-intro">One set of figures for a rented property gives both its monthly cashflow after the loan and its rental yield.</p>
           <div class="fields">
             <div class="f"><label for="c-price">Property price (S$)</label><input id="c-price" inputmode="numeric" autocomplete="off" value="1,200,000"></div>
             <div class="f"><label for="c-ltv">Loan (% of price)</label><input id="c-ltv" inputmode="decimal" autocomplete="off" value="75"></div>
@@ -608,12 +606,13 @@ address{font-style:normal}
             <div class="f"><label for="c-rent">Monthly rental income (S$)</label><input id="c-rent" inputmode="numeric" autocomplete="off" value="3,800"></div>
             <div class="f"><label for="c-mcst">Monthly MCST &amp; sinking fund fees (S$)</label><input id="c-mcst" inputmode="numeric" autocomplete="off" value="350"></div>
             <div class="f"><label for="c-tax">Monthly property tax (S$)</label><input id="c-tax" inputmode="numeric" autocomplete="off" value="300"></div>
+            <div class="f"><label for="c-upkeep">Upkeep costs &amp; others, a year (S$)</label><input id="c-upkeep" inputmode="numeric" autocomplete="off" value="1,500"></div>
           </div>
         </div>
         <div aria-live="polite">
           <p class="eyebrow" id="c-label">Monthly cashflow</p>
           <p class="figure" id="c-net">–</p>
-          <table class="res">
+          <table class="res" id="c-table">
             <tr><th scope="row">Monthly rental income</th><td id="c-r-rent">–</td></tr>
             <tr><th scope="row">Less monthly instalment</th><td id="c-r-pay">–</td></tr>
             <tr><th scope="row">Less monthly MCST &amp; sinking fund fees</th><td id="c-r-mcst">–</td></tr>
@@ -621,7 +620,19 @@ address{font-style:normal}
             <tr class="total"><th scope="row" id="c-r-label">Cashflow a month</th><td id="c-r-net">–</td></tr>
           </table>
           <p class="calc-note" id="c-note">The principal part of each instalment is still being paid with the tenant's rent, and it reduces your loan amount.</p>
-          <div class="tool-pdf"><button class="btn btn-outline pdf-btn" type="button" data-pdf aria-describedby="pdf-hint-cash">Download as PDF</button><p class="pdf-hint" id="pdf-hint-cash" aria-live="polite">Includes stamp duty and borrowing too.</p></div>
+
+          <p class="eyebrow afford-gap">Net rental yield</p>
+          <p class="figure" id="y-net">–</p>
+          <table class="res" id="y-table">
+            <tr><th scope="row">Gross rental yield</th><td id="y-gross">–</td></tr>
+            <tr><th scope="row">Rent a year</th><td id="y-coll">–</td></tr>
+            <tr><th scope="row">Less MCST &amp; sinking fund fees a year</th><td id="y-r-mcst">–</td></tr>
+            <tr><th scope="row">Less property tax a year</th><td id="y-r-tax">–</td></tr>
+            <tr><th scope="row">Less upkeep costs &amp; others</th><td id="y-r-upkeep">–</td></tr>
+            <tr class="total"><th scope="row">Net income a year, before loan</th><td id="y-inc">–</td></tr>
+          </table>
+          <p class="calc-note" id="y-note">Yield leaves out the loan so properties compare on the same basis. Gross yield is rent a year against the price; net yield is rent after yearly costs against the price.</p>
+          <div class="tool-pdf"><button class="btn btn-outline pdf-btn" type="button" data-pdf="own" aria-describedby="pdf-hint-cash">Download as PDF</button><p class="pdf-hint" id="pdf-hint-cash" aria-live="polite">Your cashflow and rental yield, with your figures.</p></div>
         </div>
       </form>
 
@@ -650,31 +661,6 @@ address{font-style:normal}
         </div>
       </form>
 
-      <form class="calc tool" role="tabpanel" id="panel-yield" aria-labelledby="tab-yield" hidden onsubmit="return false">
-        <div>
-          <p class="tool-intro">Gross yield is rent against price. Net yield takes off the yearly costs of holding the property.</p>
-          <div class="fields">
-            <div class="f"><label for="y-price">Purchase price (S$)</label><input id="y-price" inputmode="numeric" autocomplete="off" value="1,200,000"></div>
-            <div class="f"><label for="y-rent">Monthly rent (S$)</label><input id="y-rent" inputmode="numeric" autocomplete="off" value="3,800"></div>
-            <div class="f"><label for="y-mcst">Monthly MCST &amp; sinking fund fees (S$)</label><input id="y-mcst" inputmode="numeric" autocomplete="off" value="350"></div>
-            <div class="f"><label for="y-tax">Monthly property tax (S$)</label><input id="y-tax" inputmode="numeric" autocomplete="off" value="300"></div>
-            <div class="f"><label for="y-upkeep">Upkeep costs &amp; others, a year (S$)</label><input id="y-upkeep" inputmode="numeric" autocomplete="off" value="1,500"></div>
-          </div>
-        </div>
-        <div aria-live="polite">
-          <p class="eyebrow">Net yield</p>
-          <p class="figure" id="y-net">–</p>
-          <table class="res">
-            <tr><th scope="row">Gross yield</th><td id="y-gross">–</td></tr>
-            <tr><th scope="row">Rent a year</th><td id="y-coll">–</td></tr>
-            <tr><th scope="row">Less MCST &amp; sinking fund fees a year</th><td id="y-r-mcst">–</td></tr>
-            <tr><th scope="row">Less property tax a year</th><td id="y-r-tax">–</td></tr>
-            <tr><th scope="row">Less upkeep costs &amp; others</th><td id="y-r-upkeep">–</td></tr>
-            <tr class="total"><th scope="row">Net income a year, before loan</th><td id="y-inc">–</td></tr>
-          </table>
-          <p class="calc-note">Financing costs are left out so properties compare on the same basis. The Cashflow tab shows what is left after the instalment.</p>
-        </div>
-      </form>
       <p class="tools-foot">All calculators are for planning only and are not financial advice. Loan amounts, rates and actual costs depend on your bank, income, age and the rules in force when you buy or sell.</p>
     </div>
   </section>
@@ -742,7 +728,7 @@ address{font-style:normal}
     a.addEventListener('click', function(){ if ($(a.getAttribute('data-tool'))) select($(a.getAttribute('data-tool')), false); });
   });
   // Deep links from other pages, e.g. calculators.html#borrow, open that calculator's tab
-  var TOOL_HASH = { '#stamp-duty':'tab-duty', '#borrow':'tab-afford', '#cashflow':'tab-cash', '#instalment':'tab-cash', '#sale-proceeds':'tab-sale', '#rental-yield':'tab-yield' };
+  var TOOL_HASH = { '#stamp-duty':'tab-duty', '#borrow':'tab-afford', '#cashflow':'tab-cash', '#instalment':'tab-cash', '#sale-proceeds':'tab-sale', '#rental-yield':'tab-cash' };
   function openToolFromHash(){
     var t = $(TOOL_HASH[location.hash] || '');
     if (!t) return;
@@ -910,6 +896,18 @@ address{font-style:normal}
     $('c-r-net').textContent = money(net);
     $('c-note').textContent = 'Of the ' + money(pay) + ' instalment, about ' + money(prin) + ' is principal (about ' + money(int1) +
       ' is interest). The principal portion is still being paid by the tenant’s rent, and it reduces your loan amount, so part of the instalment builds your equity rather than being a cost.';
+
+    // Rental yield from the same figures (before the loan)
+    var p = num($('c-price')), up = num($('c-upkeep'));
+    var coll = rent * 12, inc = coll - mcst * 12 - tax * 12 - up;
+    mcst *= 12; tax *= 12;
+    $('y-gross').textContent = p ? pct(rent * 12 / p * 100) : '–';
+    $('y-net').textContent = p ? pct(inc / p * 100) : '–';
+    $('y-coll').textContent = money(coll);
+    $('y-r-mcst').textContent = money(-mcst);
+    $('y-r-tax').textContent = money(-tax);
+    $('y-r-upkeep').textContent = money(-up);
+    $('y-inc').textContent = money(inc);
   });
 
   // Sale proceeds
@@ -924,22 +922,10 @@ address{font-style:normal}
     $('s-warn').textContent = cash < 0
       ? 'The sale does not cover the loan, costs and CPF refund. You may need to top up the shortfall in cash; talk to your bank and CPF Board early.'
       : 'Your CPF statement shows the exact refund, including accrued interest. Your bank can tell you any penalty for repaying early.';
+
   });
 
-  // Rental yield
-  wire($('panel-yield'), function(){
-    var p = num($('y-price')), rent = num($('y-rent')), mcst = num($('y-mcst')) * 12, tax = num($('y-tax')) * 12, up = num($('y-upkeep'));
-    var coll = rent * 12, inc = coll - mcst - tax - up;
-    $('y-gross').textContent = p ? pct(rent * 12 / p * 100) : '–';
-    $('y-net').textContent = p ? pct(inc / p * 100) : '–';
-    $('y-coll').textContent = money(coll);
-    $('y-r-mcst').textContent = money(-mcst);
-    $('y-r-tax').textContent = money(-tax);
-    $('y-r-upkeep').textContent = money(-up);
-    $('y-inc').textContent = money(inc);
-  });
-
-  // Combined PDF: stamp duty, borrowing and rental cashflow.
+  // PDF reports: stamp duty and borrowing; rental cashflow and yield.
   // Builds a real PDF file with jsPDF (loaded from cdnjs only when the calculators come into view),
   // so it downloads in browsers that ignore the print window. Falls back to the print window if it can't load.
   function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -964,22 +950,35 @@ address{font-style:normal}
   var DISCLAIMER = 'Information in this document is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding.';
   var BANK = 'Estimate only. The final loan amount and purchase price are subject to the bank\'s approval, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included in the loan figures. MAS rules and IRAS rates checked on 26 November 2026.';
 
-  function reportData(){
-    Array.prototype.forEach.call(document.querySelectorAll('#duty input, #afford input, #panel-cash input:not([readonly])'), tidy);
-    ['duty', 'afford', 'panel-cash'].forEach(function(id){ $(id).dispatchEvent(new Event('change')); });
-    var now = new Date();
-    return {
+  // Two separate reports: 'numbers' (stamp duty and borrowing) and 'own' (rental cashflow and yield)
+  function reportData(kind){
+    var forms = kind === 'own' ? ['panel-cash'] : ['duty', 'afford'];
+    forms.forEach(function(id){
+      Array.prototype.forEach.call($(id).querySelectorAll('input:not([readonly])'), tidy);
+      $(id).dispatchEvent(new Event('change'));
+    });
+    var now = new Date(), d = {
       today: now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' }),
-      iso: now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2),
-      sections: [
+      iso: now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
+    };
+    if (kind === 'own'){
+      d.head = ['Run your', 'own numbers']; d.file = 'rental-cashflow-and-yield'; d.name = 'Rental cashflow and yield';
+      d.sections = [
+        { title: '1. Monthly cashflow on a rented property', key: [[$('c-label').textContent, $('c-net').textContent]],
+          inputs: inputsOf($('panel-cash')), results: resultsOf($('c-table')), notes: notesOf(['c-note']) },
+        { title: '2. Rental yield', key: [['Gross rental yield', $('y-gross').textContent], ['Net rental yield', $('y-net').textContent]],
+          inputs: [], results: resultsOf($('y-table')), notes: notesOf(['y-note']) }
+      ];
+    } else {
+      d.head = ['Know the numbers', 'before you commit']; d.file = 'stamp-duty-and-borrowing'; d.name = 'Stamp duty and borrowing';
+      d.sections = [
         { title: '1. Stamp duty on a purchase', key: [['Total stamp duty', $('d-total').textContent]],
           inputs: inputsOf($('duty')), results: resultsOf($('duty').querySelector('table')), notes: notesOf(['d-note', 'd-note-non']) },
         { title: '2. How much I can borrow', key: [['Loan you may be eligible for', $('a-loan').textContent], [$('a-price-label').textContent, $('a-price').textContent]],
-          inputs: inputsOf($('afford')), results: resultsOf($('afford').querySelector('table')), notes: notesOf(['a-why']), bank: true },
-        { title: '3. Monthly cashflow on a rented property', key: [[$('c-label').textContent, $('c-net').textContent]],
-          inputs: inputsOf($('panel-cash')), results: resultsOf($('panel-cash').querySelector('table')), notes: notesOf(['c-note']) }
-      ]
-    };
+          inputs: inputsOf($('afford')), results: resultsOf($('afford').querySelector('table')), notes: notesOf(['a-why']), bank: true }
+      ];
+    }
+    return d;
   }
 
   // Fallback: the print window, for when jsPDF cannot load
@@ -987,16 +986,16 @@ address{font-style:normal}
     var contact = '<address class="pr-contact"><strong>' + esc(CONTACT_LINES[0]) + '</strong><br>' + CONTACT_LINES.slice(1).map(esc).join('<br>') + '</address>';
     function table(rows){ return '<table>' + rows.map(function(r){ return '<tr' + (r[2] ? ' class="total"' : '') + '><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</table>'; }
     $('print-report').innerHTML =
-      '<div class="pr-head"><div><h1>Know the numbers <em>before you commit</em></h1><p class="pr-date">Prepared on ' + esc(d.today) + ' with the calculators at www.esthertxe.com</p></div>' + contact + '</div>' +
+      '<div class="pr-head"><div><h1>' + esc(d.head[0]) + ' <em>' + esc(d.head[1]) + '</em></h1><p class="pr-date">Prepared on ' + esc(d.today) + ' with the calculators at www.esthertxe.com</p></div>' + contact + '</div>' +
       d.sections.map(function(s){
         return '<div class="pr-sec"><h2>' + esc(s.title) + '</h2><div class="pr-key">' + s.key.map(function(k){ return '<p>' + esc(k[0]) + '<strong>' + esc(k[1]) + '</strong></p>'; }).join('') + '</div>' +
-          '<h3>Your inputs</h3>' + table(s.inputs) + '<h3>Results</h3>' + table(s.results) +
+          (s.inputs.length ? '<h3>Your inputs</h3>' + table(s.inputs) : '') + '<h3>Results</h3>' + table(s.results) +
           s.notes.map(function(n){ return '<p class="pr-note">' + esc(n) + '</p>'; }).join('') +
           (s.bank ? '<p class="pr-note"><strong>' + esc(BANK) + '</strong></p>' : '') + '</div>';
       }).join('') +
       '<div class="pr-foot"><p>' + esc(DISCLAIMER) + '</p><p class="pr-cta">To go through these numbers together, contact me:</p>' + contact + '</div>';
     var title = document.title;
-    document.title = 'Esther Txe - Property calculations - ' + d.today;
+    document.title = 'Esther Txe - ' + d.name + ' - ' + d.today;
     window.addEventListener('afterprint', function restore(){ document.title = title; window.removeEventListener('afterprint', restore); });
     window.print();
   }
@@ -1035,9 +1034,9 @@ address{font-style:normal}
 
     // Header: title and date on the left, contact block on the right
     contact(X1, 18, 'right');
-    font('bold', 17, INK); doc.text('KNOW THE NUMBERS', X0, 27);
-    var tw = doc.getTextWidth('KNOW THE NUMBERS ');
-    font('italic', 17, OLIVE, 'times'); doc.text('before you commit', X0 + tw, 27);
+    font('bold', 17, INK); var h0 = d.head[0].toUpperCase(); doc.text(h0, X0, 27);
+    var tw = doc.getTextWidth(h0 + ' ');
+    font('italic', 17, OLIVE, 'times'); doc.text(d.head[1], X0 + tw, 27);
     font('normal', 9, GREY); doc.text(plain('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com'), X0, 33.5);
     y = 37; rule(y, OLIVE, .5); y += 9;
 
@@ -1052,8 +1051,8 @@ address{font-style:normal}
         font('bolditalic', 17, OLIVE, 'times'); doc.text(plain(k[1]), x, y + 7.5);
       });
       y += 17;
-      font('bold', 8, GREY); room(8); doc.text('YOUR INPUTS', X0, y); y += 2.5; rows(s.inputs);
-      y += 4; font('bold', 8, GREY); room(8); doc.text('RESULTS', X0, y); y += 2.5; rows(s.results);
+      if (s.inputs.length){ font('bold', 8, GREY); room(8); doc.text('YOUR INPUTS', X0, y); y += 2.5; rows(s.inputs); y += 4; }
+      font('bold', 8, GREY); room(8); doc.text('RESULTS', X0, y); y += 2.5; rows(s.results);
       y += 3;
       s.notes.forEach(function(n){ para(n, 8, GREY, 'normal', 3.6); y += 1.2; });
       if (s.bank){ para(BANK, 8, INK, 'bold', 3.6); }
@@ -1092,10 +1091,10 @@ address{font-style:normal}
     var pdfHint = $(pdfBtn.getAttribute('aria-describedby')), label = pdfBtn.textContent;
     pdfBtn.addEventListener('pointerenter', function(){ loadPdfLib().catch(function(){}); });
     pdfBtn.addEventListener('click', function(){
-      var d = reportData();
+      var d = reportData(pdfBtn.getAttribute('data-pdf'));
       function save(){
         try {
-          buildPdf(d).save('Esther-Txe-property-calculations-' + d.iso + '.pdf');
+          buildPdf(d).save('Esther-Txe-' + d.file + '-' + d.iso + '.pdf');
           if (pdfHint) pdfHint.textContent = 'Your PDF has been downloaded. If you cannot find it, check your Downloads folder.';
         } catch (e) { printReport(d); }
       }
