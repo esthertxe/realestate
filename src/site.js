@@ -161,7 +161,13 @@
     $('a-stress').textContent = stress.toFixed(2).replace(/\.?0+$/, '') + '%';
     $('a-ten').textContent = ten + ' years';
     $('a-ltv-out').textContent = Math.round(ltv * 100) + '%';
-    $('a-pay').textContent = money(pmt(loan, rate, ten));
+    // Instalment split for the first month: interest on the full loan, the rest repays principal.
+    // Each later month a little more goes to principal as the balance falls.
+    // Rounded so the two parts always add up to the instalment shown.
+    var pay = Math.round(pmt(loan, rate, ten)), int1 = Math.min(pay, Math.round(loan * rate / 1200));
+    $('a-pay').textContent = money(pay);
+    $('a-pay-int').textContent = money(int1);
+    $('a-pay-prin').textContent = money(pay - int1);
     $('a-why').textContent = why.join(' ');
     $('a-why').hidden = !why.length;
 

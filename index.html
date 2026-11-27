@@ -282,6 +282,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 .res th,.res td{padding:.7rem 0;border-top:1px solid var(--line);text-align:left;font-weight:400}
 .res td{text-align:right;white-space:nowrap;padding-left:1rem}
 .res tr.total th,.res tr.total td{border-top:1px solid var(--ink);font-weight:600}
+.res tr.sub th,.res tr.sub td{color:var(--muted);font-size:.94em;padding-block:.45rem}
+.res tr.sub th{padding-left:1.1rem}
+.res tr.total + tr.sub th,.res tr.total + tr.sub td{border-top-color:var(--line)}
 .figure{font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(2.4rem,4.4vw,3.4rem);line-height:1;color:var(--olive);margin-top:.35rem;font-variant-numeric:lining-nums}
 .calc-note{font-size:.85rem;color:var(--muted);margin-top:1.25rem;max-width:36rem}
 .calc-note a,.text-link{color:var(--ink);text-underline-offset:3px}
@@ -895,7 +898,13 @@ address{font-style:normal}
     $('a-stress').textContent = stress.toFixed(2).replace(/\.?0+$/, '') + '%';
     $('a-ten').textContent = ten + ' years';
     $('a-ltv-out').textContent = Math.round(ltv * 100) + '%';
-    $('a-pay').textContent = money(pmt(loan, rate, ten));
+    // Instalment split for the first month: interest on the full loan, the rest repays principal.
+    // Each later month a little more goes to principal as the balance falls.
+    // Rounded so the two parts always add up to the instalment shown.
+    var pay = Math.round(pmt(loan, rate, ten)), int1 = Math.min(pay, Math.round(loan * rate / 1200));
+    $('a-pay').textContent = money(pay);
+    $('a-pay-int').textContent = money(int1);
+    $('a-pay-prin').textContent = money(pay - int1);
     $('a-why').textContent = why.join(' ');
     $('a-why').hidden = !why.length;
 
