@@ -354,3 +354,6 @@ address{font-style:normal}
 .calc-help-btns{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
 .calc-help .btn-outline{color:var(--cream)}
 @media (max-width:800px){.calc-help-in{grid-template-columns:1fr}}
+.f-derived input{color:var(--olive,var(--ink));font-weight:600;border-bottom-style:dashed;cursor:default}
+.tool-pdf{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;margin-top:1.4rem}
+.tool-pdf .pdf-hint{margin:0;text-align:left}

@@ -424,6 +424,9 @@ address{font-style:normal}
 .calc-help-btns{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
 .calc-help .btn-outline{color:var(--cream)}
 @media (max-width:800px){.calc-help-in{grid-template-columns:1fr}}
+.f-derived input{color:var(--olive,var(--ink));font-weight:600;border-bottom-style:dashed;cursor:default}
+.tool-pdf{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;margin-top:1.4rem}
+.tool-pdf .pdf-hint{margin:0;text-align:left}
 </style>
 </head>
 <body>
@@ -473,9 +476,9 @@ address{font-style:normal}
           <button class="tab" role="tab" id="tab-duty" aria-controls="duty" aria-selected="true" tabindex="0">Stamp duty</button>
           <button class="tab" role="tab" id="tab-afford" aria-controls="afford" aria-selected="false" tabindex="-1">How much I can borrow</button>
         </div>
-        <button class="btn btn-outline pdf-btn" type="button" id="pdf-btn" aria-describedby="pdf-hint">Download both as PDF</button>
+        <button class="btn btn-outline pdf-btn" type="button" id="pdf-btn" data-pdf aria-describedby="pdf-hint">Download as PDF</button>
       </div>
-      <p class="pdf-hint" id="pdf-hint" aria-live="polite">Downloads one PDF with both calculations and your figures.</p>
+      <p class="pdf-hint" id="pdf-hint" aria-live="polite">Downloads one PDF with your stamp duty, borrowing and rental cashflow figures.</p>
 
       <form class="calc tool" role="tabpanel" id="duty" aria-labelledby="tab-duty">
         <div>
@@ -597,10 +600,12 @@ address{font-style:normal}
         <div>
           <p class="tool-intro">What a rented property leaves you each month after the instalment, MCST and sinking fund fees and property tax.</p>
           <div class="fields">
-            <div class="f"><label for="c-rent">Monthly rental income (S$)</label><input id="c-rent" inputmode="numeric" autocomplete="off" value="3,800"></div>
-            <div class="f"><label for="c-loan">Loan amount (S$)</label><input id="c-loan" inputmode="numeric" autocomplete="off" value="900,000"></div>
+            <div class="f"><label for="c-price">Property price (S$)</label><input id="c-price" inputmode="numeric" autocomplete="off" value="1,200,000"></div>
+            <div class="f"><label for="c-ltv">Loan (% of price)</label><input id="c-ltv" inputmode="decimal" autocomplete="off" value="75"></div>
+            <div class="f f-derived"><label for="c-loan">Loan amount (S$)</label><input id="c-loan" readonly tabindex="-1" aria-live="polite" value="900,000"></div>
             <div class="f"><label for="c-years">Loan tenure (years)</label><input id="c-years" inputmode="numeric" autocomplete="off" value="30"></div>
             <div class="f"><label for="c-rate">Interest rate (% a year)</label><input id="c-rate" inputmode="decimal" autocomplete="off" value="2.6"></div>
+            <div class="f"><label for="c-rent">Monthly rental income (S$)</label><input id="c-rent" inputmode="numeric" autocomplete="off" value="3,800"></div>
             <div class="f"><label for="c-mcst">Monthly MCST &amp; sinking fund fees (S$)</label><input id="c-mcst" inputmode="numeric" autocomplete="off" value="350"></div>
             <div class="f"><label for="c-tax">Monthly property tax (S$)</label><input id="c-tax" inputmode="numeric" autocomplete="off" value="300"></div>
           </div>
@@ -616,6 +621,7 @@ address{font-style:normal}
             <tr class="total"><th scope="row" id="c-r-label">Cashflow a month</th><td id="c-r-net">–</td></tr>
           </table>
           <p class="calc-note" id="c-note">The principal part of each instalment is still being paid with the tenant's rent, and it reduces your loan amount.</p>
+          <div class="tool-pdf"><button class="btn btn-outline pdf-btn" type="button" data-pdf aria-describedby="pdf-hint-cash">Download as PDF</button><p class="pdf-hint" id="pdf-hint-cash" aria-live="polite">Includes stamp duty and borrowing too.</p></div>
         </div>
       </form>
 
@@ -889,7 +895,9 @@ address{font-style:normal}
   });
   // Monthly cashflow on a rented property
   wire($('panel-cash'), function(){
-    var rent = num($('c-rent')), L = num($('c-loan')), rate = num($('c-rate')), mcst = num($('c-mcst')), tax = num($('c-tax'));
+    var L = Math.round(num($('c-price')) * Math.min(100, num($('c-ltv'))) / 100);
+    $('c-loan').value = L.toLocaleString('en-SG');
+    var rent = num($('c-rent')), rate = num($('c-rate')), mcst = num($('c-mcst')), tax = num($('c-tax'));
     var pay = Math.round(pmt(L, rate, num($('c-years')))), int1 = Math.min(pay, Math.round(L * rate / 1200)), prin = pay - int1;
     var net = rent - pay - mcst - tax, word = net >= 0 ? 'Positive' : 'Negative';
     $('c-label').textContent = word + ' cashflow a month';
@@ -931,7 +939,7 @@ address{font-style:normal}
     $('y-inc').textContent = money(inc);
   });
 
-  // Combined PDF of both quick checks.
+  // Combined PDF: stamp duty, borrowing and rental cashflow.
   // Builds a real PDF file with jsPDF (loaded from cdnjs only when the calculators come into view),
   // so it downloads in browsers that ignore the print window. Falls back to the print window if it can't load.
   function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -957,8 +965,8 @@ address{font-style:normal}
   var BANK = 'Estimate only. The final loan amount and purchase price are subject to the bank\'s approval, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included in the loan figures. MAS rules and IRAS rates checked on 26 November 2026.';
 
   function reportData(){
-    Array.prototype.forEach.call(document.querySelectorAll('#duty input, #afford input'), tidy);
-    $('duty').dispatchEvent(new Event('change')); $('afford').dispatchEvent(new Event('change'));
+    Array.prototype.forEach.call(document.querySelectorAll('#duty input, #afford input, #panel-cash input:not([readonly])'), tidy);
+    ['duty', 'afford', 'panel-cash'].forEach(function(id){ $(id).dispatchEvent(new Event('change')); });
     var now = new Date();
     return {
       today: now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' }),
@@ -967,7 +975,9 @@ address{font-style:normal}
         { title: '1. Stamp duty on a purchase', key: [['Total stamp duty', $('d-total').textContent]],
           inputs: inputsOf($('duty')), results: resultsOf($('duty').querySelector('table')), notes: notesOf(['d-note', 'd-note-non']) },
         { title: '2. How much I can borrow', key: [['Loan you may be eligible for', $('a-loan').textContent], [$('a-price-label').textContent, $('a-price').textContent]],
-          inputs: inputsOf($('afford')), results: resultsOf($('afford').querySelector('table')), notes: notesOf(['a-why']), bank: true }
+          inputs: inputsOf($('afford')), results: resultsOf($('afford').querySelector('table')), notes: notesOf(['a-why']), bank: true },
+        { title: '3. Monthly cashflow on a rented property', key: [[$('c-label').textContent, $('c-net').textContent]],
+          inputs: inputsOf($('panel-cash')), results: resultsOf($('panel-cash').querySelector('table')), notes: notesOf(['c-note']) }
       ]
     };
   }
@@ -986,7 +996,7 @@ address{font-style:normal}
       }).join('') +
       '<div class="pr-foot"><p>' + esc(DISCLAIMER) + '</p><p class="pr-cta">To go through these numbers together, contact me:</p>' + contact + '</div>';
     var title = document.title;
-    document.title = 'Esther Txe - Stamp duty and borrowing - ' + d.today;
+    document.title = 'Esther Txe - Property calculations - ' + d.today;
     window.addEventListener('afterprint', function restore(){ document.title = title; window.removeEventListener('afterprint', restore); });
     window.print();
   }
@@ -1072,25 +1082,28 @@ address{font-style:normal}
     });
     return pdfLib;
   }
-  var pdfBtn = $('pdf-btn'), pdfHint = $('pdf-hint');
+  var pdfBtns = document.querySelectorAll('[data-pdf]');
   // Load the library ahead of time once the calculators are on screen, so the click downloads straight away
-  if (pdfBtn && 'IntersectionObserver' in window){
+  if (pdfBtns.length && 'IntersectionObserver' in window){
     var pre = new IntersectionObserver(function(es){ if (es.some(function(e){ return e.isIntersecting; })){ loadPdfLib().catch(function(){}); pre.disconnect(); } }, { rootMargin: '400px' });
     pre.observe($('numbers'));
   }
-  if (pdfBtn) pdfBtn.addEventListener('pointerenter', function(){ loadPdfLib().catch(function(){}); });
-  if (pdfBtn) pdfBtn.addEventListener('click', function(){
-    var d = reportData();
-    function save(){
-      try {
-        buildPdf(d).save('Esther-Txe-stamp-duty-and-borrowing-' + d.iso + '.pdf');
-        pdfHint.textContent = 'Your PDF has been downloaded. If you cannot find it, check your Downloads folder.';
-      } catch (e) { printReport(d); }
-    }
-    if (window.jspdf) return save();
-    pdfBtn.disabled = true; pdfBtn.textContent = 'Preparing PDF…';
-    loadPdfLib().then(save, function(){ printReport(d); }).then(function(){
-      pdfBtn.disabled = false; pdfBtn.textContent = 'Download both as PDF';
+  Array.prototype.forEach.call(pdfBtns, function(pdfBtn){
+    var pdfHint = $(pdfBtn.getAttribute('aria-describedby')), label = pdfBtn.textContent;
+    pdfBtn.addEventListener('pointerenter', function(){ loadPdfLib().catch(function(){}); });
+    pdfBtn.addEventListener('click', function(){
+      var d = reportData();
+      function save(){
+        try {
+          buildPdf(d).save('Esther-Txe-property-calculations-' + d.iso + '.pdf');
+          if (pdfHint) pdfHint.textContent = 'Your PDF has been downloaded. If you cannot find it, check your Downloads folder.';
+        } catch (e) { printReport(d); }
+      }
+      if (window.jspdf) return save();
+      pdfBtn.disabled = true; pdfBtn.textContent = 'Preparing PDF…';
+      loadPdfLib().then(save, function(){ printReport(d); }).then(function(){
+        pdfBtn.disabled = false; pdfBtn.textContent = label;
+      });
     });
   });
 

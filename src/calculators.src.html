@@ -118,9 +118,9 @@
           <button class="tab" role="tab" id="tab-duty" aria-controls="duty" aria-selected="true" tabindex="0">Stamp duty</button>
           <button class="tab" role="tab" id="tab-afford" aria-controls="afford" aria-selected="false" tabindex="-1">How much I can borrow</button>
         </div>
-        <button class="btn btn-outline pdf-btn" type="button" id="pdf-btn" aria-describedby="pdf-hint">Download both as PDF</button>
+        <button class="btn btn-outline pdf-btn" type="button" id="pdf-btn" data-pdf aria-describedby="pdf-hint">Download as PDF</button>
       </div>
-      <p class="pdf-hint" id="pdf-hint" aria-live="polite">Downloads one PDF with both calculations and your figures.</p>
+      <p class="pdf-hint" id="pdf-hint" aria-live="polite">Downloads one PDF with your stamp duty, borrowing and rental cashflow figures.</p>
 
       <form class="calc tool" role="tabpanel" id="duty" aria-labelledby="tab-duty">
         <div>
@@ -242,10 +242,12 @@
         <div>
           <p class="tool-intro">What a rented property leaves you each month after the instalment, MCST and sinking fund fees and property tax.</p>
           <div class="fields">
-            <div class="f"><label for="c-rent">Monthly rental income (S$)</label><input id="c-rent" inputmode="numeric" autocomplete="off" value="3,800"></div>
-            <div class="f"><label for="c-loan">Loan amount (S$)</label><input id="c-loan" inputmode="numeric" autocomplete="off" value="900,000"></div>
+            <div class="f"><label for="c-price">Property price (S$)</label><input id="c-price" inputmode="numeric" autocomplete="off" value="1,200,000"></div>
+            <div class="f"><label for="c-ltv">Loan (% of price)</label><input id="c-ltv" inputmode="decimal" autocomplete="off" value="75"></div>
+            <div class="f f-derived"><label for="c-loan">Loan amount (S$)</label><input id="c-loan" readonly tabindex="-1" aria-live="polite" value="900,000"></div>
             <div class="f"><label for="c-years">Loan tenure (years)</label><input id="c-years" inputmode="numeric" autocomplete="off" value="30"></div>
             <div class="f"><label for="c-rate">Interest rate (% a year)</label><input id="c-rate" inputmode="decimal" autocomplete="off" value="2.6"></div>
+            <div class="f"><label for="c-rent">Monthly rental income (S$)</label><input id="c-rent" inputmode="numeric" autocomplete="off" value="3,800"></div>
             <div class="f"><label for="c-mcst">Monthly MCST &amp; sinking fund fees (S$)</label><input id="c-mcst" inputmode="numeric" autocomplete="off" value="350"></div>
             <div class="f"><label for="c-tax">Monthly property tax (S$)</label><input id="c-tax" inputmode="numeric" autocomplete="off" value="300"></div>
           </div>
@@ -261,6 +263,7 @@
             <tr class="total"><th scope="row" id="c-r-label">Cashflow a month</th><td id="c-r-net">–</td></tr>
           </table>
           <p class="calc-note" id="c-note">The principal part of each instalment is still being paid with the tenant's rent, and it reduces your loan amount.</p>
+          <div class="tool-pdf"><button class="btn btn-outline pdf-btn" type="button" data-pdf aria-describedby="pdf-hint-cash">Download as PDF</button><p class="pdf-hint" id="pdf-hint-cash" aria-live="polite">Includes stamp duty and borrowing too.</p></div>
         </div>
       </form>
 

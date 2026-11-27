@@ -182,7 +182,9 @@
   });
   // Monthly cashflow on a rented property
   wire($('panel-cash'), function(){
-    var rent = num($('c-rent')), L = num($('c-loan')), rate = num($('c-rate')), mcst = num($('c-mcst')), tax = num($('c-tax'));
+    var L = Math.round(num($('c-price')) * Math.min(100, num($('c-ltv'))) / 100);
+    $('c-loan').value = L.toLocaleString('en-SG');
+    var rent = num($('c-rent')), rate = num($('c-rate')), mcst = num($('c-mcst')), tax = num($('c-tax'));
     var pay = Math.round(pmt(L, rate, num($('c-years')))), int1 = Math.min(pay, Math.round(L * rate / 1200)), prin = pay - int1;
     var net = rent - pay - mcst - tax, word = net >= 0 ? 'Positive' : 'Negative';
     $('c-label').textContent = word + ' cashflow a month';
@@ -224,7 +226,7 @@
     $('y-inc').textContent = money(inc);
   });
 
-  // Combined PDF of both quick checks.
+  // Combined PDF: stamp duty, borrowing and rental cashflow.
   // Builds a real PDF file with jsPDF (loaded from cdnjs only when the calculators come into view),
   // so it downloads in browsers that ignore the print window. Falls back to the print window if it can't load.
   function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -250,8 +252,8 @@
   var BANK = 'Estimate only. The final loan amount and purchase price are subject to the bank\'s approval, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included in the loan figures. MAS rules and IRAS rates checked on 26 November 2026.';
 
   function reportData(){
-    Array.prototype.forEach.call(document.querySelectorAll('#duty input, #afford input'), tidy);
-    $('duty').dispatchEvent(new Event('change')); $('afford').dispatchEvent(new Event('change'));
+    Array.prototype.forEach.call(document.querySelectorAll('#duty input, #afford input, #panel-cash input:not([readonly])'), tidy);
+    ['duty', 'afford', 'panel-cash'].forEach(function(id){ $(id).dispatchEvent(new Event('change')); });
     var now = new Date();
     return {
       today: now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' }),
@@ -260,7 +262,9 @@
         { title: '1. Stamp duty on a purchase', key: [['Total stamp duty', $('d-total').textContent]],
           inputs: inputsOf($('duty')), results: resultsOf($('duty').querySelector('table')), notes: notesOf(['d-note', 'd-note-non']) },
         { title: '2. How much I can borrow', key: [['Loan you may be eligible for', $('a-loan').textContent], [$('a-price-label').textContent, $('a-price').textContent]],
-          inputs: inputsOf($('afford')), results: resultsOf($('afford').querySelector('table')), notes: notesOf(['a-why']), bank: true }
+          inputs: inputsOf($('afford')), results: resultsOf($('afford').querySelector('table')), notes: notesOf(['a-why']), bank: true },
+        { title: '3. Monthly cashflow on a rented property', key: [[$('c-label').textContent, $('c-net').textContent]],
+          inputs: inputsOf($('panel-cash')), results: resultsOf($('panel-cash').querySelector('table')), notes: notesOf(['c-note']) }
       ]
     };
   }
@@ -279,7 +283,7 @@
       }).join('') +
       '<div class="pr-foot"><p>' + esc(DISCLAIMER) + '</p><p class="pr-cta">To go through these numbers together, contact me:</p>' + contact + '</div>';
     var title = document.title;
-    document.title = 'Esther Txe - Stamp duty and borrowing - ' + d.today;
+    document.title = 'Esther Txe - Property calculations - ' + d.today;
     window.addEventListener('afterprint', function restore(){ document.title = title; window.removeEventListener('afterprint', restore); });
     window.print();
   }
@@ -365,25 +369,28 @@
     });
     return pdfLib;
   }
-  var pdfBtn = $('pdf-btn'), pdfHint = $('pdf-hint');
+  var pdfBtns = document.querySelectorAll('[data-pdf]');
   // Load the library ahead of time once the calculators are on screen, so the click downloads straight away
-  if (pdfBtn && 'IntersectionObserver' in window){
+  if (pdfBtns.length && 'IntersectionObserver' in window){
     var pre = new IntersectionObserver(function(es){ if (es.some(function(e){ return e.isIntersecting; })){ loadPdfLib().catch(function(){}); pre.disconnect(); } }, { rootMargin: '400px' });
     pre.observe($('numbers'));
   }
-  if (pdfBtn) pdfBtn.addEventListener('pointerenter', function(){ loadPdfLib().catch(function(){}); });
-  if (pdfBtn) pdfBtn.addEventListener('click', function(){
-    var d = reportData();
-    function save(){
-      try {
-        buildPdf(d).save('Esther-Txe-stamp-duty-and-borrowing-' + d.iso + '.pdf');
-        pdfHint.textContent = 'Your PDF has been downloaded. If you cannot find it, check your Downloads folder.';
-      } catch (e) { printReport(d); }
-    }
-    if (window.jspdf) return save();
-    pdfBtn.disabled = true; pdfBtn.textContent = 'Preparing PDF…';
-    loadPdfLib().then(save, function(){ printReport(d); }).then(function(){
-      pdfBtn.disabled = false; pdfBtn.textContent = 'Download both as PDF';
+  Array.prototype.forEach.call(pdfBtns, function(pdfBtn){
+    var pdfHint = $(pdfBtn.getAttribute('aria-describedby')), label = pdfBtn.textContent;
+    pdfBtn.addEventListener('pointerenter', function(){ loadPdfLib().catch(function(){}); });
+    pdfBtn.addEventListener('click', function(){
+      var d = reportData();
+      function save(){
+        try {
+          buildPdf(d).save('Esther-Txe-property-calculations-' + d.iso + '.pdf');
+          if (pdfHint) pdfHint.textContent = 'Your PDF has been downloaded. If you cannot find it, check your Downloads folder.';
+        } catch (e) { printReport(d); }
+      }
+      if (window.jspdf) return save();
+      pdfBtn.disabled = true; pdfBtn.textContent = 'Preparing PDF…';
+      loadPdfLib().then(save, function(){ printReport(d); }).then(function(){
+        pdfBtn.disabled = false; pdfBtn.textContent = label;
+      });
     });
   });
 
