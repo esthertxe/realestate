@@ -1,6 +1,6 @@
 # Esther Txe, Property Advisor (Singapore)
 
-> Esther Txe is a CEA-registered property advisor in Singapore (CEA Registration No. R060284E). She shows clients the calculations behind each property option and explains them in plain language. Focus: Singapore residential property.
+> Esther Txe is a CEA-registered property advisor in Singapore (CEA Registration No. R060284E). She shows clients the calculations behind each property option and explains them in plain language. Focus: Singapore residential, industrial and commercial property, for sale and lease.
 
 Website: https://www.esthertxe.com/
 
@@ -23,6 +23,12 @@ Website: https://www.esthertxe.com/
 - Affordability with a bank loan: estimated maximum loan and maximum purchase price for private residential, EC, HDB flat (bank loan) or commercial and industrial property, using salary, variable income, existing debts, age, tenure and the MAS TDSR (55%), MSR (30%, HDB and EC), medium-term interest rate (4% residential, 5% non-residential) and loan-to-value rules (checked 26 November 2026). The final amount is subject to the bank's approval.
 - Rental cashflow and yield: from one set of figures (price, loan %, tenure, rate, rent, MCST and sinking fund fees, property tax, upkeep), the monthly cashflow after the instalment, showing positive or negative cashflow and the principal portion that reduces the loan, plus gross and net rental yield before the loan.
 - Sale proceeds: cash in hand after the loan, selling costs, Seller's Stamp Duty (worked out from how long the property was owned and when it was bought: residential on or after 4 Jul 2025, residential 11 Mar 2017 to 3 Jul 2025, industrial or commercial) and any early-repayment penalty, with the CPF refund shown separately.
+
+## Sale and lease by property type
+- Residential (HDB flats, executive condominiums, private homes): https://www.esthertxe.com/residential.html
+- Industrial (factories, warehouses, other industrial space): https://www.esthertxe.com/industrial.html
+- Commercial (offices, shops, other commercial space): https://www.esthertxe.com/commercial.html
+Each page covers selling, buying, leasing out and renting, the key rules (stamp duty, Seller's Stamp Duty, GST, bank loan limits, approved use, minimum rental periods) and how to ask for current listings.
 
 ## Process
 1. Understand: goals, timeline, finances and current property position.

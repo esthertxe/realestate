@@ -357,3 +357,19 @@ address{font-style:normal}
 .f-derived input{color:var(--olive,var(--ink));font-weight:600;border-bottom-style:dashed;cursor:default}
 .tool-pdf{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;margin-top:1.4rem}
 .tool-pdf .pdf-hint{margin:0;text-align:left}
+
+/* ---------- PROPERTY TYPE PAGES ---------- */
+.type-switch{display:flex;flex-wrap:wrap;gap:.5rem}
+.type-switch a{text-decoration:none;font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;font-weight:500;padding:.6rem .9rem;border:1px solid rgba(248,243,237,.45);color:var(--cream)}
+.type-switch a:hover{border-color:var(--cream)}
+.type-switch a[aria-current="page"]{background:#f8f3ed;color:#34321f;border-color:#f8f3ed}
+.listings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem clamp(2rem,5vw,4rem);border-top:1px solid var(--line);padding-top:1.75rem}
+.listing-col > .eyebrow{margin-bottom:1rem;color:var(--olive);font-weight:600}
+.listing-empty{background:var(--card);padding:1.5rem}
+.listing-empty p{color:var(--muted);margin-bottom:1.25rem;max-width:30rem}
+.listing{border-top:1px solid var(--line);padding-block:1.25rem}
+.listing img{width:100%;height:auto;display:block;margin-bottom:1rem}
+.listing-price{font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.6rem;color:var(--olive)}
+.listing h4{font-weight:500;font-size:1.1rem;margin:.25rem 0}
+.listing-meta{color:var(--muted);font-size:.9rem}
+@media (max-width:760px){.listings{grid-template-columns:1fr}}

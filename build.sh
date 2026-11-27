@@ -44,7 +44,7 @@ if [ -f "$A/villa-dusk.jpg" ]; then
 fi
 
 # Build each page: pull in the shared CSS/JS, inline images (and set real width/height)
-for PAGE in index calculators; do
+for PAGE in index calculators residential industrial commercial; do
 ruby -e '
   require "base64"
   page = ARGV[0]
