@@ -22,7 +22,7 @@ Website: https://www.esthertxe.com/
 - Stamp duty on a purchase: residential (Buyer's Stamp Duty plus Additional Buyer's Stamp Duty for one individual buyer) or commercial and industrial (Buyer's Stamp Duty only, top rate 5%). Rates checked against IRAS on 26 November 2026.
 - Affordability with a bank loan: estimated maximum loan and maximum purchase price for private residential, EC, HDB flat (bank loan) or commercial and industrial property, using salary, variable income, existing debts, age, tenure and the MAS TDSR (55%), MSR (30%, HDB and EC), medium-term interest rate (4% residential, 5% non-residential) and loan-to-value rules (checked 26 November 2026). The final amount is subject to the bank's approval.
 - Rental cashflow and yield: from one set of figures (price, loan %, tenure, rate, rent, MCST and sinking fund fees, property tax, upkeep), the monthly cashflow after the instalment, showing positive or negative cashflow and the principal portion that reduces the loan, plus gross and net rental yield before the loan.
-- Sale proceeds: cash in hand after the loan, selling costs, Seller's Stamp Duty and any early-repayment penalty, with the CPF refund shown separately.
+- Sale proceeds: cash in hand after the loan, selling costs, Seller's Stamp Duty (worked out from how long the property was owned and when it was bought: residential on or after 4 Jul 2025, residential 11 Mar 2017 to 3 Jul 2025, industrial or commercial) and any early-repayment penalty, with the CPF refund shown separately.
 
 ## Process
 1. Understand: goals, timeline, finances and current property position.

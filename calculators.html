@@ -644,20 +644,37 @@ address{font-style:normal}
             <div class="f"><label for="s-loan">Outstanding loan (S$)</label><input id="s-loan" inputmode="numeric" autocomplete="off" value="600,000"></div>
             <div class="f"><label for="s-cpf">CPF to refund, with accrued interest (S$)</label><input id="s-cpf" inputmode="numeric" autocomplete="off" value="250,000"></div>
             <div class="f"><label for="s-costs">Selling costs: fees, legal (S$)</label><input id="s-costs" inputmode="numeric" autocomplete="off" value="40,000"></div>
-            <div class="f"><label for="s-ssd">Seller's Stamp Duty, if any (S$)</label><input id="s-ssd" inputmode="numeric" autocomplete="off" value="0"></div>
             <div class="f"><label for="s-penalty">Loan early-repayment penalty (S$)</label><input id="s-penalty" inputmode="numeric" autocomplete="off" value="0"></div>
           </div>
+          <fieldset class="grp ssd">
+            <legend>Seller's Stamp Duty (SSD)</legend>
+            <div class="fields">
+              <div class="f"><label for="s-held">How long owned (years)</label><input id="s-held" inputmode="decimal" autocomplete="off" placeholder="e.g. 6" value="6"></div>
+              <div class="f"><label for="s-bought">When was it bought?</label><span class="sel"><select id="s-bought">
+                <option value="r25">On or after 4 Jul 2025 (residential)</option>
+                <option value="r17">11 Mar 2017 – 3 Jul 2025 (residential)</option>
+                <option value="ind">Industrial</option>
+                <option value="com">Commercial (office, retail)</option>
+              </select></span></div>
+            </div>
+            <p class="calc-note" id="s-ssd-note">SSD only applies if sold within the holding period (residential: up to 4 years if bought on or after 4 Jul 2025, up to 3 years if bought 11 Mar 2017 to 3 Jul 2025; industrial: up to 3 years). HDB flats sold after the MOP and long-term owners pay <strong>none</strong>. Commercial (office, retail) has no SSD.</p>
+          </fieldset>
         </div>
         <div aria-live="polite">
           <p class="eyebrow">Cash in hand after the sale</p>
           <p class="figure" id="s-cash">–</p>
-          <table class="res">
+          <table class="res" id="s-table">
             <tr><th scope="row">Selling price</th><td id="s-r-price">–</td></tr>
-            <tr><th scope="row">Less loan, costs, duty and penalty</th><td id="s-r-out">–</td></tr>
-            <tr><th scope="row">Returned to your CPF</th><td id="s-r-cpf">–</td></tr>
+            <tr><th scope="row">Less outstanding loan</th><td id="s-r-loan">–</td></tr>
+            <tr><th scope="row">Less selling costs</th><td id="s-r-costs">–</td></tr>
+            <tr><th scope="row" id="s-r-ssd-label">Less Seller's Stamp Duty</th><td id="s-r-ssd">–</td></tr>
+            <tr><th scope="row">Less early-repayment penalty</th><td id="s-r-pen">–</td></tr>
+            <tr><th scope="row">Less CPF returned to your CPF account</th><td id="s-r-cpf">–</td></tr>
             <tr class="total"><th scope="row">Cash in hand</th><td id="s-r-cash">–</td></tr>
           </table>
+          <p class="calc-note" id="s-ssd-status"></p>
           <p class="calc-note" id="s-warn">Your CPF statement shows the exact refund, including accrued interest. Your bank can tell you any penalty for repaying early.</p>
+          <div class="tool-pdf"><button class="btn btn-outline pdf-btn" type="button" data-pdf="sale" aria-describedby="pdf-hint-sale">Download as PDF</button><p class="pdf-hint" id="pdf-hint-sale" aria-live="polite">Your sale proceeds, with your figures.</p></div>
         </div>
       </form>
 
@@ -911,14 +928,38 @@ address{font-style:normal}
   });
 
   // Sale proceeds
+  // Seller's Stamp Duty (IRAS rates checked 28 Nov 2026), by holding period: up to 1 year, more than 1 and up to 2, and so on.
+  // Charged on the selling price or market value, whichever is higher, rounded down to the dollar.
+  var SSD = {
+    r25: { rates: [16, 12, 8, 4], name: 'residential bought on or after 4 Jul 2025' },
+    r17: { rates: [12, 8, 4], name: 'residential bought 11 Mar 2017 to 3 Jul 2025' },
+    ind: { rates: [15, 10, 5], name: 'industrial' },
+    com: { rates: [], name: 'commercial' }
+  };
   wire($('panel-sale'), function(){
-    var p = num($('s-price')), out = num($('s-loan')) + num($('s-costs')) + num($('s-ssd')) + num($('s-penalty')), cpf = num($('s-cpf'));
-    var cash = p - out - cpf;
+    var p = num($('s-price')), loan = num($('s-loan')), costs = num($('s-costs')), pen = num($('s-penalty')), cpf = num($('s-cpf'));
+    var heldRaw = $('s-held').value.trim(), held = num($('s-held')), t = SSD[$('s-bought').value];
+    var rate = 0, status;
+    if (!t.rates.length) status = 'No SSD: commercial property (office, retail) is not subject to SSD.';
+    else if (heldRaw === '') status = 'Enter how long you have owned the property to work out any SSD.';
+    else {
+      var i = Math.max(0, Math.ceil(held) - 1);
+      if (i < t.rates.length){
+        rate = t.rates[i];
+        status = 'SSD at ' + rate + '% (' + t.name + ', owned ' + held + (held === 1 ? ' year' : ' years') + '). IRAS charges SSD on the selling price or market value, whichever is higher; this uses the selling price.';
+      } else status = 'No SSD: owned more than ' + t.rates.length + ' years (' + t.name + ').';
+    }
+    var ssd = Math.floor(p * rate / 100), cash = p - loan - costs - ssd - pen - cpf;
     $('s-cash').textContent = money(cash);
     $('s-r-price').textContent = money(p);
-    $('s-r-out').textContent = money(-out);
-    $('s-r-cpf').textContent = money(cpf);
+    $('s-r-loan').textContent = money(-loan);
+    $('s-r-costs').textContent = money(-costs);
+    $('s-r-ssd-label').textContent = 'Less Seller’s Stamp Duty' + (rate ? ' (' + rate + '%)' : '');
+    $('s-r-ssd').textContent = money(-ssd);
+    $('s-r-pen').textContent = money(-pen);
+    $('s-r-cpf').textContent = money(-cpf);
     $('s-r-cash').textContent = money(cash);
+    $('s-ssd-status').textContent = status;
     $('s-warn').textContent = cash < 0
       ? 'The sale does not cover the loan, costs and CPF refund. You may need to top up the shortfall in cash; talk to your bank and CPF Board early.'
       : 'Your CPF statement shows the exact refund, including accrued interest. Your bank can tell you any penalty for repaying early.';
@@ -952,7 +993,7 @@ address{font-style:normal}
 
   // Two separate reports: 'numbers' (stamp duty and borrowing) and 'own' (rental cashflow and yield)
   function reportData(kind){
-    var forms = kind === 'own' ? ['panel-cash'] : ['duty', 'afford'];
+    var forms = kind === 'own' ? ['panel-cash'] : kind === 'sale' ? ['panel-sale'] : ['duty', 'afford'];
     forms.forEach(function(id){
       Array.prototype.forEach.call($(id).querySelectorAll('input:not([readonly])'), tidy);
       $(id).dispatchEvent(new Event('change'));
@@ -961,7 +1002,13 @@ address{font-style:normal}
       today: now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' }),
       iso: now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
     };
-    if (kind === 'own'){
+    if (kind === 'sale'){
+      d.head = ['Run your', 'own numbers']; d.file = 'sale-proceeds'; d.name = 'Sale proceeds';
+      d.sections = [
+        { title: 'Sale proceeds', key: [['Cash in hand after the sale', $('s-cash').textContent]],
+          inputs: inputsOf($('panel-sale')), results: resultsOf($('s-table')), notes: notesOf(['s-ssd-status', 's-warn']) }
+      ];
+    } else if (kind === 'own'){
       d.head = ['Run your', 'own numbers']; d.file = 'rental-cashflow-and-yield'; d.name = 'Rental cashflow and yield';
       d.sections = [
         { title: '1. Monthly cashflow on a rented property', key: [[$('c-label').textContent, $('c-net').textContent]],

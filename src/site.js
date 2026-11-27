@@ -212,14 +212,38 @@
   });
 
   // Sale proceeds
+  // Seller's Stamp Duty (IRAS rates checked 28 Nov 2026), by holding period: up to 1 year, more than 1 and up to 2, and so on.
+  // Charged on the selling price or market value, whichever is higher, rounded down to the dollar.
+  var SSD = {
+    r25: { rates: [16, 12, 8, 4], name: 'residential bought on or after 4 Jul 2025' },
+    r17: { rates: [12, 8, 4], name: 'residential bought 11 Mar 2017 to 3 Jul 2025' },
+    ind: { rates: [15, 10, 5], name: 'industrial' },
+    com: { rates: [], name: 'commercial' }
+  };
   wire($('panel-sale'), function(){
-    var p = num($('s-price')), out = num($('s-loan')) + num($('s-costs')) + num($('s-ssd')) + num($('s-penalty')), cpf = num($('s-cpf'));
-    var cash = p - out - cpf;
+    var p = num($('s-price')), loan = num($('s-loan')), costs = num($('s-costs')), pen = num($('s-penalty')), cpf = num($('s-cpf'));
+    var heldRaw = $('s-held').value.trim(), held = num($('s-held')), t = SSD[$('s-bought').value];
+    var rate = 0, status;
+    if (!t.rates.length) status = 'No SSD: commercial property (office, retail) is not subject to SSD.';
+    else if (heldRaw === '') status = 'Enter how long you have owned the property to work out any SSD.';
+    else {
+      var i = Math.max(0, Math.ceil(held) - 1);
+      if (i < t.rates.length){
+        rate = t.rates[i];
+        status = 'SSD at ' + rate + '% (' + t.name + ', owned ' + held + (held === 1 ? ' year' : ' years') + '). IRAS charges SSD on the selling price or market value, whichever is higher; this uses the selling price.';
+      } else status = 'No SSD: owned more than ' + t.rates.length + ' years (' + t.name + ').';
+    }
+    var ssd = Math.floor(p * rate / 100), cash = p - loan - costs - ssd - pen - cpf;
     $('s-cash').textContent = money(cash);
     $('s-r-price').textContent = money(p);
-    $('s-r-out').textContent = money(-out);
-    $('s-r-cpf').textContent = money(cpf);
+    $('s-r-loan').textContent = money(-loan);
+    $('s-r-costs').textContent = money(-costs);
+    $('s-r-ssd-label').textContent = 'Less Seller’s Stamp Duty' + (rate ? ' (' + rate + '%)' : '');
+    $('s-r-ssd').textContent = money(-ssd);
+    $('s-r-pen').textContent = money(-pen);
+    $('s-r-cpf').textContent = money(-cpf);
     $('s-r-cash').textContent = money(cash);
+    $('s-ssd-status').textContent = status;
     $('s-warn').textContent = cash < 0
       ? 'The sale does not cover the loan, costs and CPF refund. You may need to top up the shortfall in cash; talk to your bank and CPF Board early.'
       : 'Your CPF statement shows the exact refund, including accrued interest. Your bank can tell you any penalty for repaying early.';
@@ -253,7 +277,7 @@
 
   // Two separate reports: 'numbers' (stamp duty and borrowing) and 'own' (rental cashflow and yield)
   function reportData(kind){
-    var forms = kind === 'own' ? ['panel-cash'] : ['duty', 'afford'];
+    var forms = kind === 'own' ? ['panel-cash'] : kind === 'sale' ? ['panel-sale'] : ['duty', 'afford'];
     forms.forEach(function(id){
       Array.prototype.forEach.call($(id).querySelectorAll('input:not([readonly])'), tidy);
       $(id).dispatchEvent(new Event('change'));
@@ -262,7 +286,13 @@
       today: now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' }),
       iso: now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
     };
-    if (kind === 'own'){
+    if (kind === 'sale'){
+      d.head = ['Run your', 'own numbers']; d.file = 'sale-proceeds'; d.name = 'Sale proceeds';
+      d.sections = [
+        { title: 'Sale proceeds', key: [['Cash in hand after the sale', $('s-cash').textContent]],
+          inputs: inputsOf($('panel-sale')), results: resultsOf($('s-table')), notes: notesOf(['s-ssd-status', 's-warn']) }
+      ];
+    } else if (kind === 'own'){
       d.head = ['Run your', 'own numbers']; d.file = 'rental-cashflow-and-yield'; d.name = 'Rental cashflow and yield';
       d.sections = [
         { title: '1. Monthly cashflow on a rented property', key: [[$('c-label').textContent, $('c-net').textContent]],

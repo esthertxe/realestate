@@ -286,20 +286,37 @@
             <div class="f"><label for="s-loan">Outstanding loan (S$)</label><input id="s-loan" inputmode="numeric" autocomplete="off" value="600,000"></div>
             <div class="f"><label for="s-cpf">CPF to refund, with accrued interest (S$)</label><input id="s-cpf" inputmode="numeric" autocomplete="off" value="250,000"></div>
             <div class="f"><label for="s-costs">Selling costs: fees, legal (S$)</label><input id="s-costs" inputmode="numeric" autocomplete="off" value="40,000"></div>
-            <div class="f"><label for="s-ssd">Seller's Stamp Duty, if any (S$)</label><input id="s-ssd" inputmode="numeric" autocomplete="off" value="0"></div>
             <div class="f"><label for="s-penalty">Loan early-repayment penalty (S$)</label><input id="s-penalty" inputmode="numeric" autocomplete="off" value="0"></div>
           </div>
+          <fieldset class="grp ssd">
+            <legend>Seller's Stamp Duty (SSD)</legend>
+            <div class="fields">
+              <div class="f"><label for="s-held">How long owned (years)</label><input id="s-held" inputmode="decimal" autocomplete="off" placeholder="e.g. 6" value="6"></div>
+              <div class="f"><label for="s-bought">When was it bought?</label><span class="sel"><select id="s-bought">
+                <option value="r25">On or after 4 Jul 2025 (residential)</option>
+                <option value="r17">11 Mar 2017 – 3 Jul 2025 (residential)</option>
+                <option value="ind">Industrial</option>
+                <option value="com">Commercial (office, retail)</option>
+              </select></span></div>
+            </div>
+            <p class="calc-note" id="s-ssd-note">SSD only applies if sold within the holding period (residential: up to 4 years if bought on or after 4 Jul 2025, up to 3 years if bought 11 Mar 2017 to 3 Jul 2025; industrial: up to 3 years). HDB flats sold after the MOP and long-term owners pay <strong>none</strong>. Commercial (office, retail) has no SSD.</p>
+          </fieldset>
         </div>
         <div aria-live="polite">
           <p class="eyebrow">Cash in hand after the sale</p>
           <p class="figure" id="s-cash">–</p>
-          <table class="res">
+          <table class="res" id="s-table">
             <tr><th scope="row">Selling price</th><td id="s-r-price">–</td></tr>
-            <tr><th scope="row">Less loan, costs, duty and penalty</th><td id="s-r-out">–</td></tr>
-            <tr><th scope="row">Returned to your CPF</th><td id="s-r-cpf">–</td></tr>
+            <tr><th scope="row">Less outstanding loan</th><td id="s-r-loan">–</td></tr>
+            <tr><th scope="row">Less selling costs</th><td id="s-r-costs">–</td></tr>
+            <tr><th scope="row" id="s-r-ssd-label">Less Seller's Stamp Duty</th><td id="s-r-ssd">–</td></tr>
+            <tr><th scope="row">Less early-repayment penalty</th><td id="s-r-pen">–</td></tr>
+            <tr><th scope="row">Less CPF returned to your CPF account</th><td id="s-r-cpf">–</td></tr>
             <tr class="total"><th scope="row">Cash in hand</th><td id="s-r-cash">–</td></tr>
           </table>
+          <p class="calc-note" id="s-ssd-status"></p>
           <p class="calc-note" id="s-warn">Your CPF statement shows the exact refund, including accrued interest. Your bank can tell you any penalty for repaying early.</p>
+          <div class="tool-pdf"><button class="btn btn-outline pdf-btn" type="button" data-pdf="sale" aria-describedby="pdf-hint-sale">Download as PDF</button><p class="pdf-hint" id="pdf-hint-sale" aria-live="polite">Your sale proceeds, with your figures.</p></div>
         </div>
       </form>
 
