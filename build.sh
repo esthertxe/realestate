@@ -43,10 +43,13 @@ if [ -f "$A/villa-dusk.jpg" ]; then
   jpg "$B/villa.jpg" "$B/villa.jpg" 85
 fi
 
-# Inline images (and set real width/height) into index.html
+# Build each page: pull in the shared CSS/JS, inline images (and set real width/height)
+for PAGE in index calculators; do
 ruby -e '
   require "base64"
-  html = File.read("src/index.src.html", encoding: "UTF-8")
+  page = ARGV[0]
+  html = File.read("src/#{page}.src.html", encoding: "UTF-8")
+  html.gsub!(/\/\* @inline ([\w.-]+) \*\/\n/) { File.read("src/#{$1}", encoding: "UTF-8") }
   html.gsub!(/<img([^>]*?)src="(assets\/build\/[^"]+)"([^>]*)>/) do
     pre, path, post = $1, $2, $3
     if File.exist?(path)
@@ -58,6 +61,7 @@ ruby -e '
       warn "missing #{path} (left as a file reference)"; $&
     end
   end
-  File.write("index.html", html)
-  puts "index.html: #{(html.bytesize/1024.0).round} KB"
-'
+  File.write("#{page}.html", html)
+  puts "#{page}.html: #{(html.bytesize/1024.0).round} KB"
+' "$PAGE"
+done

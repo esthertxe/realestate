@@ -197,7 +197,7 @@ button,input,select,textarea{font:inherit;color:inherit}
   linear-gradient(180deg,rgba(22,21,17,.62) 0%,rgba(22,21,17,0) 22%),
   linear-gradient(0deg,rgba(22,21,17,.6) 0%,rgba(22,21,17,0) 38%),
   linear-gradient(90deg,rgba(22,21,17,.8) 0%,rgba(22,21,17,.55) 38%,rgba(22,21,17,.18) 62%,rgba(22,21,17,.5) 100%)}
-.panel::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.25;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.panel::after,.page-head::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.25;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 .nav{display:flex;align-items:center;gap:2rem;padding:1.4rem clamp(1.1rem,2.6vw,2.4rem)}
 .brand{font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.7rem;line-height:1;text-decoration:none;margin-right:auto;white-space:nowrap}
@@ -438,6 +438,35 @@ address{font-style:normal}
 .foot-top .brand{font-size:1.4rem;margin:0}
 .foot p + p{margin-top:.6rem}
 .foot .disc{margin-top:1.25rem;max-width:52rem}
+
+/* ---------- HOME: CALCULATORS TEASER ---------- */
+.calc-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:2.5rem;border-bottom:1px solid var(--line)}
+.calc-list a{display:grid;grid-template-columns:1fr auto;gap:.25rem 1rem;padding:1.25rem 0;border-top:1px solid var(--line);text-decoration:none;height:100%}
+.calc-list strong{font-weight:500;font-size:1.15rem}
+.calc-list span{grid-column:1;color:var(--muted);font-size:.92rem;line-height:1.45}
+.calc-list i{grid-column:2;grid-row:1 / span 2;align-self:center;font-style:normal;color:var(--olive)}
+.calc-list a:hover strong{color:var(--olive)}
+.calc-cta{margin-top:2rem}
+@media (max-width:1000px){.calc-list{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.calc-list{grid-template-columns:1fr}}
+
+/* ---------- CALCULATORS PAGE ---------- */
+.page-head{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(180deg,#2c2b27 0%,#4a4538 65%,#2c2b27 100%);color:var(--cream);padding-top:env(safe-area-inset-top)}
+.page-head::after{z-index:-1}
+.page-head-in{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.page-head .nav{padding-inline:0}
+.nav-links a[aria-current="page"]{border-bottom-color:currentColor}
+.page-title{padding:clamp(3rem,8vw,6rem) 0 clamp(2.5rem,5vw,4rem)}
+.crumbs{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:rgba(248,243,237,.75);margin-bottom:1.25rem}
+.crumbs a{text-decoration:none;border-bottom:1px solid rgba(248,243,237,.4)}
+.page-title h1{font-weight:500;text-transform:uppercase;letter-spacing:-.015em;line-height:1;font-size:clamp(2.4rem,6vw,5.4rem)}
+.page-title h1 em{display:block;font-family:var(--serif);font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;font-size:1.05em;margin-top:.06em}
+.page-lead{max-width:36rem;margin:1.5rem 0 1.75rem;font-size:1.1rem;line-height:1.55;color:rgba(248,243,237,.88)}
+.calc-help-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5rem clamp(2rem,6vw,6rem);align-items:end}
+.calc-help p{max-width:32rem}
+.calc-help-btns{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
+.calc-help .btn-outline{color:var(--cream)}
+@media (max-width:800px){.calc-help-in{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -459,7 +488,7 @@ address{font-style:normal}
       <a class="brand" href="#main">Esther Txe</a>
       <ul class="nav-links">
         <li><a href="#start">Start here</a></li>
-        <li><a href="#tools">Calculators</a></li>
+        <li><a href="calculators.html">Calculators</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#process">Process</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -481,125 +510,24 @@ address{font-style:normal}
 
 <main id="main" tabindex="-1">
 
-  <section class="sec" id="numbers" aria-labelledby="numbers-h">
-    <div class="wrap">
-      <div class="intro">
-        <h2 class="hd" id="numbers-h">Know the numbers <em>before you commit</em></h2>
-        <div class="intro-copy">
-          <p>Whether you are buying, selling, upgrading or investing, a good decision starts with a few honest figures. Start with these two, run the rest below, or bring them to me and we will go through them together.</p>
-          <p>Every figure I give you comes with the working behind it, so you can check it yourself.</p>
-        </div>
+<section class="sec" id="calculators" aria-labelledby="calc-h">
+  <div class="wrap">
+    <div class="intro">
+      <h2 class="hd" id="calc-h">Know the numbers <em>before you commit</em></h2>
+      <div class="intro-copy">
+        <p>Five free calculators for Singapore property, from stamp duty to how much a bank may lend you. Every figure comes with the working behind it, and you can download your results as a PDF.</p>
       </div>
-
-      <div class="tab-row">
-        <div class="tablist" role="tablist" aria-label="Quick checks">
-          <button class="tab" role="tab" id="tab-duty" aria-controls="duty" aria-selected="true" tabindex="0">Stamp duty</button>
-          <button class="tab" role="tab" id="tab-afford" aria-controls="afford" aria-selected="false" tabindex="-1">How much I can borrow</button>
-        </div>
-        <button class="btn btn-outline pdf-btn" type="button" id="pdf-btn" aria-describedby="pdf-hint">Download both as PDF</button>
-      </div>
-      <p class="pdf-hint" id="pdf-hint" aria-live="polite">Downloads one PDF with both calculations and your figures.</p>
-
-      <form class="calc tool" role="tabpanel" id="duty" aria-labelledby="tab-duty">
-        <div>
-          <p class="eyebrow" id="duty-h">Stamp duty on a purchase</p>
-          <div class="fields">
-            <div class="f"><label for="d-type">Property type</label><span class="sel"><select id="d-type"><option value="res">Residential</option><option value="non">Commercial or industrial</option></select></span></div>
-            <div class="f"><label for="d-price">Purchase price (S$)</label><input id="d-price" inputmode="numeric" autocomplete="off" value="1,500,000"></div>
-            <div class="f res-only"><label for="d-buyer">Buyer</label><span class="sel"><select id="d-buyer"><option value="sc">Singapore citizen</option><option value="pr">Permanent resident</option><option value="fr">Foreigner</option></select></span></div>
-            <div class="f res-only"><label for="d-count">Homes owned after this purchase</label><span class="sel"><select id="d-count"><option value="1">1 (this is the first)</option><option value="2">2</option><option value="3">3 or more</option></select></span></div>
-          </div>
-          <div class="calc-actions">
-            <button class="btn btn-olive" type="submit">Calculate</button>
-            <p class="calc-status" id="d-status" aria-live="polite">Figures also update as you change any option.</p>
-          </div>
-        </div>
-        <div>
-          <p class="eyebrow">Total stamp duty</p>
-          <p class="figure" id="d-total-fig">–</p>
-          <table class="res">
-            <tr><th scope="row">Buyer's Stamp Duty (BSD)</th><td id="d-bsd">–</td></tr>
-            <tr><th scope="row" id="d-absd-label">Additional Buyer's Stamp Duty (ABSD)</th><td id="d-absd">–</td></tr>
-            <tr class="total"><th scope="row">Total stamp duty</th><td id="d-total">–</td></tr>
-          </table>
-          <p class="calc-note" id="d-note">For one individual buyer. Rates checked against <a href="https://www.iras.gov.sg/taxes/stamp-duty/for-property/buying-or-acquiring-property" rel="noopener">IRAS</a> on 26 November 2026. Joint buyers with different profiles, entities, mixed-use property and some HDB cases are treated differently, so confirm your own case with your lawyer before you sign.</p>
-          <p class="calc-note" id="d-note-non" hidden>Commercial and industrial property pays Buyer's Stamp Duty only, with a top rate of 5%; ABSD does not apply. GST may also be payable if the seller is GST-registered, so check with the seller and your lawyer.</p>
-        </div>
-      </form>
-
-      <form class="calc tool" role="tabpanel" id="afford" aria-labelledby="tab-afford" hidden>
-        <div>
-          <p class="eyebrow" id="afford-h">How much can I borrow? Affordability with a bank loan</p>
-          <div class="fields">
-            <div class="f"><label for="a-type">Property type</label><span class="sel"><select id="a-type">
-              <option value="private">Private residential</option>
-              <option value="ec">Executive condominium (EC)</option>
-              <option value="hdb">HDB flat (bank loan)</option>
-              <option value="non">Commercial or industrial</option>
-            </select></span></div>
-            <div class="f"><label for="a-joint">Borrowers</label><span class="sel"><select id="a-joint"><option value="1">One borrower</option><option value="2">Two borrowers (joint)</option></select></span></div>
-          </div>
-
-          <fieldset class="grp">
-            <legend>Borrower 1</legend>
-            <div class="fields">
-              <div class="f"><label for="a-age1">Age</label><input id="a-age1" inputmode="numeric" autocomplete="off" value="35"></div>
-              <div class="f"><label for="a-fix1">Monthly salary, before CPF (S$)</label><input id="a-fix1" inputmode="numeric" autocomplete="off" value="8,000"></div>
-              <div class="f"><label for="a-var1">Variable income a month, e.g. bonus or commission (S$)</label><input id="a-var1" inputmode="numeric" autocomplete="off" value="0"></div>
-            </div>
-          </fieldset>
-          <fieldset class="grp" id="a-b2" hidden>
-            <legend>Borrower 2</legend>
-            <div class="fields">
-              <div class="f"><label for="a-age2">Age</label><input id="a-age2" inputmode="numeric" autocomplete="off" value="35"></div>
-              <div class="f"><label for="a-fix2">Monthly salary, before CPF (S$)</label><input id="a-fix2" inputmode="numeric" autocomplete="off" value="6,000"></div>
-              <div class="f"><label for="a-var2">Variable income a month, e.g. bonus or commission (S$)</label><input id="a-var2" inputmode="numeric" autocomplete="off" value="0"></div>
-            </div>
-          </fieldset>
-          <fieldset class="grp">
-            <legend>Existing monthly repayments</legend>
-            <div class="fields">
-              <div class="f"><label for="a-home">Home loans (S$)</label><input id="a-home" inputmode="numeric" autocomplete="off" value="0"></div>
-              <div class="f"><label for="a-car">Car loans (S$)</label><input id="a-car" inputmode="numeric" autocomplete="off" value="0"></div>
-              <div class="f"><label for="a-other">Credit cards and other loans (S$)</label><input id="a-other" inputmode="numeric" autocomplete="off" value="0"></div>
-              <div class="f" id="a-loans-f"><label for="a-loans">Home loans still outstanding</label><span class="sel"><select id="a-loans"><option value="0">None</option><option value="1">One</option><option value="2">Two or more</option></select></span></div>
-            </div>
-          </fieldset>
-          <fieldset class="grp">
-            <legend>The new loan</legend>
-            <div class="fields">
-              <div class="f"><label for="a-tenure">Loan tenure (years)</label><input id="a-tenure" inputmode="numeric" autocomplete="off" value="30"></div>
-              <div class="f"><label for="a-rate">Bank's interest rate (% a year)</label><input id="a-rate" inputmode="decimal" autocomplete="off" value="2.6"></div>
-              <div class="f" id="a-ltv-f" hidden><label for="a-ltv">Loan the bank offers (% of price)</label><input id="a-ltv" inputmode="decimal" autocomplete="off" value="80"></div>
-            </div>
-          </fieldset>
-          <div class="calc-actions">
-            <button class="btn btn-olive" type="submit">Calculate</button>
-            <p class="calc-status" id="a-status" aria-live="polite">Figures also update as you change any option.</p>
-          </div>
-        </div>
-
-        <div class="afford-out">
-          <p class="eyebrow">Loan you may be eligible for</p>
-          <p class="figure" id="a-loan">–</p>
-          <p class="eyebrow afford-gap" id="a-price-label">Maximum purchase price with a 75% loan</p>
-          <p class="figure" id="a-price">–</p>
-          <table class="res">
-            <tr><th scope="row">Income counted a month</th><td id="a-inc">–</td></tr>
-            <tr><th scope="row">TDSR limit (55%), after existing repayments</th><td id="a-tdsr">–</td></tr>
-            <tr id="a-msr-row"><th scope="row">MSR limit (30%), after existing home loans</th><td id="a-msr">–</td></tr>
-            <tr><th scope="row">Available for mortgage</th><td id="a-avail">–</td></tr>
-            <tr><th scope="row">Banks' stress test rate</th><td id="a-stress">–</td></tr>
-            <tr><th scope="row" id="a-ten-label">Loan tenure</th><td id="a-ten">–</td></tr>
-            <tr><th scope="row">Loan-to-value applied</th><td id="a-ltv-out">–</td></tr>
-            <tr class="total"><th scope="row">Monthly instalment at your rate</th><td id="a-pay">–</td></tr>
-          </table>
-          <p class="calc-note" id="a-why"></p>
-          <p class="calc-note afford-disc"><strong>Estimate only. The final loan amount and purchase price are subject to the bank's approval</strong>, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included. Rules checked against <a href="https://www.mas.gov.sg/regulation/explainers/new-housing-loans" rel="noopener">MAS</a> on 26 November 2026.</p>
-        </div>
-      </form>
     </div>
-  </section>
+    <ul class="calc-list">
+      <li><a href="calculators.html#stamp-duty"><strong>Stamp duty</strong><span>Residential, commercial or industrial, with ABSD by buyer profile</span><i aria-hidden="true">→</i></a></li>
+      <li><a href="calculators.html#borrow"><strong>How much I can borrow</strong><span>Your loan and maximum price under bank TDSR, MSR and loan limits</span><i aria-hidden="true">→</i></a></li>
+      <li><a href="calculators.html#instalment"><strong>Monthly instalment</strong><span>At your rate, and again at a higher test rate</span><i aria-hidden="true">→</i></a></li>
+      <li><a href="calculators.html#sale-proceeds"><strong>Sale proceeds</strong><span>Cash in hand after the loan, costs and CPF refund</span><i aria-hidden="true">→</i></a></li>
+      <li><a href="calculators.html#rental-yield"><strong>Rental yield</strong><span>Gross and net yield after costs and empty months</span><i aria-hidden="true">→</i></a></li>
+    </ul>
+    <p class="calc-cta"><a class="btn btn-olive" href="calculators.html">Open the calculators</a></p>
+  </div>
+</section>
 
   <section class="sec" id="start" aria-labelledby="start-h" style="padding-top:0">
     <div class="wrap">
@@ -615,7 +543,7 @@ address{font-style:normal}
             <h3>Buy <em>with a buffer</em></h3>
             <p>Start with the monthly instalment you can live with, then test it at a higher rate before you settle on a budget.</p>
             <p class="caveat"><strong>When buying may not suit you yet</strong>If the instalment only works at today's rate, or leaves no cash buffer after stamp duty and renovation.</p>
-            <a class="btn btn-olive" href="#tools" data-tool="tab-loan">Test my instalment</a>
+            <a class="btn btn-olive" href="calculators.html#instalment">Test my instalment</a>
           </div>
         </article>
         <article class="intent">
@@ -625,7 +553,7 @@ address{font-style:normal}
             <h3>Sell <em>knowing the net</em></h3>
             <p>See what a sale actually leaves you after the loan, your CPF refund and selling costs, split into cash and CPF.</p>
             <p class="caveat"><strong>When selling now may not suit you</strong>If you may still be within the Seller's Stamp Duty holding period, or the cash left over will not fund your next purchase.</p>
-            <a class="btn btn-olive" href="#tools" data-tool="tab-sale">Work out my proceeds</a>
+            <a class="btn btn-olive" href="calculators.html#sale-proceeds">Work out my proceeds</a>
           </div>
         </article>
         <article class="intent">
@@ -635,7 +563,7 @@ address{font-style:normal}
             <h3>Invest <em>on net yield</em></h3>
             <p>Compare gross and net yield on the same basis, so you know what a property returns after costs and empty months.</p>
             <p class="caveat"><strong>When a purchase may not suit you</strong>If the figures only work with no vacancy, or rely on prices rising to make sense.</p>
-            <a class="btn btn-olive" href="#tools" data-tool="tab-yield">Check the yield</a>
+            <a class="btn btn-olive" href="calculators.html#rental-yield">Check the yield</a>
           </div>
         </article>
       </div>
@@ -645,97 +573,12 @@ address{font-style:normal}
         <ul>
           <li><a href="#faq-upgrade">Upgrading: sell first or buy first? <span aria-hidden="true">→</span></a></li>
           <li><a href="#faq-decouple">Thinking about decoupling <span aria-hidden="true">→</span></a></li>
-          <li><a href="#tools" data-tool="tab-yield">Letting out your property <span aria-hidden="true">→</span></a></li>
-          <li><a href="#numbers" data-tool="tab-afford">Checking what you can borrow <span aria-hidden="true">→</span></a></li>
+          <li><a href="calculators.html#rental-yield">Letting out your property <span aria-hidden="true">→</span></a></li>
+          <li><a href="calculators.html#borrow">Checking what you can borrow <span aria-hidden="true">→</span></a></li>
           <li><a href="#faq-choose">Choosing an advisor: what to ask <span aria-hidden="true">→</span></a></li>
           <li><a href="#faq-cea">Checking my CEA registration <span aria-hidden="true">→</span></a></li>
         </ul>
       </nav>
-    </div>
-  </section>
-
-  <section class="sec" id="tools" aria-labelledby="tools-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2 class="hd" id="tools-h">Run your <em>own numbers</em></h2>
-        <p class="desc">For planning only</p>
-      </div>
-
-      <div class="tablist" role="tablist" aria-label="Calculators">
-        <button class="tab" role="tab" id="tab-loan" aria-controls="panel-loan" aria-selected="true" tabindex="0">Instalment</button>
-        <button class="tab" role="tab" id="tab-sale" aria-controls="panel-sale" aria-selected="false" tabindex="-1">Sale proceeds</button>
-        <button class="tab" role="tab" id="tab-yield" aria-controls="panel-yield" aria-selected="false" tabindex="-1">Rental yield</button>
-      </div>
-
-      <form class="calc tool" role="tabpanel" id="panel-loan" aria-labelledby="tab-loan" onsubmit="return false">
-        <div>
-          <p class="tool-intro">Your monthly instalment at your rate, and again at a higher rate, so you can see how much room you have if rates rise.</p>
-          <div class="fields">
-            <div class="f"><label for="l-amt">Loan amount (S$)</label><input id="l-amt" inputmode="numeric" autocomplete="off" value="1,000,000"></div>
-            <div class="f"><label for="l-years">Loan tenure (years)</label><input id="l-years" inputmode="numeric" autocomplete="off" value="25"></div>
-            <div class="f"><label for="l-rate">Your interest rate (% a year)</label><input id="l-rate" inputmode="decimal" autocomplete="off" value="2.6"></div>
-            <div class="f"><label for="l-test">Test rate (% a year)</label><input id="l-test" inputmode="decimal" autocomplete="off" value="4"></div>
-          </div>
-        </div>
-        <div aria-live="polite">
-          <p class="eyebrow">Monthly instalment at your rate</p>
-          <p class="figure" id="l-pay">–</p>
-          <table class="res">
-            <tr><th scope="row">At the test rate</th><td id="l-test-pay">–</td></tr>
-            <tr><th scope="row">Extra each month</th><td id="l-diff">–</td></tr>
-            <tr class="total"><th scope="row">Total interest at your rate</th><td id="l-int">–</td></tr>
-          </table>
-          <p class="calc-note">Example figures; replace them with your own. Your bank decides how much it will lend and at what rate.</p>
-        </div>
-      </form>
-
-      <form class="calc tool" role="tabpanel" id="panel-sale" aria-labelledby="tab-sale" hidden onsubmit="return false">
-        <div>
-          <p class="tool-intro">What a sale leaves you after the loan and costs. CPF you used goes back to your CPF account, so it is shown apart from cash.</p>
-          <div class="fields">
-            <div class="f"><label for="s-price">Selling price (S$)</label><input id="s-price" inputmode="numeric" autocomplete="off" value="1,800,000"></div>
-            <div class="f"><label for="s-loan">Outstanding loan (S$)</label><input id="s-loan" inputmode="numeric" autocomplete="off" value="600,000"></div>
-            <div class="f"><label for="s-cpf">CPF to refund, with accrued interest (S$)</label><input id="s-cpf" inputmode="numeric" autocomplete="off" value="250,000"></div>
-            <div class="f"><label for="s-costs">Selling costs: fees, legal (S$)</label><input id="s-costs" inputmode="numeric" autocomplete="off" value="40,000"></div>
-            <div class="f"><label for="s-ssd">Seller's Stamp Duty, if any (S$)</label><input id="s-ssd" inputmode="numeric" autocomplete="off" value="0"></div>
-            <div class="f"><label for="s-penalty">Loan early-repayment penalty (S$)</label><input id="s-penalty" inputmode="numeric" autocomplete="off" value="0"></div>
-          </div>
-        </div>
-        <div aria-live="polite">
-          <p class="eyebrow">Cash in hand after the sale</p>
-          <p class="figure" id="s-cash">–</p>
-          <table class="res">
-            <tr><th scope="row">Selling price</th><td id="s-r-price">–</td></tr>
-            <tr><th scope="row">Less loan, costs, duty and penalty</th><td id="s-r-out">–</td></tr>
-            <tr><th scope="row">Returned to your CPF</th><td id="s-r-cpf">–</td></tr>
-            <tr class="total"><th scope="row">Cash in hand</th><td id="s-r-cash">–</td></tr>
-          </table>
-          <p class="calc-note" id="s-warn">Your CPF statement shows the exact refund, including accrued interest. Your bank can tell you any penalty for repaying early.</p>
-        </div>
-      </form>
-
-      <form class="calc tool" role="tabpanel" id="panel-yield" aria-labelledby="tab-yield" hidden onsubmit="return false">
-        <div>
-          <p class="tool-intro">Gross yield is rent against price. Net yield takes off yearly costs and the months the unit sits empty.</p>
-          <div class="fields">
-            <div class="f"><label for="y-price">Purchase price (S$)</label><input id="y-price" inputmode="numeric" autocomplete="off" value="1,200,000"></div>
-            <div class="f"><label for="y-rent">Monthly rent (S$)</label><input id="y-rent" inputmode="numeric" autocomplete="off" value="3,800"></div>
-            <div class="f"><label for="y-costs">Yearly costs: upkeep, tax, fees (S$)</label><input id="y-costs" inputmode="numeric" autocomplete="off" value="7,000"></div>
-            <div class="f"><label for="y-vac">Empty months a year</label><input id="y-vac" inputmode="decimal" autocomplete="off" value="1"></div>
-          </div>
-        </div>
-        <div aria-live="polite">
-          <p class="eyebrow">Net yield</p>
-          <p class="figure" id="y-net">–</p>
-          <table class="res">
-            <tr><th scope="row">Gross yield</th><td id="y-gross">–</td></tr>
-            <tr><th scope="row">Rent collected a year</th><td id="y-coll">–</td></tr>
-            <tr class="total"><th scope="row">Net income a year, before loan</th><td id="y-inc">–</td></tr>
-          </table>
-          <p class="calc-note">Financing costs are left out so properties compare on the same basis. Add your loan interest to see cash flow.</p>
-        </div>
-      </form>
-      <p class="tools-foot">All calculators are for planning only and are not financial advice. Loan amounts, rates and actual costs depend on your bank, income, age and the rules in force when you buy or sell.</p>
     </div>
   </section>
 
@@ -882,8 +725,6 @@ address{font-style:normal}
   </div>
 </footer>
 
-<div id="print-report" aria-hidden="true"></div>
-
 <aside class="nudge" id="nudge" aria-label="Chat with Esther" hidden>
   <p><strong class="long">Want a second pair of eyes on your numbers?</strong><strong class="short">Unsure about your numbers?</strong> <span>I'll go through them with you.</span></p>
   <a class="btn btn-white" href="https://wa.me/6588008787" rel="noopener">Chat on WhatsApp</a>
@@ -917,10 +758,21 @@ address{font-style:normal}
       if (n !== null){ e.preventDefault(); select(g[n], true); }
     });
   });
-  // Links that open a specific calculator
+  // Links that open a specific calculator on this page
   Array.prototype.forEach.call(document.querySelectorAll('[data-tool]'), function(a){
-    a.addEventListener('click', function(){ select($(a.getAttribute('data-tool')), false); });
+    a.addEventListener('click', function(){ if ($(a.getAttribute('data-tool'))) select($(a.getAttribute('data-tool')), false); });
   });
+  // Deep links from other pages, e.g. calculators.html#borrow, open that calculator's tab
+  var TOOL_HASH = { '#stamp-duty':'tab-duty', '#borrow':'tab-afford', '#instalment':'tab-loan', '#sale-proceeds':'tab-sale', '#rental-yield':'tab-yield' };
+  function openToolFromHash(){
+    var t = $(TOOL_HASH[location.hash] || '');
+    if (!t) return;
+    select(t, false);
+    var sec = t.closest('section');
+    if (sec) requestAnimationFrame(function(){ sec.scrollIntoView(); });
+  }
+  openToolFromHash();
+  window.addEventListener('hashchange', openToolFromHash);
   // Links that open a specific FAQ answer
   function openFaq(hash){
     var d = hash && hash.indexOf('#faq-') === 0 ? $(hash.slice(1)) : null;
@@ -940,6 +792,7 @@ address{font-style:normal}
     var v = num(el); if (el.value.trim() !== '') el.value = Math.round(v).toLocaleString('en-SG');
   }
   function wire(form, fn){
+    if (!form) return; // calculator not on this page
     form.addEventListener('input', function(){ fn(); });
     form.addEventListener('change', function(){ fn(); });
     form.addEventListener('submit', function(e){
@@ -1228,14 +1081,14 @@ address{font-style:normal}
     });
     return pdfLib;
   }
+  var pdfBtn = $('pdf-btn'), pdfHint = $('pdf-hint');
   // Load the library ahead of time once the calculators are on screen, so the click downloads straight away
-  if ('IntersectionObserver' in window){
+  if (pdfBtn && 'IntersectionObserver' in window){
     var pre = new IntersectionObserver(function(es){ if (es.some(function(e){ return e.isIntersecting; })){ loadPdfLib().catch(function(){}); pre.disconnect(); } }, { rootMargin: '400px' });
     pre.observe($('numbers'));
   }
-  var pdfBtn = $('pdf-btn'), pdfHint = $('pdf-hint');
-  pdfBtn.addEventListener('pointerenter', function(){ loadPdfLib().catch(function(){}); });
-  pdfBtn.addEventListener('click', function(){
+  if (pdfBtn) pdfBtn.addEventListener('pointerenter', function(){ loadPdfLib().catch(function(){}); });
+  if (pdfBtn) pdfBtn.addEventListener('click', function(){
     var d = reportData();
     function save(){
       try {
@@ -1250,27 +1103,25 @@ address{font-style:normal}
     });
   });
 
-  // Chat nudge: shown between the hero and the contact section, can be closed for the visit
+  // Chat nudge: hidden while the page header, a contact section or the footer is on screen; can be closed for the visit
   var nudge = $('nudge'), closed = false;
   try { closed = sessionStorage.getItem('nudgeClosed') === '1'; } catch (e) {}
-  nudge.querySelector('.nudge-x').addEventListener('click', function(){
+  if (nudge) nudge.querySelector('.nudge-x').addEventListener('click', function(){
     closed = true; nudge.hidden = true;
     try { sessionStorage.setItem('nudgeClosed', '1'); } catch (e) {}
   });
-  if ('IntersectionObserver' in window){
-    var seen = {};
+  if (nudge && 'IntersectionObserver' in window){
+    var showing = new Set();
     var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ seen[en.target.id || 'hero'] = en.isIntersecting; });
-      nudge.hidden = closed || seen.hero || seen.contact || seen.foot;
+      entries.forEach(function(en){ en.isIntersecting ? showing.add(en.target) : showing.delete(en.target); });
+      nudge.hidden = closed || showing.size > 0;
     });
-    io.observe(document.querySelector('.hero'));
-    io.observe($('contact'));
-    var ft = document.querySelector('.foot'); ft.id = 'foot'; io.observe(ft);
+    Array.prototype.forEach.call(document.querySelectorAll('.hero, .page-head, .contact, .foot'), function(el){ io.observe(el); });
   }
 
   // Enquiry form -> mailto
   var form = document.getElementById('enquiry');
-  form.addEventListener('submit', function(e){
+  if (form) form.addEventListener('submit', function(e){
     e.preventDefault();
     var name = form.name.value.trim(), contact = form.contact.value.trim();
     if (!name){ form.name.focus(); form.name.setAttribute('aria-invalid','true'); return; }
@@ -1280,7 +1131,7 @@ address{font-style:normal}
     form.setAttribute('data-mailto', href);
     window.location.href = href;
   });
-  ['name','contact'].forEach(function(k){ form[k].addEventListener('input', function(){ this.removeAttribute('aria-invalid'); }); });
+  if (form) ['name','contact'].forEach(function(k){ form[k].addEventListener('input', function(){ this.removeAttribute('aria-invalid'); }); });
 })();
 </script>
 </body>
