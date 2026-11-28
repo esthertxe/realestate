@@ -115,10 +115,27 @@ module Space
     [s, "available"]
   end
 
+  # Column names are matched loosely, so small spelling changes in the sheet ("Remarsk", "Floor Loading ()") still work.
+  # Order matters: the first pattern that matches wins.
+  COLUMNS = [
+    ["Up to 20ft / 40ft (for Ramp Up)", /20\s*ft|40\s*ft/i], ["Floor Loading (kN/m2)", /floor\s*load/i],
+    ["Loading Bays + Dock Levelers", /loading\s*bay|dock/i], ["Ramp Up / Flatted", /ramp|flatted/i],
+    ["Building", /\Abuilding/i], ["Area", /\A(area|region)\b/i], ["Unit", /\Aunit/i], ["Zoning (B1/B2)", /zoning/i],
+    ["Type", /\Atype/i], ["Size", /\Asize/i], ["Asking PSF", /psf/i], ["Power", /power/i],
+    ["Ceiling Height (m)", /ceiling/i], ["Cargo Lift", /cargo/i], ["Passenger Lift", /passenger/i],
+    ["Carpark", /car\s*park/i], ["Availability", /avail/i], ["Remarks", /\Arem/i], ["Photos", /photo/i]
+  ]
+
+  def canonical(head)
+    h = head.to_s.strip
+    hit = COLUMNS.find { |_, re| h =~ re }
+    hit ? hit[0] : h
+  end
+
   def rows
     path = CSV_FILE
     return [] unless File.exist?(path)
-    CSV.read(path, encoding: "UTF-8", headers: true).map(&:to_h)
+    CSV.read(path, encoding: "UTF-8", headers: true).map { |r| r.to_h.each_with_object({}) { |(k, v), o| c = canonical(k); o[c] = v unless o[c] } }
   end
 
   def load
