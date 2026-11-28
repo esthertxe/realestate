@@ -1,67 +1,4 @@
 Building,Area,Unit,Zoning (B1/B2),Type,Size,Asking PSF,Power,Ceiling Height (m),Floor Loading (),Cargo Lift,Passenger Lift,Loading Bays + Dock Levelers,Ramp Up / Flatted,Up to 20ft / 40ft (for Ramp Up),Carpark,Availability,Remarsk
-2 Serangoon North,Central,#03-02A,B1,Warehouse,5175sqft,,,3.75/4.7,12.5,4 X 3tons,2,7LB + 4 DL,Flatted,NA,Basement,Immediate,Stand alone 8-storey industrial building with basement car park
-2 Serangoon North,Central,#05-01,B1,Office,"6,764",,,3,13.5,5 X 3tons,2,7LB + 4 DL,Flatted,NA,Basement,Immediate,
-2 Serangoon North,Central,#06-01/01A/02A,B1,Warehouse,"18,839",,,5,14.5,6 X 3tons,2,7LB + 4 DL,Flatted,NA,Basement,Immediate,
-21 Serangoon North Ave 5,Central,Level 4,B1,Warehouse,"21,097",,,6.5,10,2 X 3tons,2,13LB,Flatted,NA,,Immediate,5-storey Light Industrial Building & Ancillary 7-storey office
-21 Serangoon North Ave 5,Central,#07-05,B1,Warehouse,"16,404",,,4.5,7.5,2 X 3tons,2,13LB,Flatted,NA,,Immediate,
-21 Serangoon North Ave 5,Central,#04-01,B1,Office (aircon),"5,683",,,5,2.5,2 X 3tons,2,13LB,Flatted,NA,,Immediate,
-21 Serangoon North Ave 5,Central,#05-01,B1,Office (aircon),"6,222",,,5,2.5,2 X 3tons,2,13LB,Flatted,NA,,Immediate,
-85 Defu Lane 10,Central,#04-01,B1,Warehouse,"10,764",,,3.8,2.5/7.5,2 X 2 tons,2,4LB,Flatted,NA,,Jan-26,Stand alone 6-storey light industrial building
-97 Ubi Ave 4,Central,Whole Building,B1,Factory,"112,715",,,5.5/3.3,20.0/5.0,,,2 LB,Flatted,NA,,Dec-26,4-storey light industrial factory building with ancillary office
-15 Changi South Street 2,East,Level 1,B2,Warehouse,"40,515",,,5.5/16,25-40,6 X 4tons,2,15LB + 15DL,Flatted,NA,Basement,Immediate,3-storey warehouse cum 5-storey ancillary office with basement carpark
-15 Changi South Street 2,East,Level 1,B2,Office (aircon),"5,500",,,2.7,5,6 X 4tons,2,15LB + 15DL,Flatted,NA,Basement,Immediate,
-15 Changi South Street 2,East,Level 2,B2,Office (aircon),"13,384",,,2.7,5,6 X 4tons,2,15LB + 15DL,Flatted,NA,Basement,Immediate,
-9 Changi South Street 2,East,#01-01A,B2,Office (aircon),"1,798",,,2.7,25,2,1,,Flatted,NA,,Immediate,"Part 3-storey, part 4-storey temperature controlled warehouse with ancillary office"
-9 Changi South Street 2,East,#02-01A,B2,Office (aircon),"1,345",,,2.7,20,2,1,,Flatted,NA,,Immediate,
-9 Changi South Street 2,East,#03-02,B2,Warehouse,"10,032",,,3,7.5,2,1,,Flatted,NA,,Immediate,
-9 Changi South Street 2,East,#04-01,B2,Office (aircon),"11,022",,,2.7,7.5/10,2,1,,Flatted,NA,,Immediate,
-19 Senoko Loop,North,#01-01,B2,Warehouse,"106,644",,,7.5,15,1,1,6LB + 6DL,Flatted,NA,,Jul-26,4-storey office cum warehouse facility
-19 Senoko Loop,North,#02-01,B2,Warehouse,,,,6,15,1,1,6LB + 6DL,Flatted,NA,,,
-19 Senoko Loop,North,#02-00,B2,Office,,,,4,5,1,1,6LB + 6DL,Flatted,NA,,,
-19 Senoko Loop,North,#02-02,B2,Warehouse,"2,606",,,2.4,5,1,1,6LB + 6DL,Flatted,NA,,Immediate,
-3A Jalan Terusan,West,Whole Building,B2,Warehouse,"195,243",,,3 to 7m,4 to 30,"4X1.5ton, 2X4tons",1,16LB + 16 DL,Flatted,NA,,TBA,"5-storey warehouse cum ancillary office, Near Seaport"
-Jurong Logistics Hub,West,#01-10m/11m,B2,Office,"2,820",,,3,5,Yes,,NA,Flatted,,,Immediate,8-storey ramp up warehouse with ancillary office block
-Jurong Logistics Hub,West,#01-12m/13m,B2,Office,"3,391",,,3,5,Yes,,NA,Flatted,,,Immediate,"Near Seaport, Ample Parking, Inhouse aircon canteen"
-Jurong Logistics Hub,West,#01-15m,B2,Office,"1,991",,,3,5,Yes,,NA,Flatted,,,Immediate,
-Jurong Logistics Hub,West,#01-17/18m,B2,Office,"8,224",,,3,5,Yes,,NA,Flatted,,,Immediate,
-Jurong Logistics Hub,West,#02-10/11,B2,Office,"2,820",,,3,5,,,NA,Flatted,,,Immediate,
-Jurong Logistics Hub,West,#02-12,B2,Office,"1,442",,,3,5,,,NA,Flatted,,,Immediate,
-Jurong Logistics Hub,West,#07-10M/11m/12m,B2,Office,"4,263",,,3,5,,,NA,Flatted,,,Immediate,
-Jurong Logistics Hub,West,#07-25/26,B2,Warehouse,"16,329",,,6.2,22.5,,,4LB,Ramp Up,40ft,,Immediate,
-Jurong Logistics Hub,West,#07-06/07,B2,Warehouse,"15,758",,,6.2,22.5,,,4LB,Ramp Up,40ft,,Immediate,
-Jurong Logistics Hub,West,#07-08/09,B2,Warehouse,"16,329",,,6.2,22.5,,,4LB,Ramp Up,40ft,,Immediate,
-Jurong Logistics Hub,West,#08-32/33,B2,Warehouse,"15,952",,,6.2,22.5,,,4LB,Ramp Up,40ft,,Dec-25,
-30 Boon Lay Way,West,#01-00,B2,Office,"5,695",,,4.9,2.5,2X4tons,,"3LB (dedicated), 4LB Shared",Flatted,,,TBA,Stand alone part 2-storey and single-storey warehouse cum 4-storey ancillary office with open yard
-30 Boon Lay Way,West,#02-00,B2,Office,"10,839",,,3.28,2.5,2X4tons,,"3LB (dedicated), 4LB Shared",Flatted,,,Immediate,
-521 Bukit Batok Street 23,West,#03-E,B1,Warehouse,"13,175",,,7,15,2,1,,,,,,Stand-alone part 5 / part 7 storey light industrial building with ancillary office.
-521 Bukit Batok Street 23,West,#05-A,B1,Warehouse,"20,839",,,7,15,2,1,,,,,,
-521 Bukit Batok Street 23,West,#05-01,B1,Office,,,,3.1,5,2,1,,,,,,
-521 Bukit Batok Street 23,West,#05-C,B1,Warehouse,"17,115",,,7,15,2,1,,,,,,
-521 Bukit Batok Street 23,West,#07-00,B1,Office,"1,905",,,3.1,5,2,1,,,,,,
-"25 Pandan Crescent, TIC Tech Centre",West,#05-03,B2,Warehouse Aircon,"10,358",,,4.5,12.5,3 X 3tons,6,6,Flatted,,Basement,,Stand alone 5-storey industrial building with 6-storey ancillary office block and basement carpark
-"25 Pandan Crescent, TIC Tech Centre",West,#02-10/11,B2,Office,"5,565",,,3.5,4,3 X 3tons,6,NA,Flatted,,Basement,,In house aircon canteen
-15A Tuas Ave 18,West,#01-01,B2,Warehouse,"41,595",,,9,20,1X5tons,2,7LB,Flatted,,,,5-storey warehouse with ancillary office
-15A Tuas Ave 18,West,#04-01,B2,Warehouse,"22,231",,,9,20,1X5tons,2,7LB,Flatted,,,,
-15A Tuas Ave 18,West,#01-02,B2,Office,"3,673",,,5.5,4,1X5tons,2,NA,Flatted,,,,
-15A Tuas Ave 18,West,#02-01A,B2,Office,"8,089",,,3.5,4,1X5tons,2,NA,Flatted,,,,
-15A Tuas Ave 18,West,#02-01B,B2,Office,"4,844",,,3.5,4,1X5tons,2,NA,Flatted,,,,
-15A Tuas Ave 18,West,#04-02,B2,Office,"6,834",,,4.5,2.5,1X5tons,2,NA,Flatted,,,,
-15A Tuas Ave 18,West,#05-01,B2,Office,"7,734",,,3,4,1X5tons,2,NA,Flatted,,,,
-4 Pandan Avenue,West,#03-00,B2,Warehouse,"116,369",,,11.8,22.5,,2,,Ramp Up,,,,5-storey ramp-up warehouse with ancillary office
-4 Pandan Avenue,West,#04M,B2,Office,"25,248",,,4.85/6.62,4,,2,,Ramp Up,,,,
-6 Fishery Port Road,West,#01-01,B2,Warehouse,"44,080",,,9,50,,,8LB,Ramp Up,,,Nov-25,7-storey ramp up warehouse with ancillary office
-6 Fishery Port Road,West,#01-01A,B2,Temp Controlled,"20,736",,,4,50,,,2 LB,Ramp Up,,,Nov-25,Ramp-up Food Logistics Warehouse
-6 Fishery Port Road,West,#01-01A,B2,AirCon,"14,482",,,4,50,,,2 LB,Ramp Up,,,Nov-25,Ambient warehouse with adjoining temperature
-6 Fishery Port Road,West,#01-01A,B2,Office,"2,000",,,3,4,,,NA,Ramp Up,,,Nov-25,controlled storage facilities
-5B Toh Guan Road East,West,#01-02,B2,Warehouse,"53,508",,,10,30,,,6LB Dedicated,Ramp Up,,,Oct-26,6-storey ramp-up warehouse
-5B Toh Guan Road East,West,#01-03,B2,Warehouse,"54,632",,,10,30,,,6LB Dedicated,Ramp Up,,,Jul-26,
-5B Toh Guan Road East,West,#04-02,B2,Warehouse,"50,355",,,8,30,,,6LB Dedicated,Ramp Up,,,Immediate,
-Mapletree Joo Koon Logistics Hub - 5A Joo Koon Circle,West,#01-01/02,B2,Warehouse,"40,772",,,10 (clear),30,,,8LB Dedicated,Ramp Up,,,Immediate,6-storey ramp-up warehouse with Rooftop Parking
-Mapletree Joo Koon Logistics Hub - 5A Joo Koon Circle,West,#01-05,B2,Warehouse,"34,253",,,10 (clear),30,,,6LB Dedicated,Ramp Up,,,Immediate,"Inhouse Canteen, Ample Parking"
-Mapletree Joo Koon Logistics Hub - 5A Joo Koon Circle,West,#01-07,B2,Warehouse,"5,940",,,3.6,5,,,NA,Ramp Up,,,Immediate,
-Mapletree Joo Koon Logistics Hub - 5A Joo Koon Circle,West,#04-01/02,B2,Warehouse,"55,094",,,8 (clear),20,,,9LB Dedicated,Ramp Up,,,Immediate,
-Mapletree Joo Koon Logistics Hub - 5A Joo Koon Circle,West,#04-05,B2,Warehouse,"34,251",,,8 (clear),20,,,5LB Dedicated,Ramp Up,,,Immediate,
-Mapletree Joo Koon Logistics Hub - 5A Joo Koon Circle,West,#05-03,B2,Warehouse,"34,252",,,8 (clear),20,,,6LB Dedicated,Ramp Up,,,Immediate,
 NTP+ @ New Tech Park,,#01,,,"1,206",,150A,,,,,,,,,Jun 26,Ideal for creative cafe concepts
 "151 Lorong Chuan, New Tech Park",,#04-06,B1,AirCon,"12,745",,,4.8,7.5,Yes,,,,,,Immediate,"New lifestyle mall with array of F&B options, supermarket, gym and foodcourt"
 "151 Lorong Chuan, New Tech Park",,#05-01B,B1,AirCon,"14,811",,,4.8,7.5,Yes,,,,,,Immediate,
@@ -270,6 +207,160 @@ Partially fitted with centralised a/c
 8 Senoko South Road (Build to Suit only),North,Level 1 to 5,B2,Food Manufacturing / Cold Storage,"Possible GFA 189,212",,,6.5 to 10,12.5 to 20,,,,,,,2H 2028, - Close proximity from Sembawang / Admiralty / Woodlands North MRT - Upcoming Johor Bahru - Singapore RTS Link at Woodlands North MRT - Well served by SLE and BKE 
 Solaris @ one-north (1 Fusionopolis Walk) South Tower,West,#06-05/06,,Business Park,"8,262",$6.80,,,,,,,,,,Immediate,Possible to subdivide
 Solaris @ one-north (1 Fusionopolis Walk) South Tower,West,#09-01 & 02,,Business Park,"22,795",$6.80,,,,,,,,,,Immediate,
+Solaris @ one-north (1 Fusionopolis Walk) South Tower,West,#10-02,,Business Park,"1,714",$6.80,,,,,,,,,,1-Aug-27,
+Solaris @ one-north (1 Fusionopolis Walk) South Tower,West,#10-03,,Business Park,"3,081",$6.80,,,,,,,,,,1-Aug-27,
+Solaris @ one-north (1 Fusionopolis Walk) South Tower,West,#11-05,,Business Park,"6,791",$6.80,,,,,,,,,,Immediate,
+Solaris @ one-north (1 Fusionopolis Walk) South Tower,West,#01-12,,F&B,881,VTO,,,,,,,,,,Immediate,F&B unit
+Solaris @ one-north (1 Fusionopolis Walk) North Tower,West,#09-11,,Business Park,"8,730",$6.80,,,,,,,,,,Immediate,
+Eightrium @ Changi Business Park (15A Changi Business Park Central) East Wing,East,#01-05,,Business Park,"6,319",$4.00,,,,,,,,,,Immediate,Partially fitted
+Eightrium @ Changi Business Park (15A Changi Business Park Central) East Wing,East,#02-03,,Business Park,"10,876",$4.00,,,,,,,,,,Immediate,Fitted unit
+Eightrium @ Changi Business Park (15A Changi Business Park Central) East Wing,East,#02-04,,Business Park,"8,811",$4.00,,,,,,,,,,Immediate,Fitted unit
+Eightrium @ Changi Business Park (15A Changi Business Park Central) East Wing,East,#06-01,,Business Park,"6,394",$4.00,,,,,,,,,,Immediate,
+Eightrium @ Changi Business Park (15A Changi Business Park Central) East Wing,East,#07-02,,Business Park,"12,831",$4.00,,,,,,,,,,Immediate,Fitted unit
+Eightrium @ Changi Business Park (15A Changi Business Park Central) West Wing,East,#02-02,,Business Park,"4,724",$4.00,,,,,,,,,,Immediate,Possible to subdivide
+Eightrium @ Changi Business Park (15A Changi Business Park Central) West Wing,East,#04-01,,Business Park,"8,880",$4.00,,,,,,,,,,Immediate,
+Eightrium @ Changi Business Park (15A Changi Business Park Central) West Wing,East,#05-01 (part),,Business Park,"5,038",$4.00,,,,,,,,,,Immediate,
+Solaris @ Kallang 164 (164 Kallang Way) West Wing,Central,#03-01,,High Specs,"3,030",$5.30,,,,,,,,,,Immediate,Can explore fitted options
+Solaris @ Kallang 164 (164 Kallang Way) West Wing,Central,#03-09,,High Specs,"2,648",$4.50,,,,,,,,,,8-Feb-27,
+Solaris @ Kallang 164 (164 Kallang Way) West Wing,Central,#04-03,,High Specs,"5,720",$4.50,,,,,,,,,,19-Jun-27,
+Solaris @ Kallang 164 (164 Kallang Way) West Wing,Central,#05-01/02/03,,High Specs,"11,670",$4.80,,,,,,,,,,16-Nov-26,
+Solaris @ Kallang 164 (164 Kallang Way) West Wing,Central,#05-04/05,,High Specs,"4,913",$4.80,,,,,,,,,,16-Nov-26,
+Solaris @ Kallang 164 (164 Kallang Way) West Wing,Central,#05-06 to #05-09,,High Specs,"10,398",$4.80,,,,,,,,,,16-Nov-26,Can explore subdivision. Clear views
+Solaris @ Kallang 164 (164 Kallang Way) West Wing,Central,#05-10/11,,High Specs,"8,837",$4.50,,,,,,,,,,16-Nov-26,
+Solaris @ Kallang 164 (164 Kallang Way) West Wing,Central,#06-06,,High Specs,"2,648",$5.30,,,,,,,,,,Immediate,Can explore fitted options
+Solaris @ Kallang 164 (164 Kallang Way) East Wing,Central,#04-13,,High Specs,"5,702",$4.50,,,,,,,,,,Immediate,
+Solaris @ Kallang 164 (164 Kallang Way) East Wing,Central,#04-18,,High Specs,"2,691",$4.50,,,,,,,,,,Immediate,
+Solaris @ Kallang 164 (164 Kallang Way) East Wing,Central,#07-12,,High Specs,"3,130",$4.50,,,,,,,,,,Immediate,
+Solaris @ Kallang 164 (164 Kallang Way) East Wing,Central,#07-18,,High Specs,"2,728",$4.50,,,,,,,,,,Immediate,
+West Park BizCentral (20 Pioneer Crescent) Block 20,West,#05-01/02/03/04/05,B2,Flatted Factory,"4,725",VTO,,,,,,,,,,Immediate,"Flatted factory, partially fitted office"
+West Park BizCentral (20 Pioneer Crescent) Block 20,West,#06-01/02/03/04/05,B2,Flatted Factory,"4,715",VTO,,,,,,,,,,Immediate,Flatted factory
+West Park BizCentral (30 Pioneer Crescent) Block 30,West,#04-15/16,B2,Flatted Factory,"4,338",VTO,,,,,,,,,,Immediate,Flatted factory
+West Park BizCentral (30 Pioneer Crescent) Block 30,West,#05-15/16/17,B2,Flatted Factory,"7,007",VTO,,,,,,,,,,Immediate,"Flatted factory, fitted office"
+163 Kallang Way (Mapletree Hi-Tech Park @ Kallang Way),East,#03-12,,Hi-Tech,"4,962",$4.80,,,,,,,,,,Immediate,"Very bright corner unit, 2 elevations of windows. 6 mins sheltered walk to Geylang Bahru MRT. Agent incentive: 2 months' effective gross rent for leases ≥ 3 years"
+163 Kallang Way (Mapletree Hi-Tech Park @ Kallang Way),East,#03-14,,Hi-Tech,"3,423",$4.80,,,,,,,,,,Immediate,
+163 Kallang Way (Mapletree Hi-Tech Park @ Kallang Way),East,#04-13/14,,Hi-Tech,"7,244",$4.80,,,,,,,,,,Immediate,
+163 Kallang Way (Mapletree Hi-Tech Park @ Kallang Way),East,#04-11/12/13/14,,Hi-Tech,"16,684",$4.80,,,,,,,,,,Immediate,"Squarish corner unit, 3 elevations of windows. Suitable for lab (louvers for exhaust, high power possible, floor traps)"
+161 Kallang Way (Mapletree Hi-Tech Park @ Kallang Way),East,#03-01,,Hi-Tech,"2,379",$4.80,,,,,,,,,,Immediate,"Column-free unit with lights, ceiling boards and central air-con"
+161 Kallang Way (Mapletree Hi-Tech Park @ Kallang Way),East,Whole Floor,,Hi-Tech,"35,349",$4.80,,,,,,,,,,Immediate,"Centre-core floor plate, full-height windows. Ideal for knowledge-based industries, product engineering and labs"
+30A Kallang Place,East,#05-09,,AirCon,"2,000",$4.80,,,,,,,,,,Immediate,"5 mins walk to Bendemeer MRT. Fitted with aircon, ceiling board and lighting (aircon included in rent)"
+30A Kallang Place,East,#11-08/09,,AirCon,"3,305",$4.80,,,,,,,,,,Immediate,
+514 Chai Chee Lane,East,#03-06,,,"4,623",$1.60,,,,,,,,,,1-Jan-27,"Canteen within factory, shuttle bus from Bedok MRT, 8 mins walk to Bedok North MRT"
+514 Chai Chee Lane,East,#04-12/13/14,,,"9,956",$1.60,,,,,,,,,,1-Feb-27,
+514 Chai Chee Lane,East,#04-15,,,"2,648",$1.70,,,,,,,,,,1-Feb-27,
+11 Changi North Street 1,East,#02-05/06/07,,,"3,897",$1.90,,,,,,,,,,Immediate,"Bare unit. Easy access to PIE, TPE & ECP, 10 mins from Changi Airport"
+8 Kaki Bukit Ave 1,East,#03-01/02,B1,,"10,969",$2.20,,,,,,,,,,Immediate,Clean B1 factory. 7 mins walk to Kaki Bukit & Ubi MRT
+10 Kaki Bukit Ave 1,East,#05-02,B1,,"5,619",$2.20,,,,,,,,,,Immediate,
+9 Kallang Place (Kallang Basin 2),East,#05-10,,,"1,267",$2.40,,,,,,,,,,Immediate,"Bare. 8 mins walk to Boon Keng, Geylang Bahru, Bendemeer MRT"
+16 Kallang Place (Kallang Basin 3),East,#07-25,,,"1,600",$2.40,,,,,,,,,,31-Mar-27,Bare
+30 Kallang Place (Kallang Basin 4),East,#07-12/14/15,,,"2,931",$2.40,,,,,,,,,,Immediate,"Near major expressways, bus stops from Boon Keng, Lavender, Kallang and Bendemeer MRT"
+21 Kallang Ave (Kallang Basin 5),East,#02-173/175,,,"5,371",$2.70,,,,,,,,,,22-Apr-27,"Fitted with meeting rooms and open area, lights and electricity. 20/40 footers accessible"
+171 Kampong Ampat,East,#05-09,,Food Factory,"2,530",$3.90,,,,,,,,,,Immediate,Bare food factory for food production / manufacturing and central kitchen. 8 mins walk to Tai Seng MRT
+171 Kampong Ampat,East,#05-01/02,,Food Factory,"8,665",$3.90,,,,,,,,,,Immediate,Bare food factory for food production / manufacturing and central kitchen
+171 Kampong Ampat,East,#05-03,,Food Factory,"4,015",$3.90,,,,,,,,,,Immediate,Bare food factory for food production / manufacturing and central kitchen
+171 Kampong Ampat,East,#05-04,,Food Factory,"3,983",$3.90,,,,,,,,,,Immediate,Bare food factory for food production / manufacturing and central kitchen
+171 Kampong Ampat,East,#06-05/06,,Food Factory,"9,279",$3.90,,,,,,,,,,Immediate,Fitted with coldrooms
+3014A Ubi Road 1,East,#02-01/02,,,"8,775",$2.20,,,,,,,,,,Immediate,7 mins walk to MacPherson MRT
+3014A Ubi Road 1,East,#03-10,,,"2,316",$2.20,,,,,,,,,,Immediate,
+3014A Ubi Road 1,East,#05-01/02,,,"8,775",$2.20,,,,,,,,,,Immediate,
+3014A Ubi Road 1,East,#05-03/04,,,"4,627",$2.20,,,,,,,,,,Immediate,
+3014A Ubi Road 1,East,#05-06,,,"2,393",$2.20,,,,,,,,,,Immediate,
+3015A Ubi Road 1,East,#04-04,,,"2,284",$2.20,,,,,,,,,,1-Dec-26,
+8 Lorong Bakar Batu (Kolam Ayer 1),East,#02-05,,,"1,067",$2.40,,,,,,,,,,18-Jan-27,"Near Aljunied, Potong Pasir, Geylang Bahru and Boon Keng MRT"
+8 Lorong Bakar Batu (Kolam Ayer 1),East,#03-08,,,"2,137",$2.40,,,,,,,,,,16-Nov-26,
+8 Lorong Bakar Batu (Kolam Ayer 1),East,#03-09/10,,,"4,267",$2.40,,,,,,,,,,16-Nov-26,
+12 Lorong Bakar Batu (Kolam Ayer 1),East,#03-09,,,"2,133",$2.40,,,,,,,,,,TBA,
+5 Kallang Sector (Kolam Ayer 5),East,#03-04,,,"1,607",$1.70,,,,,,,,,,Immediate,"Walk up, no lift, no loading / unloading"
+5 Kallang Sector (Kolam Ayer 5),East,#04-01,,,"2,347",$1.70,,,,,,,,,,Immediate,"Walk up, no lift, no loading / unloading"
+5 Kallang Sector (Kolam Ayer 5),East,#04-02,,,"2,551",$1.70,,,,,,,,,,Immediate,"Fully fitted with lights, air-con and rooms. Walk up, no lift, no loading / unloading"
+30 Loyang Way (Loyang 1),East,#06-17,,,"2,928",$1.70,,,,,,,,,,Immediate,"Bare. 5 mins bus ride to Tampines East MRT, near airport and port"
+30 Loyang Way (Loyang 1),East,#07-17,,,"2,917",$1.70,,,,,,,,,,Immediate,Bare
+30 Loyang Way (Loyang 1),East,#02-04,,,"2,605",$1.70,,,,,,,,,,Immediate,Bare
+30 Loyang Way (Loyang 1),East,#06-23,,,"2,928",$1.70,,,,,,,,,,Immediate,Bare
+2 Loyang Lane (Loyang 2),East,#03-03,,,"4,930",$1.80,,,,,,,,,,1-Jan-27,Bare
+51 Changi Business Park Central 2 (The Signature),East,#02-06,,Business Park,"3,232",VTO,,,,,,,,,,Immediate,5 mins walk to Expo MRT. Agent incentive: 2 months' effective gross rent for leases ≥ 3 years
+51 Changi Business Park Central 2 (The Signature),East,#04-01,,Business Park,"6,012",$4.20,,,,,,,,,,Immediate,Near lift lobby
+51 Changi Business Park Central 2 (The Signature),East,#04-02,,Business Park,"8,021",$4.20,,,,,,,,,,Immediate,
+51 Changi Business Park Central 2 (The Signature),East,#04-11A/12,,Business Park,"8,871",$4.20,,,,,,,,,,Immediate,
+51 Changi Business Park Central 2 (The Signature),East,#06-07,,Business Park,"1,589",$4.50,,,,,,,,,,Immediate,Fully fitted
+51 Changi Business Park Central 2 (The Signature),East,#06-08,,Business Park,"2,152",$4.50,,,,,,,,,,Immediate,
+51 Changi Business Park Central 2 (The Signature),East,#08-01,,Business Park,"7,996",VTO,,,,,,,,,,Immediate,
+51 Changi Business Park Central 2 (The Signature),East,#08-03,,Business Park,"1,363",$4.50,,,,,,,,,,TBA,Currently fitted
+51 Changi Business Park Central 2 (The Signature),East,#09-01,,Business Park,"5,288",VTO,,,,,,,,,,Immediate,Near lift lobby
+51 Changi Business Park Central 2 (The Signature),East,#09-04,,Business Park,"1,363",$4.50,,,,,,,,,,Immediate,
+51 Changi Business Park Central 2 (The Signature),East,#01-13,,Ancillary,383,$6.00,,,,,,,,,,Immediate,"Florist and gift shop, currently fitted"
+51 Changi Business Park Central 2 (The Signature),East,#02-02,,Ancillary,"1,054",$6.00,,,,,,,,,,Immediate,Clinic
+1002 Jalan Bukit Merah (Redhill 1),Central,#03-13,,,915,$2.30,,,,,,,,,,Immediate,"Bare. Bus stop at the entrance, near AYE/CTE & ECP"
+1002 Jalan Bukit Merah (Redhill 1),Central,#03-14,,,915,$2.30,,,,,,,,,,Immediate,Bare
+1001 Jalan Bukit Merah (Redhill 1),Central,#07-01/02,,,"2,136",$2.30,,,,,,,,,,Immediate,"Bare, with inter-tenancy wall"
+1001 Jalan Bukit Merah (Redhill 1),Central,#07-06,,,946,$2.30,,,,,,,,,,Immediate,Bare
+1001 Jalan Bukit Merah (Redhill 1),Central,#07-12,,,"1,960",$2.30,,,,,,,,,,Immediate,Bare
+1003 Bukit Merah Central (Redhill 2),Central,#03-08,,Flatted Factory,"3,679",$2.30,,,,,,,,,,20-Jan-27,"Fitted with aircons, lights and meeting rooms. Next to Bukit Merah Bus Interchange"
+1003 Bukit Merah Central (Inno·Centre),Central,#04-12,,E-Biz,710,$3.30,,,,,,,,,,Immediate,"Window unit. Partially fitted (ceiling board, air con, lights, carpet)"
+1003 Bukit Merah Central (Inno·Centre),Central,#04-40,,E-Biz,570,$3.10,,,,,,,,,,Immediate,Non-window unit. Agent incentive up to 2 months' effective gross rent
+1003 Bukit Merah Central (Inno·Centre),Central,#05-02A,,E-Biz,342,$3.30,,,,,,,,,,15-Jan-27,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#05-32,,E-Biz,"1,378",$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#05-33,,E-Biz,969,$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#05-34,,E-Biz,"1,076",$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#06-39,,E-Biz,517,$3.30,,,,,,,,,,22-Jan-27,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-02,,E-Biz,440,$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-09,,E-Biz,381,$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-14,,E-Biz,344,$3.10,,,,,,,,,,15-Nov-26,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-15,,E-Biz,346,$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-16,,E-Biz,344,$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-19,,E-Biz,312,$3.10,,,,,,,,,,2 months' notice,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-22,,E-Biz,312,$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-27,,E-Biz,658,$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-29,,E-Biz,482,$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-31,,E-Biz,559,$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-36,,E-Biz,483,$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-37,,E-Biz,516,$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-39,,E-Biz,487,$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-44,,E-Biz,577,$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-45,,E-Biz,724,$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-46,,E-Biz,679,$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-47,,E-Biz,429,$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-48,,E-Biz,738,$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-49,,E-Biz,661,$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-52,,E-Biz,580,$3.30,,,,,,,,,,Immediate,Window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-57,,E-Biz,490,$3.10,,,,,,,,,,Immediate,Non-window unit
+1003 Bukit Merah Central (Inno·Centre),Central,#07-58,,E-Biz,515,$3.10,,,,,,,,,,Immediate,Non-window unit
+1093 Lower Delta Road (Tiong Bahru 2),Central,#01-14/15/16,,,"2,807",$2.60,,,,,,,,,,Immediate,Bare. 2 bus stops from Tiong Bahru MRT
+988 Toa Payoh North (Hi-Tech Block),North,#04-04,,Hi-Tech,"1,722",$4.00,,,,,,,,,,3 months' notice,6 mins to Braddell MRT. Agent incentive: 2 months' effective gross rent for leases ≥ 3 years
+988 Toa Payoh North (Hi-Tech Block),North,#04-02/03,,Hi-Tech,"5,952",$4.00,,,,,,,,,,3 months' notice,Central air-conditioning. Area subject to resurvey
+988 Toa Payoh North (Hi-Tech Block),North,#04-02/03/04,,Hi-Tech,"7,761",$4.00,,,,,,,,,,Immediate,Central air-conditioning
+988 Toa Payoh North (Hi-Tech Block),North,#08-03/04/05/06/07,,Hi-Tech,"12,388",$4.00,,,,,,,,,,Immediate,Central air-conditioning
+998 Toa Payoh North,North,#03-02/03/04,,,"2,667",$2.30,,,,,,,,,,Immediate,
+998 Toa Payoh North,North,#05-18/19/20,,,"2,693",$2.30,,,,,,,,,,Immediate,
+998 Toa Payoh North,North,#05-01/02/03/04/05/06/07,,,"6,202",$2.30,,,,,,,,,,Immediate,
+998 Toa Payoh North,North,#05-05,,,889,$2.30,,,,,,,,,,8-Jan-27,
+1008 Toa Payoh North (Toa Payoh North 3),North,#06-09/10/11/12/14,,,"3,936",$2.30,,,,,,,,,,1-Dec-26,Bare. 6 mins walk to Braddell MRT
+2 Woodlands Sector 1 (Woodlands Spectrum),North,#05-04,B2,,"13,466",$1.70,,,,,,,,,,14-Dec-26,"Original bare condition (no DB, lightings). 1st production floor, mezzanine office and 2nd production floor"
+2 Woodlands Sector 1 (Woodlands Spectrum),North,#05-12,B2,,"35,553",$1.70,,,,,,,,,,1-Jan-27,
+211 Woodlands Ave 9,North,#06-82,,Flatted Factory,"1,335",$1.80,,,10,,,,,,,Immediate,Floor loading 10 kN/sqm
+1 Clementi Loop (Clementi West),West,#04-01,,,"3,380",$1.90,,,,,,,,,,Immediate,"Bare unit. Between AYE and PIE, 3 bus stops to Clementi Interchange"
+1 Clementi Loop (Clementi West),West,#03-01,,,"3,380",$1.90,,,,,,,,,,Immediate,Bare unit
+Tai Seng Exchange Tower A (1 Tai Seng Ave),Central,#02-10,,High Specs,"4,284",$4.80,,,,,,,,,,Immediate,Air-conditioned. Commission 2 months (min 3-year lease)
+Tai Seng Exchange Tower A (1 Tai Seng Ave),Central,#08-05,,High Specs,"4,123",$4.80,,,,,,,,,,Immediate,
+Tai Seng Exchange Tower A (1 Tai Seng Ave),Central,9th storey,,High Specs,"43,519",$4.80,,,,,,,,,,Immediate,Single floor plate
+Tai Seng Exchange Tower B (3 Tai Seng Ave),Central,#02-31,,High Specs,"5,145",$4.80,,,,,,,,,,Immediate,
+Tai Seng Exchange Tower B (3 Tai Seng Ave),Central,#02-33,,High Specs,"4,230",$4.80,,,,,,,,,,Immediate,
+Tai Seng Exchange Tower B (3 Tai Seng Ave),Central,8th storey,,High Specs,"27,365",$4.80,,,,,,,,,,Immediate,Single floor plate
+Tai Seng Exchange Tower C (5 Tai Seng Ave),Central,2nd and 6th storey,,High Specs,"from 2,500",$4.80,,,,,,,,,,Immediate,Lab unit
+Tai Seng Exchange Tower C (5 Tai Seng Ave),Central,#03-51,,High Specs,"5,296",$4.80,,,,,,,,,,Nov-26,Area subject to final survey
+Tai Seng Exchange Tower C (5 Tai Seng Ave),Central,#03-52,,High Specs,"2,863",$4.80,,,,,,,,,,Nov-26,Area subject to final survey
+Tai Seng Exchange Tower C (5 Tai Seng Ave),Central,#03-55,,High Specs,"3,154",$4.80,,,,,,,,,,Nov-26,Area subject to final survey
+Tai Seng Exchange Tower C (5 Tai Seng Ave),Central,#03-56,,High Specs,"2,723",$4.80,,,,,,,,,,Nov-26,Area subject to final survey
+Tai Seng Exchange Tower C (5 Tai Seng Ave),Central,#03-57,,High Specs,"4,887",$4.80,,,,,,,,,,Nov-26,Area subject to final survey
+Tai Seng Exchange Tower C (5 Tai Seng Ave),Central,#05-54,,High Specs,"2,239",$4.80,,,,,,,,,,Nov-26,Area subject to final survey
+Eclipse (1 Fusionopolis View),West,#04-03,,Business Park,"4,026",$6.80,,,,,,,,,,Immediate,Commission 2 months (min 3-year lease)
+Eclipse (1 Fusionopolis View),West,#05-03,,Business Park,"4,370",$6.80,,,,,,,,,,TBC,Commission TBC
+20 Kian Teck Lane,West,Whole building (No 20),,Industrial,"93,767",VTO,,up to 12,up to 15,,,,,,,Call us,"FOR SALE, not lease. Commission 2%. Height is floor-to-floor"
+B Central (994 Bendemeer Rd) Block 994,Central,#04-01,,Industrial,"2,831",$2.50,,3.6,10,,,,,,,Immediate,Floor-to-floor height. Commission 1 month
+B Central (994 Bendemeer Rd) Block 994,Central,#04-02,,Industrial,"2,992",$2.50,,3.6,10,,,,,,,Immediate,Floor-to-floor height
+B Central (996 Bendemeer Rd) Block 996,Central,#02-07,,Industrial,"4,768",$2.50,,3.6,15,,,,,,,Immediate,Floor-to-floor height
+B Central (996 Bendemeer Rd) Block 996,Central,#07-01,,Industrial,"2,831",$2.50,,3.6,10,,,,,,,Immediate,Floor-to-floor height
+Food Ascent (45 Tuas South Ave 1),West,#03-05,,Food Factory,"2,572",$2.40,,Up to 6.3,Up to 15,,,,,,,Immediate,With mezzanine. Floor-to-floor height. Commission 2 months
+Food Ascent (45 Tuas South Ave 1),West,#04-14,,Food Factory,"2,271",$2.40,,6.3,15,,,,,,,Immediate,Floor-to-floor height. Commission 2 months
 Galaxis - BP ,,#08-10 to 19,,Business Park,"39,547.37",,,,,,,,,,,1 Nov 25,Fitted
 Galaxis - BP ,,#09-10 to 18,,Business Park,"40,157.15",,,,,,,,,,,1 Nov 25,Fitted
 Galaxis - BP ,,#11-10 to 18,,Business Park,"43,121.45",,,,,,,,,,,1 Feb 26,
