@@ -7389,5 +7389,10 @@
         ]
       ]
     }
+  },
+  "Solaris @ one-north (1 Fusionopolis Walk) South Tower": {
+    "query": "Solaris @ one-north (1 Fusionopolis Walk) South Tower",
+    "not_found": true,
+    "fetched": "2026-11-28"
   }
 }

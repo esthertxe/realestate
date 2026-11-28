@@ -38,6 +38,7 @@ module Space
     head = rows.first.map { |x| x.to_s.strip }
     keep = head.each_index.reject { |i| head[i].empty? || head[i] =~ /reit|landlord/i }
     abort "Sheet has no Building column" unless keep.any? { |i| head[i] == "Building" }
+    rows = rows.select { |r| keep.any? { |i| !r[i].to_s.strip.empty? } }   # drop empty rows at the bottom of the sheet
     out = CSV.generate { |csv| rows.each { |r| csv << keep.map { |i| r[i] } } }
     if File.exist?(CSV_FILE) && File.read(CSV_FILE, encoding: "UTF-8") == out
       puts "Google Sheet: no changes"
