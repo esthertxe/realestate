@@ -277,7 +277,7 @@
 
   // Two separate reports: 'numbers' (stamp duty and borrowing) and 'own' (rental cashflow and yield)
   function reportData(kind){
-    var forms = kind === 'own' ? ['panel-cash'] : kind === 'sale' ? ['panel-sale'] : ['duty', 'afford'];
+    var forms = kind === 'listing' ? [] : kind === 'own' ? ['panel-cash'] : kind === 'sale' ? ['panel-sale'] : ['duty', 'afford'];
     forms.forEach(function(id){
       Array.prototype.forEach.call($(id).querySelectorAll('input:not([readonly])'), tidy);
       $(id).dispatchEvent(new Event('change'));
@@ -286,6 +286,20 @@
       today: now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' }),
       iso: now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
     };
+    if (kind === 'listing'){
+      // Fact sheet for one listing, read from the page
+      var lt = document.querySelector('[data-listing]');
+      var dl = function(sel){ return Array.prototype.map.call(document.querySelectorAll(sel), function(div){ return [div.querySelector('dt').textContent, div.querySelector('dd').textContent]; }); };
+      var hl = Array.prototype.map.call(document.querySelectorAll('.highlights li'), function(li){ return li.textContent; });
+      d.head = [lt.querySelector('h1').firstChild.textContent.trim(), lt.querySelector('h1 em').textContent];
+      d.file = lt.getAttribute('data-listing'); d.name = d.head[0]; d.sub = 'Fact sheet prepared on ' + d.today + ' from www.esthertxe.com';
+      d.sections = [{ title: lt.querySelector('.page-lead').textContent, key: [[lt.querySelector('.status-chip').textContent, $('l-price').textContent]],
+        inputs: [], results: dl('#facts > div'), resultsLabel: 'Key details', notes: hl.length ? ['Highlights: ' + hl.join('; ') + '.'] : [] }];
+      if ($('movein-table')) d.sections.push({ title: 'Cost to move in', key: [], inputs: [], results: resultsOf($('movein-table')), resultsLabel: 'Estimate',
+        notes: notesOf([]).concat([$('movein-table').nextElementSibling.textContent.trim()]) });
+      d.sections[d.sections.length - 1].notes.push(document.querySelector('.foot').textContent.match(/Listing details as at[^.]*\./)[0]);
+      return d;
+    }
     if (kind === 'sale'){
       d.head = ['Run your', 'own numbers']; d.file = 'sale-proceeds'; d.name = 'Sale proceeds';
       d.sections = [
@@ -317,10 +331,10 @@
     var contact = '<address class="pr-contact"><strong>' + esc(CONTACT_LINES[0]) + '</strong><br>' + CONTACT_LINES.slice(1).map(esc).join('<br>') + '</address>';
     function table(rows){ return '<table>' + rows.map(function(r){ return '<tr' + (r[2] ? ' class="total"' : '') + '><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</table>'; }
     $('print-report').innerHTML =
-      '<div class="pr-head"><div><h1>' + esc(d.head[0]) + ' <em>' + esc(d.head[1]) + '</em></h1><p class="pr-date">Prepared on ' + esc(d.today) + ' with the calculators at www.esthertxe.com</p></div>' + contact + '</div>' +
+      '<div class="pr-head"><div><h1>' + esc(d.head[0]) + ' <em>' + esc(d.head[1]) + '</em></h1><p class="pr-date">' + esc(d.sub || ('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com')) + '</p></div>' + contact + '</div>' +
       d.sections.map(function(s){
         return '<div class="pr-sec"><h2>' + esc(s.title) + '</h2><div class="pr-key">' + s.key.map(function(k){ return '<p>' + esc(k[0]) + '<strong>' + esc(k[1]) + '</strong></p>'; }).join('') + '</div>' +
-          (s.inputs.length ? '<h3>Your inputs</h3>' + table(s.inputs) : '') + '<h3>Results</h3>' + table(s.results) +
+          (s.inputs.length ? '<h3>Your inputs</h3>' + table(s.inputs) : '') + '<h3>' + esc(s.resultsLabel || 'Results') + '</h3>' + table(s.results) +
           s.notes.map(function(n){ return '<p class="pr-note">' + esc(n) + '</p>'; }).join('') +
           (s.bank ? '<p class="pr-note"><strong>' + esc(BANK) + '</strong></p>' : '') + '</div>';
       }).join('') +
@@ -368,7 +382,7 @@
     font('bold', 17, INK); var h0 = d.head[0].toUpperCase(); doc.text(h0, X0, 27);
     var tw = doc.getTextWidth(h0 + ' ');
     font('italic', 17, OLIVE, 'times'); doc.text(d.head[1], X0 + tw, 27);
-    font('normal', 9, GREY); doc.text(plain('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com'), X0, 33.5);
+    font('normal', 9, GREY); doc.text(plain(d.sub || ('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com')), X0, 33.5);
     y = 37; rule(y, OLIVE, .5); y += 9;
 
     d.sections.forEach(function(s, si){
@@ -383,7 +397,7 @@
       });
       y += 17;
       if (s.inputs.length){ font('bold', 8, GREY); room(8); doc.text('YOUR INPUTS', X0, y); y += 2.5; rows(s.inputs); y += 4; }
-      font('bold', 8, GREY); room(8); doc.text('RESULTS', X0, y); y += 2.5; rows(s.results);
+      font('bold', 8, GREY); room(8); doc.text((s.resultsLabel || 'Results').toUpperCase(), X0, y); y += 2.5; rows(s.results);
       y += 3;
       s.notes.forEach(function(n){ para(n, 8, GREY, 'normal', 3.6); y += 1.2; });
       if (s.bank){ para(BANK, 8, INK, 'bold', 3.6); }
@@ -416,7 +430,7 @@
   // Load the library ahead of time once the calculators are on screen, so the click downloads straight away
   if (pdfBtns.length && 'IntersectionObserver' in window){
     var pre = new IntersectionObserver(function(es){ if (es.some(function(e){ return e.isIntersecting; })){ loadPdfLib().catch(function(){}); pre.disconnect(); } }, { rootMargin: '400px' });
-    pre.observe($('numbers'));
+    pre.observe($('numbers') || pdfBtns[0]);
   }
   Array.prototype.forEach.call(pdfBtns, function(pdfBtn){
     var pdfHint = $(pdfBtn.getAttribute('aria-describedby')), label = pdfBtn.textContent;
@@ -452,6 +466,20 @@
     });
     Array.prototype.forEach.call(document.querySelectorAll('.hero, .page-head, .contact, .foot'), function(el){ io.observe(el); });
   }
+
+  // Calculators opened from a listing: calculators.html?price=1850000&type=res&rent=4500#stamp-duty
+  (function(){
+    if (!$('duty') || !window.URLSearchParams) return;
+    var q = new URLSearchParams(location.search), p = parseInt(q.get('price'), 10), rent = parseInt(q.get('rent'), 10);
+    if (!(p > 0)) return;
+    var fmt = function(n){ return n.toLocaleString('en-SG'); };
+    $('d-price').value = fmt(p);
+    if (q.get('type') === 'non' || q.get('type') === 'res') $('d-type').value = q.get('type');
+    $('c-price').value = fmt(p);
+    if (rent > 0) $('c-rent').value = fmt(rent);
+    ['duty', 'panel-cash'].forEach(function(id){ $(id).dispatchEvent(new Event('change')); });
+    $('d-type').dispatchEvent(new Event('change', { bubbles: true }));
+  })();
 
   // Enquiry form -> mailto
   var form = document.getElementById('enquiry');

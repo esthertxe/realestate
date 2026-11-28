@@ -1,0 +1,21 @@
+{
+  "type": "residential",
+  "deal": "lease",
+  "status": "available",
+  "name": "Sample Court, common room",
+  "subtype": "Room (common)",
+  "address": "2 Sample Avenue",
+  "district": "D16 · Sample district",
+  "price": 1200,
+  "bedrooms": 1,
+  "bathrooms": 1,
+  "furnishing": "Fully furnished",
+  "lease_months": 12,
+  "available": "1 January 2027",
+  "mrt": "Sample MRT, 8 minutes' walk",
+  "summary": "SAMPLE ONLY, not a real listing: a furnished common room used to preview the lease template.",
+  "highlights": ["Aircon", "Shared bathroom", "Wi-Fi included"],
+  "description": ["This is a sample lease listing used to preview the page layout. None of these details are real."],
+  "listed": "2026-11-28",
+  "updated": "2026-11-28"
+}

@@ -43,13 +43,22 @@ if [ -f "$A/villa-dusk.jpg" ]; then
   jpg "$B/villa.jpg" "$B/villa.jpg" 85
 fi
 
-# Build each page: pull in the shared CSS/JS, inline images (and set real width/height)
+# Listing photos: assets/listings/<slug>/ -> img/listings/<slug>/ (see listings/README.md)
+ruby -E UTF-8 -r ./src/listings.rb -e 'Listings.resize_photos'
+
+# Build each page: pull in the shared CSS/JS, inline images (and set real width/height),
+# and fill the For sale / For lease columns of the property-type pages with listing cards
 for PAGE in index calculators residential industrial commercial; do
-ruby -e '
+ruby -E UTF-8 -r ./src/listings.rb -e '
   require "base64"
+  all = Listings.load(ENV["PREVIEW"] == "1")
   page = ARGV[0]
   html = File.read("src/#{page}.src.html", encoding: "UTF-8")
   html.gsub!(/\/\* @inline ([\w.-]+) \*\/\n/) { File.read("src/#{$1}", encoding: "UTF-8") }
+  html.gsub!(/<!-- @listings (\w+) (\w+)[^>]*-->\n(.*?)<!-- \/@listings -->/m) do
+    cards = Listings.cards_for(all, $1, $2)
+    cards.empty? ? $3 : "<div class=\"listing-grid\">\n#{cards}</div>\n"
+  end
   html.gsub!(/<img([^>]*?)src="(assets\/build\/[^"]+)"([^>]*)>/) do
     pre, path, post = $1, $2, $3
     if File.exist?(path)
@@ -65,3 +74,6 @@ ruby -e '
   puts "#{page}.html: #{(html.bytesize/1024.0).round} KB"
 ' "$PAGE"
 done
+
+# Listing pages (/<type>/<slug>.html) and sitemap.xml. PREVIEW=1 ./build.sh also builds listings/_*.json samples.
+ruby -E UTF-8 -r ./src/listings.rb -e 'Listings.build(ENV["PREVIEW"] == "1")'

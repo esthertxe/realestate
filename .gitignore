@@ -3,3 +3,9 @@ Photos/
 assets/
 .DS_Store
 .claude/
+
+# Preview-only sample listings (listings/_*.json) are never published
+img/listings/_*/
+residential/_*.html
+industrial/_*.html
+commercial/_*.html

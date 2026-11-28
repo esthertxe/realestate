@@ -1,0 +1,31 @@
+{
+  "type": "residential",
+  "deal": "sale",
+  "status": "available",
+  "name": "Sample Residences",
+  "subtype": "Condominium",
+  "address": "1 Sample Road",
+  "postal_code": "000000",
+  "district": "D15 · Sample district",
+  "price": 1850000,
+  "size_sqft": 1001,
+  "bedrooms": 3,
+  "bathrooms": 2,
+  "tenure": "99-year leasehold",
+  "top": 2019,
+  "furnishing": "Partially furnished",
+  "available": "On completion of sale",
+  "mrt": "Sample MRT, 6 minutes' walk",
+  "expected_rent": 5200,
+  "summary": "SAMPLE ONLY, not a real listing: a three-bedroom condominium used to preview the listing template.",
+  "highlights": ["High floor", "Unblocked view", "Renovated kitchen", "Near MRT"],
+  "description": [
+    "This is a sample listing used to preview the page layout. None of these details are real.",
+    "A second paragraph shows how longer descriptions wrap: layout, condition, views, and anything a buyer should know before a viewing."
+  ],
+  "facilities": ["Swimming pool", "Gym", "Covered car park", "24-hour security"],
+  "photo_alts": ["Living room with a timber staircase", "Exterior at dusk", "Living area"],
+  "faq": [["Is the unit tenanted?", "Sample answer: the unit is vacant and ready for viewing."]],
+  "listed": "2026-11-28",
+  "updated": "2026-11-28"
+}

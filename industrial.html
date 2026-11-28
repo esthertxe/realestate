@@ -436,12 +436,77 @@ address{font-style:normal}
 .listing-col > .eyebrow{margin-bottom:1rem;color:var(--olive);font-weight:600}
 .listing-empty{background:var(--card);padding:1.5rem}
 .listing-empty p{color:var(--muted);margin-bottom:1.25rem;max-width:30rem}
-.listing{border-top:1px solid var(--line);padding-block:1.25rem}
-.listing img{width:100%;height:auto;display:block;margin-bottom:1rem}
 .listing-price{font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.6rem;color:var(--olive)}
 .listing h4{font-weight:500;font-size:1.1rem;margin:.25rem 0}
 .listing-meta{color:var(--muted);font-size:.9rem}
 @media (max-width:760px){.listings{grid-template-columns:1fr}}
+
+/* ---------- LISTING CARDS ---------- */
+.listing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:1.75rem}
+.listing-col .listing-grid{grid-template-columns:repeat(auto-fill,minmax(13rem,1fr))}
+.listing{display:flex;flex-direction:column}
+.listing-img{position:relative;display:block;aspect-ratio:4/3;background:var(--card);overflow:hidden}
+.listing-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.listing:hover .listing-img img{transform:scale(1.03)}
+.listing-ph{display:grid;place-items:center;height:100%;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.listing-badge{position:absolute;left:.75rem;top:.75rem;background:#2c2b27;color:#f8f3ed;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;padding:.35rem .6rem}
+.listing-body{padding-top:.9rem}
+.listing-body h4 a{text-decoration:none}
+.listing-body h4 a:hover{color:var(--olive)}
+.listing-none{color:var(--muted)}
+.listing-none a{color:var(--ink)}
+
+/* ---------- LISTING PAGE ---------- */
+.listing-title{padding-bottom:clamp(2rem,4vw,3rem)}
+.listing-chips{display:flex;gap:.5rem;margin-bottom:1.25rem}
+.status-chip{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;font-weight:500;padding:.45rem .75rem;border:1px solid rgba(248,243,237,.5)}
+.status-chip.on{background:#f8f3ed;color:#34321f;border-color:#f8f3ed}
+.listing-title h1{font-size:clamp(2.2rem,5vw,4.4rem)}
+.listing-title .page-lead{margin:1.1rem 0 .9rem}
+.listing-hero-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1rem;font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(2rem,4vw,3rem);line-height:1}
+.listing-hero-price .psf{font-family:var(--sans);font-style:normal;font-weight:400;font-size:.95rem;color:rgba(248,243,237,.8)}
+.gallery-sec{padding-block:clamp(1.5rem,3vw,2.5rem)}
+.gallery{display:grid;gap:.5rem;grid-template-columns:2fr 1fr 1fr;grid-template-rows:repeat(2,clamp(9rem,17vw,15rem))}
+.gallery a{position:relative;display:block;overflow:hidden;background:var(--card)}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery a:first-child{grid-row:1 / span 2}
+.gallery-1{grid-template-columns:1fr;grid-template-rows:clamp(16rem,40vw,34rem)}
+.gallery-2{grid-template-columns:2fr 1fr}.gallery-2 a:nth-child(2){grid-row:1 / span 2}
+.gallery-3{grid-template-columns:2fr 1fr}
+.gallery-4 a:nth-child(4){grid-column:2 / span 2}
+.gallery-more{position:absolute;inset:auto .6rem .6rem auto;background:rgba(44,43,39,.85);color:#f8f3ed;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;padding:.4rem .65rem}
+.gallery-all{margin-top:.75rem;font-size:.85rem;display:flex;flex-wrap:wrap;gap:.25rem .9rem}
+.gallery-all a{color:var(--muted)}
+.gallery-empty{background:var(--card);padding:2.5rem 1.5rem;text-align:center;color:var(--muted)}
+.listing-main{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:2.5rem clamp(2rem,5vw,5rem);align-items:start}
+.listing-main .hd{margin:0 0 1.25rem}
+.highlights{display:flex;flex-wrap:wrap;gap:.5rem;margin:.75rem 0 2.25rem}
+.highlights li,.chips li{border:1px solid var(--line);padding:.45rem .75rem;font-size:.9rem}
+.listing-desc p{max-width:40rem;margin-bottom:1rem;line-height:1.65}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.listing-main h3.eyebrow{margin-top:2rem}
+.facts-card{background:var(--card);padding:1.5rem 1.5rem 1.25rem;position:sticky;top:1.5rem}
+.facts{margin:.75rem 0 1.25rem}
+.facts div{display:flex;justify-content:space-between;gap:1rem;padding:.65rem 0;border-top:1px solid var(--line)}
+.facts dt{color:var(--muted)}
+.facts dd{text-align:right;font-weight:500}
+.facts-actions{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.facts-actions .btn-olive{grid-column:1 / -1}
+.facts-actions .btn{white-space:normal;text-align:center}
+.facts-card .pdf-hint{text-align:left;margin:.9rem 0 0}
+.listing-numbers .hd{margin-bottom:1.5rem}
+.listing-numbers .res{max-width:40rem}
+.listing-faq{max-width:54rem}
+.listing-bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;align-items:center;gap:.6rem;padding:.6rem var(--gutter) calc(.6rem + env(safe-area-inset-bottom));background:#2c2b27;color:#f8f3ed}
+.listing-bar p{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.listing-bar strong{font-family:var(--serif);font-style:italic;font-size:1.3rem;margin-right:.5rem}
+.listing-bar span{color:rgba(248,243,237,.75);font-size:.9rem}
+.listing-bar .btn{min-height:2.6rem;padding:.6rem 1rem}
+.listing-bar .btn-outline{color:#f8f3ed}
+body.has-bar{padding-bottom:4.5rem}
+@media (max-width:900px){.listing-main{grid-template-columns:1fr}.facts-card{position:static}}
+@media (max-width:640px){.gallery,.gallery-2,.gallery-3,.gallery-4,.gallery-5{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:7.5rem}.gallery a:first-child,.gallery-2 a:nth-child(2),.gallery-4 a:nth-child(4){grid-column:1 / -1;grid-row:span 2}.gallery-2 a:nth-child(2),.gallery-4 a:nth-child(4){grid-row:auto}.gallery a:nth-child(n+4){display:none}.gallery-1{grid-auto-rows:15rem}.gallery-1 a:first-child{grid-row:auto}.listing-bar span{display:none}}
+@media print{.listing-bar{display:none}}
 </style>
 </head>
 <body>
@@ -521,22 +586,19 @@ address{font-style:normal}
       <div class="listings">
         <div class="listing-col" id="for-sale">
           <h3 class="eyebrow">For sale</h3>
-          <!-- Listing cards go here, for example:
-          <article class="listing">
-            <img src="LISTING-PHOTO.jpg" width="640" height="420" alt="" loading="lazy">
-            <div class="listing-body"><p class="listing-price">S$0</p><h4>Name of property</h4><p class="listing-meta">District · size · tenure</p></div>
-          </article> -->
-          <div class="listing-empty">
+                    <div class="listing-empty">
             <p>No industrial listings for sale are shown here yet. Tell me what you are looking for and I will share the current options that fit.</p>
             <a class="btn btn-olive" href="https://wa.me/6588008787?text=Hi%20Esther%2C%20I%27m%20looking%20for%20industrial%20property%20for%20sale." rel="noopener">Ask for listings for sale</a>
           </div>
+          
         </div>
         <div class="listing-col" id="for-lease">
           <h3 class="eyebrow">For lease</h3>
-          <div class="listing-empty">
+                    <div class="listing-empty">
             <p>No industrial listings for lease are shown here yet. Tell me the size, area and budget you have in mind and I will share what is available.</p>
             <a class="btn btn-olive" href="https://wa.me/6588008787?text=Hi%20Esther%2C%20I%27m%20looking%20for%20industrial%20property%20for%20lease." rel="noopener">Ask for listings for lease</a>
           </div>
+          
         </div>
       </div>
     </div>
@@ -890,7 +952,7 @@ address{font-style:normal}
 
   // Two separate reports: 'numbers' (stamp duty and borrowing) and 'own' (rental cashflow and yield)
   function reportData(kind){
-    var forms = kind === 'own' ? ['panel-cash'] : kind === 'sale' ? ['panel-sale'] : ['duty', 'afford'];
+    var forms = kind === 'listing' ? [] : kind === 'own' ? ['panel-cash'] : kind === 'sale' ? ['panel-sale'] : ['duty', 'afford'];
     forms.forEach(function(id){
       Array.prototype.forEach.call($(id).querySelectorAll('input:not([readonly])'), tidy);
       $(id).dispatchEvent(new Event('change'));
@@ -899,6 +961,20 @@ address{font-style:normal}
       today: now.toLocaleDateString('en-SG', { day:'numeric', month:'long', year:'numeric' }),
       iso: now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
     };
+    if (kind === 'listing'){
+      // Fact sheet for one listing, read from the page
+      var lt = document.querySelector('[data-listing]');
+      var dl = function(sel){ return Array.prototype.map.call(document.querySelectorAll(sel), function(div){ return [div.querySelector('dt').textContent, div.querySelector('dd').textContent]; }); };
+      var hl = Array.prototype.map.call(document.querySelectorAll('.highlights li'), function(li){ return li.textContent; });
+      d.head = [lt.querySelector('h1').firstChild.textContent.trim(), lt.querySelector('h1 em').textContent];
+      d.file = lt.getAttribute('data-listing'); d.name = d.head[0]; d.sub = 'Fact sheet prepared on ' + d.today + ' from www.esthertxe.com';
+      d.sections = [{ title: lt.querySelector('.page-lead').textContent, key: [[lt.querySelector('.status-chip').textContent, $('l-price').textContent]],
+        inputs: [], results: dl('#facts > div'), resultsLabel: 'Key details', notes: hl.length ? ['Highlights: ' + hl.join('; ') + '.'] : [] }];
+      if ($('movein-table')) d.sections.push({ title: 'Cost to move in', key: [], inputs: [], results: resultsOf($('movein-table')), resultsLabel: 'Estimate',
+        notes: notesOf([]).concat([$('movein-table').nextElementSibling.textContent.trim()]) });
+      d.sections[d.sections.length - 1].notes.push(document.querySelector('.foot').textContent.match(/Listing details as at[^.]*\./)[0]);
+      return d;
+    }
     if (kind === 'sale'){
       d.head = ['Run your', 'own numbers']; d.file = 'sale-proceeds'; d.name = 'Sale proceeds';
       d.sections = [
@@ -930,10 +1006,10 @@ address{font-style:normal}
     var contact = '<address class="pr-contact"><strong>' + esc(CONTACT_LINES[0]) + '</strong><br>' + CONTACT_LINES.slice(1).map(esc).join('<br>') + '</address>';
     function table(rows){ return '<table>' + rows.map(function(r){ return '<tr' + (r[2] ? ' class="total"' : '') + '><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</table>'; }
     $('print-report').innerHTML =
-      '<div class="pr-head"><div><h1>' + esc(d.head[0]) + ' <em>' + esc(d.head[1]) + '</em></h1><p class="pr-date">Prepared on ' + esc(d.today) + ' with the calculators at www.esthertxe.com</p></div>' + contact + '</div>' +
+      '<div class="pr-head"><div><h1>' + esc(d.head[0]) + ' <em>' + esc(d.head[1]) + '</em></h1><p class="pr-date">' + esc(d.sub || ('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com')) + '</p></div>' + contact + '</div>' +
       d.sections.map(function(s){
         return '<div class="pr-sec"><h2>' + esc(s.title) + '</h2><div class="pr-key">' + s.key.map(function(k){ return '<p>' + esc(k[0]) + '<strong>' + esc(k[1]) + '</strong></p>'; }).join('') + '</div>' +
-          (s.inputs.length ? '<h3>Your inputs</h3>' + table(s.inputs) : '') + '<h3>Results</h3>' + table(s.results) +
+          (s.inputs.length ? '<h3>Your inputs</h3>' + table(s.inputs) : '') + '<h3>' + esc(s.resultsLabel || 'Results') + '</h3>' + table(s.results) +
           s.notes.map(function(n){ return '<p class="pr-note">' + esc(n) + '</p>'; }).join('') +
           (s.bank ? '<p class="pr-note"><strong>' + esc(BANK) + '</strong></p>' : '') + '</div>';
       }).join('') +
@@ -981,7 +1057,7 @@ address{font-style:normal}
     font('bold', 17, INK); var h0 = d.head[0].toUpperCase(); doc.text(h0, X0, 27);
     var tw = doc.getTextWidth(h0 + ' ');
     font('italic', 17, OLIVE, 'times'); doc.text(d.head[1], X0 + tw, 27);
-    font('normal', 9, GREY); doc.text(plain('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com'), X0, 33.5);
+    font('normal', 9, GREY); doc.text(plain(d.sub || ('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com')), X0, 33.5);
     y = 37; rule(y, OLIVE, .5); y += 9;
 
     d.sections.forEach(function(s, si){
@@ -996,7 +1072,7 @@ address{font-style:normal}
       });
       y += 17;
       if (s.inputs.length){ font('bold', 8, GREY); room(8); doc.text('YOUR INPUTS', X0, y); y += 2.5; rows(s.inputs); y += 4; }
-      font('bold', 8, GREY); room(8); doc.text('RESULTS', X0, y); y += 2.5; rows(s.results);
+      font('bold', 8, GREY); room(8); doc.text((s.resultsLabel || 'Results').toUpperCase(), X0, y); y += 2.5; rows(s.results);
       y += 3;
       s.notes.forEach(function(n){ para(n, 8, GREY, 'normal', 3.6); y += 1.2; });
       if (s.bank){ para(BANK, 8, INK, 'bold', 3.6); }
@@ -1029,7 +1105,7 @@ address{font-style:normal}
   // Load the library ahead of time once the calculators are on screen, so the click downloads straight away
   if (pdfBtns.length && 'IntersectionObserver' in window){
     var pre = new IntersectionObserver(function(es){ if (es.some(function(e){ return e.isIntersecting; })){ loadPdfLib().catch(function(){}); pre.disconnect(); } }, { rootMargin: '400px' });
-    pre.observe($('numbers'));
+    pre.observe($('numbers') || pdfBtns[0]);
   }
   Array.prototype.forEach.call(pdfBtns, function(pdfBtn){
     var pdfHint = $(pdfBtn.getAttribute('aria-describedby')), label = pdfBtn.textContent;
@@ -1065,6 +1141,20 @@ address{font-style:normal}
     });
     Array.prototype.forEach.call(document.querySelectorAll('.hero, .page-head, .contact, .foot'), function(el){ io.observe(el); });
   }
+
+  // Calculators opened from a listing: calculators.html?price=1850000&type=res&rent=4500#stamp-duty
+  (function(){
+    if (!$('duty') || !window.URLSearchParams) return;
+    var q = new URLSearchParams(location.search), p = parseInt(q.get('price'), 10), rent = parseInt(q.get('rent'), 10);
+    if (!(p > 0)) return;
+    var fmt = function(n){ return n.toLocaleString('en-SG'); };
+    $('d-price').value = fmt(p);
+    if (q.get('type') === 'non' || q.get('type') === 'res') $('d-type').value = q.get('type');
+    $('c-price').value = fmt(p);
+    if (rent > 0) $('c-rent').value = fmt(rent);
+    ['duty', 'panel-cash'].forEach(function(id){ $(id).dispatchEvent(new Event('change')); });
+    $('d-type').dispatchEvent(new Event('change', { bubbles: true }));
+  })();
 
   // Enquiry form -> mailto
   var form = document.getElementById('enquiry');
