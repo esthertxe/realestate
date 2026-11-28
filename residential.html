@@ -500,12 +500,12 @@ address{font-style:normal}
 .listing-bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;align-items:center;gap:.6rem;padding:.6rem var(--gutter) calc(.6rem + env(safe-area-inset-bottom));background:#2c2b27;color:#f8f3ed}
 .listing-bar p{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .listing-bar strong{font-family:var(--serif);font-style:italic;font-size:1.3rem;margin-right:.5rem}
-.listing-bar span{color:rgba(248,243,237,.75);font-size:.9rem}
+.listing-bar p span{color:rgba(248,243,237,.75);font-size:.9rem}
 .listing-bar .btn{min-height:2.6rem;padding:.6rem 1rem}
 .listing-bar .btn-outline{color:#f8f3ed}
 body.has-bar{padding-bottom:4.5rem}
 @media (max-width:900px){.listing-main{grid-template-columns:1fr}.facts-card{position:static}}
-@media (max-width:640px){.gallery,.gallery-2,.gallery-3,.gallery-4,.gallery-5{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:7.5rem}.gallery a:first-child,.gallery-2 a:nth-child(2),.gallery-4 a:nth-child(4){grid-column:1 / -1;grid-row:span 2}.gallery-2 a:nth-child(2),.gallery-4 a:nth-child(4){grid-row:auto}.gallery a:nth-child(n+4){display:none}.gallery-1{grid-auto-rows:15rem}.gallery-1 a:first-child{grid-row:auto}.listing-bar span{display:none}}
+@media (max-width:640px){.gallery,.gallery-2,.gallery-3,.gallery-4,.gallery-5{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:7.5rem}.gallery a:first-child,.gallery-2 a:nth-child(2),.gallery-4 a:nth-child(4){grid-column:1 / -1;grid-row:span 2}.gallery-2 a:nth-child(2),.gallery-4 a:nth-child(4){grid-row:auto}.gallery a:nth-child(n+4){display:none}.gallery-1{grid-auto-rows:15rem}.gallery-1 a:first-child{grid-row:auto}.listing-bar p span{display:none}}
 @media print{.listing-bar{display:none}}
 
 /* ---------- SPACE LISTINGS (text cards, filters, JTC charts) ---------- */
@@ -544,6 +544,57 @@ body.has-bar{padding-bottom:4.5rem}
 .res.units th,.res.units td{text-align:left;white-space:nowrap;padding-right:1rem}
 .res.units thead th{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:500;border-top:0}
 .res.units a{color:var(--ink)}
+
+/* ---------- LISTING LOCATION ---------- */
+.loc-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:2rem clamp(2rem,4vw,3.5rem);align-items:start}
+.map{height:clamp(18rem,36vw,26rem);background:var(--card);z-index:0}
+.loc-side{display:grid;gap:1.75rem}
+.loc-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:1.75rem clamp(2rem,4vw,3.5rem);margin-top:2.25rem}
+.loc-block .eyebrow{color:var(--olive);font-weight:600;margin-bottom:.6rem}
+.loc-list li{display:flex;flex-direction:column;padding:.55rem 0;border-top:1px solid var(--line)}
+.loc-list strong{font-weight:500}
+.loc-list span{color:var(--muted);font-size:.88rem}
+.loc-more{color:var(--muted);font-size:.88rem;margin-top:.4rem}
+.loc-foot{margin-top:.75rem;font-size:.95rem}
+.bars li{display:grid;grid-template-columns:9.5rem minmax(0,1fr) 4.8rem;align-items:center;gap:.75rem;padding:.4rem 0}
+.bar-label{font-size:.9rem}
+.bar{height:.55rem;background:var(--card)}
+.bar i{display:block;height:100%;background:var(--olive)}
+.bar-val{text-align:right;font-size:.9rem;font-variant-numeric:tabular-nums}
+.map .leaflet-tooltip{font-family:var(--sans);font-weight:500}
+@media (max-width:860px){.loc-grid{grid-template-columns:1fr}}
+@media (max-width:480px){.bars li{grid-template-columns:7rem minmax(0,1fr) 4.2rem}}
+
+/* ---------- SHORTLIST ---------- */
+.save-btn{position:absolute;z-index:2;top:.6rem;right:.6rem;display:inline-flex;align-items:center;gap:.35rem;background:#f8f3ed;color:#34321f;border:1px solid var(--line);font:500 .72rem/1 var(--sans);text-transform:uppercase;letter-spacing:.05em;padding:.45rem .6rem;cursor:pointer}
+.listing-text .save-btn{top:.75rem;right:.75rem}
+.listing{position:relative}
+.save-ico{width:.8rem;height:.8rem;display:inline-block;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 3h12v18l-6-4-6 4z' fill='none' stroke='black' stroke-width='2.2' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 3h12v18l-6-4-6 4z' fill='none' stroke='black' stroke-width='2.2' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+[data-save][aria-pressed="true"] .save-ico{-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 3h12v18l-6-4-6 4z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 3h12v18l-6-4-6 4z' fill='black'/%3E%3C/svg%3E") center/contain no-repeat}
+.save-btn[aria-pressed="true"]{background:var(--olive);color:#f8f3ed;border-color:var(--olive)}
+.listing-text .listing-tags{padding-right:5.5rem}
+.facts-actions .save-big{grid-column:1 / -1}
+.save-big[aria-pressed="true"]{background:var(--olive);color:#f8f3ed;border-color:var(--olive)}
+.listing-bar .save-bar{color:#f8f3ed}
+.listing-bar .save-bar[aria-pressed="true"]{background:#f8f3ed;color:#34321f}
+.shortlist{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--bg);border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(0,0,0,.08)}
+.shortlist[hidden]{display:none}
+.shortlist.above-bar{bottom:calc(3.9rem + env(safe-area-inset-bottom))}
+.shortlist-bar{display:flex;align-items:center;gap:.6rem;padding:.6rem var(--gutter)}
+.shortlist-bar p{flex:1;font-size:1rem}
+.shortlist-bar strong{font-family:var(--serif);font-style:italic;font-size:1.4rem;color:var(--olive)}
+.shortlist-bar .btn{min-height:2.6rem;padding:.55rem 1rem}
+.shortlist-bar .btn-white{background:var(--olive);color:#f8f3ed}
+.shortlist-items{max-height:45vh;overflow:auto;padding:0 var(--gutter)}
+.shortlist-items li{display:flex;align-items:center;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--line)}
+.shortlist-items a{flex:1;text-decoration:none}
+.shortlist-items a:hover{color:var(--olive)}
+.shortlist-rm{background:none;border:0;font-size:1.4rem;line-height:1;color:var(--muted);cursor:pointer;padding:.2rem .4rem}
+body.has-shortlist{padding-bottom:4.5rem}
+body.has-bar.has-shortlist{padding-bottom:8.5rem}
+@media (max-width:560px){.listing-bar .save-bar .save-txt{display:none}}
+@media print{.shortlist,.save-btn{display:none}}
+.listing-bar p{order:0}.listing-bar .save-bar{order:1}.listing-bar a.btn{order:2}
 </style>
 </head>
 <body>
@@ -1213,6 +1264,102 @@ body.has-bar{padding-bottom:4.5rem}
     window.location.href = href;
   });
   if (form) ['name','contact'].forEach(function(k){ form[k].addEventListener('input', function(){ this.removeAttribute('aria-invalid'); }); });
+
+  // Listing map: loads Leaflet (cdnjs) with OneMap tiles once the map scrolls into view
+  var mapEl = $('map');
+  if (mapEl){
+    var startMap = function(){
+      if (mapEl.getAttribute('data-ready')) return;
+      mapEl.setAttribute('data-ready', '1');
+      var css = document.createElement('link');
+      css.rel = 'stylesheet'; css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+      document.head.appendChild(css);
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+      s.onload = function(){
+        var ll = [+mapEl.getAttribute('data-lat'), +mapEl.getAttribute('data-lon')];
+        var m = window.L.map(mapEl, { scrollWheelZoom: false }).setView(ll, 16);
+        window.L.tileLayer('https://www.onemap.gov.sg/maps/tiles/Default/{z}/{x}/{y}.png', {
+          minZoom: 11, maxZoom: 19, detectRetina: true,
+          attribution: '<a href="https://www.onemap.gov.sg/" rel="noopener">OneMap</a> &copy; contributors &#124; <a href="https://www.sla.gov.sg/" rel="noopener">Singapore Land Authority</a>'
+        }).addTo(m);
+        window.L.circleMarker(ll, { radius: 9, color: '#f8f3ed', weight: 3, fillColor: '#5d5839', fillOpacity: 1 })
+          .addTo(m).bindTooltip(mapEl.getAttribute('data-name'), { permanent: true, direction: 'top', offset: [0, -10] });
+      };
+      s.onerror = function(){ mapEl.hidden = true; };
+      document.head.appendChild(s);
+    };
+    if ('IntersectionObserver' in window){
+      var mapIo = new IntersectionObserver(function(es){ if (es[0].isIntersecting){ startMap(); mapIo.disconnect(); } }, { rootMargin: '300px' });
+      mapIo.observe(mapEl);
+    } else startMap();
+  }
+
+  // Shortlist: visitors save listings (kept in their own browser), then send the list to Esther on WhatsApp
+  (function(){
+    var KEY = 'esther-shortlist', items = [];
+    try { items = JSON.parse(localStorage.getItem(KEY) || '[]') || []; } catch (e) { items = []; }
+    function store(){ try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {} }
+    function has(url){ return items.some(function(x){ return x.url === url; }); }
+    var buttons = document.querySelectorAll('[data-save]');
+    if (!buttons.length && !items.length) return;
+
+    var tray = document.createElement('div');
+    tray.className = 'shortlist'; tray.id = 'shortlist'; tray.setAttribute('role', 'region'); tray.setAttribute('aria-label', 'Saved listings');
+    tray.innerHTML = '<ul class="shortlist-items" id="shortlist-items" hidden></ul>' +
+      '<div class="shortlist-bar"><p><strong id="shortlist-n">0</strong> saved</p>' +
+      '<button class="btn btn-outline" type="button" id="shortlist-view" aria-expanded="false" aria-controls="shortlist-items">View</button>' +
+      '<a class="btn btn-white" id="shortlist-send" rel="noopener">Send to Esther</a></div>';
+    document.body.appendChild(tray);
+    if (document.querySelector('.listing-bar')) tray.classList.add('above-bar');
+    var list = $('shortlist-items'), view = $('shortlist-view');
+
+    function render(){
+      $('shortlist-n').textContent = items.length;
+      tray.hidden = items.length === 0;
+      document.body.classList.toggle('has-shortlist', items.length > 0);
+      var nudge = $('nudge'); if (nudge && items.length) nudge.hidden = true;
+      list.innerHTML = '';
+      items.forEach(function(x){
+        var li = document.createElement('li'), a = document.createElement('a'), rm = document.createElement('button');
+        a.href = x.url; a.textContent = x.title;
+        rm.type = 'button'; rm.className = 'shortlist-rm'; rm.setAttribute('aria-label', 'Remove ' + x.title); rm.textContent = '×';
+        rm.addEventListener('click', function(){ toggle(x.url); });
+        li.appendChild(a); li.appendChild(rm); list.appendChild(li);
+      });
+      if (!items.length){ list.hidden = true; view.setAttribute('aria-expanded', 'false'); view.textContent = 'View'; }
+      var text = 'Hi Esther, I’m interested in these ' + (items.length === 1 ? 'listing' : items.length + ' listings') + ':\n' +
+        items.map(function(x, i){ return (i + 1) + '. ' + x.title + '\n' + location.origin + x.url; }).join('\n');
+      $('shortlist-send').href = 'https://wa.me/6588008787?text=' + encodeURIComponent(text);
+      Array.prototype.forEach.call(document.querySelectorAll('[data-save]'), function(b){
+        var on = has(b.getAttribute('data-save'));
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        var t = b.querySelector('.save-txt'); if (t) t.textContent = on ? 'Saved' : 'Save';
+      });
+    }
+    function toggle(url, title){
+      if (has(url)) items = items.filter(function(x){ return x.url !== url; });
+      else items.push({ url: url, title: title || url });
+      store(); render();
+    }
+    document.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('[data-save]');
+      if (!b) return;
+      e.preventDefault();
+      toggle(b.getAttribute('data-save'), b.getAttribute('data-title'));
+    });
+    view.addEventListener('click', function(){
+      var open = list.hidden;
+      list.hidden = !open; view.setAttribute('aria-expanded', open ? 'true' : 'false'); view.textContent = open ? 'Hide' : 'View';
+    });
+    // Keep tabs in step when the list changes in another tab
+    window.addEventListener('storage', function(e){
+      if (e.key !== KEY) return;
+      try { items = JSON.parse(e.newValue || '[]') || []; } catch (x) { items = []; }
+      render();
+    });
+    render();
+  })();
 })();
 </script>
 </body>

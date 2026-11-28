@@ -5,6 +5,11 @@ set -euo pipefail
 cd "$(dirname "$0")"
 A=assets; B=assets/build; mkdir -p "$B"
 
+# On the GitHub rebuild job: pull the listings Google Sheet first (link in the SHEET_CSV_URL secret)
+if [ -n "${SHEET_CSV_URL:-}" ]; then
+  ruby -E UTF-8 -r ./src/space.rb -e 'Space.pull_sheet(ENV["SHEET_CSV_URL"])'
+fi
+
 w(){ sips -g pixelWidth  "$1" | awk '/pixelWidth/{print $2}'; }
 h(){ sips -g pixelHeight "$1" | awk '/pixelHeight/{print $2}'; }
 jpg(){ sips -s format jpeg -s formatOptions "${3:-80}" "$1" --out "$2" >/dev/null; }
@@ -48,7 +53,10 @@ ruby -E UTF-8 -r ./src/listings.rb -e 'Listings.resize_photos; JTC.refresh'
 
 # Build each page: pull in the shared CSS/JS, inline images (and set real width/height),
 # and fill the For sale / For lease columns of the property-type pages with listing cards
-for PAGE in index calculators residential industrial commercial; do
+# SKIP_INDEX=1 (GitHub job): the homepage needs the photos in assets/, which stay on the Mac
+PAGES="index calculators residential industrial commercial"
+[ "${SKIP_INDEX:-}" = 1 ] && PAGES="calculators residential industrial commercial"
+for PAGE in $PAGES; do
 ruby -E UTF-8 -r ./src/listings.rb -e '
   require "base64"
   all = Listings.load(ENV["PREVIEW"] == "1")

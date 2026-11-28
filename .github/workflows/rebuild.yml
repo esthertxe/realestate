@@ -1,0 +1,45 @@
+# Rebuilds the listings from the Google Sheet every 6 hours, or straight away from the Actions tab (Run workflow).
+# Secrets (Settings > Secrets and variables > Actions): SHEET_CSV_URL, ONEMAP_EMAIL, ONEMAP_PASSWORD, LTA_KEY.
+# The homepage is not rebuilt here: it needs the photos that stay on the Mac (assets/).
+name: Rebuild listings
+
+on:
+  schedule:
+    - cron: "15 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rebuild-listings
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: macos-14
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Build from the Google Sheet
+        env:
+          SHEET_CSV_URL: ${{ secrets.SHEET_CSV_URL }}
+          ONEMAP_EMAIL: ${{ secrets.ONEMAP_EMAIL }}
+          ONEMAP_PASSWORD: ${{ secrets.ONEMAP_PASSWORD }}
+          LTA_KEY: ${{ secrets.LTA_KEY }}
+          SKIP_INDEX: "1"
+        run: |
+          if [ -z "$SHEET_CSV_URL" ]; then echo "SHEET_CSV_URL secret is not set"; exit 1; fi
+          ./build.sh
+
+      - name: Publish changes
+        run: |
+          git add -A
+          if git diff --cached --quiet; then echo "Nothing changed"; exit 0; fi
+          git -c user.name="Listings rebuild" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "Update listings from the Google Sheet"
+          git push

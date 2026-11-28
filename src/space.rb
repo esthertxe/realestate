@@ -18,6 +18,38 @@ module Space
     @config ||= JSON.parse(File.read(CONFIG, encoding: "UTF-8"))
   end
 
+  # Download the listings Google Sheet (shared "Anyone with the link: Viewer") and save it as listings/space.csv
+  # without the REIT / landlord column. The link is kept in a GitHub secret, never in this public repository.
+  def pull_sheet(link)
+    require "net/http"
+    id = link[%r{/spreadsheets/d/([\w-]+)}, 1] or abort "SHEET_CSV_URL is not a Google Sheets link"
+    gid = link[/gid=(\d+)/, 1] || "0"
+    uri = URI("https://docs.google.com/spreadsheets/d/#{id}/export?format=csv&gid=#{gid}")
+    body = nil
+    5.times do
+      res = Net::HTTP.get_response(uri)
+      if res.is_a?(Net::HTTPRedirection) then uri = URI(res["location"]); next end
+      abort "Google Sheet download failed (HTTP #{res.code}). Is it shared as 'Anyone with the link: Viewer'?" unless res.code == "200"
+      body = res.body.force_encoding("UTF-8").sub("﻿", ""); break
+    end
+    abort "Google Sheet download failed (too many redirects)" unless body
+    abort "The Google Sheet is not public: share it as 'Anyone with the link: Viewer'" if body.lstrip.start_with?("<")
+    rows = CSV.parse(body)
+    head = rows.first.map { |x| x.to_s.strip }
+    keep = head.each_index.reject { |i| head[i].empty? || head[i] =~ /reit|landlord/i }
+    abort "Sheet has no Building column" unless keep.any? { |i| head[i] == "Building" }
+    out = CSV.generate { |csv| rows.each { |r| csv << keep.map { |i| r[i] } } }
+    if File.exist?(CSV_FILE) && File.read(CSV_FILE, encoding: "UTF-8") == out
+      puts "Google Sheet: no changes"
+      return
+    end
+    File.write(CSV_FILE, out)
+    cfg = JSON.parse(File.read(CONFIG, encoding: "UTF-8"))
+    cfg["as_at"] = Date.today.to_s
+    File.write(CONFIG, JSON.pretty_generate(cfg) + "\n")
+    puts "Google Sheet: #{rows.size - 1} rows saved to #{CSV_FILE}"
+  end
+
   def clean(v)
     s = v.to_s.gsub(/\s+/, " ").strip
     s.empty? || %w[na n/a nil - none].include?(s.downcase) ? nil : s

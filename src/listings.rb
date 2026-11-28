@@ -85,6 +85,11 @@ module Listings
     %(data-page="#{l["type"]}" data-deal="#{l["deal"]}" data-kind="#{h(l["subtype"])}" data-zone="#{h(l["zoning"])}" data-region="#{h(l["region"] || l["district"])}" data-size="#{l["size_sqft"].to_i}" data-psf="#{l["psf"] || ""}" data-price="#{l["price"].to_i}" data-status="#{l["status"]}" data-text="#{h(text)}")
   end
 
+  # Save-to-shortlist button (handled by src/site.js; the list stays in the visitor's browser)
+  def save_btn(l, cls = "save-btn")
+    %(<button class="#{cls}" type="button" data-save="#{path(l)}" data-title="#{h(l["name"])} · #{h(price_text(l))}" aria-pressed="false"><span class="save-ico" aria-hidden="true"></span><span class="save-txt">Save</span></button>)
+  end
+
   def card(l, attrs: false)
     badge = l["status"] == "available" ? "" : %(<span class="listing-badge">#{STATUS[l["status"]]}</span>)
     extra = attrs ? " " + data_attrs(l) : ""
@@ -93,6 +98,7 @@ module Listings
       return <<~C
         <article class="listing listing-text"#{extra}>
           <p class="listing-tags">#{tags}#{badge}</p>
+          #{save_btn(l)}
           <h4><a href="#{path(l)}">#{h(l["building"])}</a></h4>
           <p class="listing-unit">#{h(l["unit"])} · #{num(l["size_sqft"])} sq ft</p>
           <p class="listing-price">#{h(price_text(l))}</p>
@@ -108,6 +114,7 @@ module Listings
     <<~C
       <article class="listing"#{extra}>
         <a class="listing-img" href="#{path(l)}" tabindex="-1">#{img}#{badge}</a>
+        #{save_btn(l)}
         <div class="listing-body">
           <p class="listing-price">#{h(price_text(l))}</p>
           <h4><a href="#{path(l)}">#{h(l["name"])}</a></h4>
@@ -425,6 +432,7 @@ module Listings
                 #{fact_rows}
               </dl>
               <div class="facts-actions">
+                #{save_btn(l, "btn btn-outline save-big")}
                 <a class="btn btn-olive" href="#{wa}" rel="noopener">WhatsApp Esther</a>
                 <a class="btn btn-outline" href="tel:#{PHONE}">Call</a>
                 <a class="btn btn-outline" href="#{maps}" rel="noopener">Open in Google Maps</a>
@@ -437,6 +445,7 @@ module Listings
 
         #{numbers.empty? ? "" : %(<section class="sec" id="numbers" aria-labelledby="numbers-h" style="padding-top:0"><div class="wrap listing-numbers">\n#{numbers}</div></section>)}
 
+        #{location_html(l)}
         #{bldg_html}
         <section class="sec" aria-labelledby="lfaq-h" style="padding-top:0">
           <div class="wrap">
@@ -475,6 +484,7 @@ module Listings
       #{shell[:footer].sub("</div>\n</footer>", %(  <p>Listing details as at #{h(Date.parse(l["updated"]).strftime("%-d %B %Y"))}. #{l["space"] ? "Indicative only: asking rents are per sq ft a month and may exclude GST and service charge; check the approved use with JTC or URA." : "Photos and details are for reference only; please check them before you commit."}</p>\n  </div>\n</footer>))}
 
       <div class="listing-bar" role="region" aria-label="Contact about this listing">
+        #{save_btn(l, "btn btn-outline save-bar")}
         <p><strong>#{h(price_text(l))}</strong> <span>#{h(l["name"])}</span></p>
         <a class="btn btn-white" href="#{wa}" rel="noopener">WhatsApp</a>
         <a class="btn btn-outline" href="tel:#{PHONE}">Call</a>
@@ -589,9 +599,71 @@ module Listings
     N
   end
 
+  def geo_query(l)
+    q = l["address"] || l["building"]
+    (Space.config["geocode"] || {})[q] || q   # cleaner search text for names OneMap cannot read
+  end
+
+  # Map, nearest MRT, bus stops and foot traffic, travel times and the area's population (see src/geo.rb)
+  def location_html(l)
+    g = l["geo"] or return ""
+    @bus_cache ||= {}
+    bus = (@bus_cache[geo_query(l)] ||= Geo.buses(g))
+    fmt_min = ->(m) { m >= 60 ? "#{m / 60} h #{m % 60} min" : "#{m} min" }
+    blocks = []
+    if g["mrt"].to_a.any?
+      blocks << %(<div class="loc-block"><h3 class="eyebrow">Nearest MRT</h3><ul class="loc-list">#{g["mrt"].map { |m| %(<li><strong>#{h(m["name"])}</strong><span>#{num(m["metres"])} m · about #{[m["walk_min"].to_i, (m["metres"] * 1.6 / 80.0).ceil].min.clamp(1, 99)} min walk</span></li>) }.join}</ul></div>)
+    end
+    if bus && bus["stops"].any?
+      wk = bus["stops"].map { |b| b["weekday"].to_i }.sum; we = bus["stops"].map { |b| b["weekend"].to_i }.sum
+      month = bus["month"] ? Date.strptime(bus["month"], "%Y%m").strftime("%B %Y") : nil
+      foot = wk > 0 ? %(<p class="loc-foot"><strong>#{num(wk)}</strong> people a day get off at the #{bus["stops"].size == 1 ? "bus stop" : "#{bus["stops"].size} bus stops"} within 400 m on weekdays, <strong>#{num(we)}</strong> on weekends and holidays#{month ? " (average, #{month})" : ""}.</p>) : ""
+      blocks << %(<div class="loc-block"><h3 class="eyebrow">Bus stops within 400 m</h3><ul class="loc-list">#{bus["stops"].first(6).map { |b| %(<li><strong>#{h(b["name"])}</strong><span>#{h(b["road"])} · #{num(b["metres"])} m#{b["weekday"] ? " · #{num(b["weekday"])} a weekday" : ""}</span></li>) }.join}</ul>#{bus["stops"].size > 6 ? %(<p class="loc-more">and #{bus["stops"].size - 6} more</p>) : ""}#{foot}</div>)
+    end
+    if g["travel"].to_a.any?
+      mx = g["travel"].values.max.to_f
+      bars = g["travel"].map { |n, m| %(<li><span class="bar-label">#{h(n)}</span><span class="bar"><i style="width:#{(m / mx * 100).round}%"></i></span><span class="bar-val">#{fmt_min.(m)}</span></li>) }.join
+      blocks << %(<div class="loc-block loc-wide"><h3 class="eyebrow">By public transport, weekday 8:30 am</h3><ul class="bars">#{bars}</ul></div>)
+    end
+    if (p = g["population"]) && p["residents"]
+      mix = p["age_mix"].map { |k, v| %(<li><span class="bar-label">#{h(k)}</span><span class="bar"><i style="width:#{(v * 100.0 / p["residents"]).round}%"></i></span><span class="bar-val">#{(v * 100.0 / p["residents"]).round}%</span></li>) }.join
+      names = { "Public admin education" => "public administration and education", "Wholesale retail trade" => "wholesale and retail trade",
+                "Financial insurance services" => "finance and insurance", "Transportation storage" => "transport and storage",
+                "Accommodation food services" => "accommodation and food services", "Information communications" => "information and communications",
+                "Health social services" => "health and social services", "Admin support services" => "administrative and support services",
+                "Real estate services" => "real estate", "Arts entertainment recreation" => "arts and recreation" }
+      ind = p["top_industries"].to_a.map { |k, v| "#{h(names[k] || k.downcase)} (#{num(v)})" }.join(", ")
+      blocks << %(<div class="loc-block loc-wide"><h3 class="eyebrow">Who lives nearby · #{h(p["planning_area"])} planning area</h3><p class="loc-foot"><strong>#{num(p["residents"])}</strong> residents#{p["households"] ? ", <strong>#{num(p["households"])}</strong> households" : ""} (Census 2020).#{ind.empty? ? "" : " Top industries residents work in: #{ind}."}</p><ul class="bars">#{mix}</ul></div>)
+    end
+    srcs = ["Map, address, routing and Census data: OneMap, Singapore Land Authority", "MRT exits: LTA via data.gov.sg"]
+    srcs << "bus stops and passenger volumes: LTA DataMall" if bus
+    <<~L
+      <section class="sec" id="location" aria-labelledby="loc-h" style="padding-top:0">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 class="hd" id="loc-h">Location <em>and getting there</em></h2>
+            <p class="desc">#{h([g["population"] && g["population"]["planning_area"], l["region"]].compact.first || "Singapore")}</p>
+          </div>
+          <div class="loc-grid">
+            <div class="map" id="map" data-lat="#{g["lat"]}" data-lon="#{g["lon"]}" data-name="#{h(l["building"] || l["name"])}" role="img" aria-label="Map of #{h(l["building"] || l["name"])}"></div>
+            <div class="loc-side">#{blocks.first(2).join}</div>
+          </div>
+          <div class="loc-row">#{blocks.drop(2).join}</div>
+          <p class="calc-note">Times and distances are estimates. Sources: #{srcs.join("; ")}. Fetched #{h(Date.parse(g["fetched"]).strftime("%-d %B %Y"))}.</p>
+        </div>
+      </section>
+    L
+  end
+
   # Build every listing page, /listings.html, the shared /static files and the sitemap. Returns the listings.
   def build(preview)
     all = load(preview)
+    spaces = all.select { |l| l["space"] }
+    unless spaces.empty? || ENV["SKIP_GEO"] == "1"
+      require_relative "geo"
+      cache = Geo.enrich(spaces.map { |l| geo_query(l) })
+      spaces.each { |l| g = cache[geo_query(l)]; next if !g || g["not_found"]; l["geo"] = g; l["postal_code"] ||= g["postal"] }
+    end
     calc = File.read("src/calculators.src.html", encoding: "UTF-8")
     css = File.read("src/styles.css", encoding: "UTF-8")
     js = File.read("src/site.js", encoding: "UTF-8")

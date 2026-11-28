@@ -499,4 +499,100 @@
     window.location.href = href;
   });
   if (form) ['name','contact'].forEach(function(k){ form[k].addEventListener('input', function(){ this.removeAttribute('aria-invalid'); }); });
+
+  // Listing map: loads Leaflet (cdnjs) with OneMap tiles once the map scrolls into view
+  var mapEl = $('map');
+  if (mapEl){
+    var startMap = function(){
+      if (mapEl.getAttribute('data-ready')) return;
+      mapEl.setAttribute('data-ready', '1');
+      var css = document.createElement('link');
+      css.rel = 'stylesheet'; css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+      document.head.appendChild(css);
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+      s.onload = function(){
+        var ll = [+mapEl.getAttribute('data-lat'), +mapEl.getAttribute('data-lon')];
+        var m = window.L.map(mapEl, { scrollWheelZoom: false }).setView(ll, 16);
+        window.L.tileLayer('https://www.onemap.gov.sg/maps/tiles/Default/{z}/{x}/{y}.png', {
+          minZoom: 11, maxZoom: 19, detectRetina: true,
+          attribution: '<a href="https://www.onemap.gov.sg/" rel="noopener">OneMap</a> &copy; contributors &#124; <a href="https://www.sla.gov.sg/" rel="noopener">Singapore Land Authority</a>'
+        }).addTo(m);
+        window.L.circleMarker(ll, { radius: 9, color: '#f8f3ed', weight: 3, fillColor: '#5d5839', fillOpacity: 1 })
+          .addTo(m).bindTooltip(mapEl.getAttribute('data-name'), { permanent: true, direction: 'top', offset: [0, -10] });
+      };
+      s.onerror = function(){ mapEl.hidden = true; };
+      document.head.appendChild(s);
+    };
+    if ('IntersectionObserver' in window){
+      var mapIo = new IntersectionObserver(function(es){ if (es[0].isIntersecting){ startMap(); mapIo.disconnect(); } }, { rootMargin: '300px' });
+      mapIo.observe(mapEl);
+    } else startMap();
+  }
+
+  // Shortlist: visitors save listings (kept in their own browser), then send the list to Esther on WhatsApp
+  (function(){
+    var KEY = 'esther-shortlist', items = [];
+    try { items = JSON.parse(localStorage.getItem(KEY) || '[]') || []; } catch (e) { items = []; }
+    function store(){ try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {} }
+    function has(url){ return items.some(function(x){ return x.url === url; }); }
+    var buttons = document.querySelectorAll('[data-save]');
+    if (!buttons.length && !items.length) return;
+
+    var tray = document.createElement('div');
+    tray.className = 'shortlist'; tray.id = 'shortlist'; tray.setAttribute('role', 'region'); tray.setAttribute('aria-label', 'Saved listings');
+    tray.innerHTML = '<ul class="shortlist-items" id="shortlist-items" hidden></ul>' +
+      '<div class="shortlist-bar"><p><strong id="shortlist-n">0</strong> saved</p>' +
+      '<button class="btn btn-outline" type="button" id="shortlist-view" aria-expanded="false" aria-controls="shortlist-items">View</button>' +
+      '<a class="btn btn-white" id="shortlist-send" rel="noopener">Send to Esther</a></div>';
+    document.body.appendChild(tray);
+    if (document.querySelector('.listing-bar')) tray.classList.add('above-bar');
+    var list = $('shortlist-items'), view = $('shortlist-view');
+
+    function render(){
+      $('shortlist-n').textContent = items.length;
+      tray.hidden = items.length === 0;
+      document.body.classList.toggle('has-shortlist', items.length > 0);
+      var nudge = $('nudge'); if (nudge && items.length) nudge.hidden = true;
+      list.innerHTML = '';
+      items.forEach(function(x){
+        var li = document.createElement('li'), a = document.createElement('a'), rm = document.createElement('button');
+        a.href = x.url; a.textContent = x.title;
+        rm.type = 'button'; rm.className = 'shortlist-rm'; rm.setAttribute('aria-label', 'Remove ' + x.title); rm.textContent = '×';
+        rm.addEventListener('click', function(){ toggle(x.url); });
+        li.appendChild(a); li.appendChild(rm); list.appendChild(li);
+      });
+      if (!items.length){ list.hidden = true; view.setAttribute('aria-expanded', 'false'); view.textContent = 'View'; }
+      var text = 'Hi Esther, I’m interested in these ' + (items.length === 1 ? 'listing' : items.length + ' listings') + ':\n' +
+        items.map(function(x, i){ return (i + 1) + '. ' + x.title + '\n' + location.origin + x.url; }).join('\n');
+      $('shortlist-send').href = 'https://wa.me/6588008787?text=' + encodeURIComponent(text);
+      Array.prototype.forEach.call(document.querySelectorAll('[data-save]'), function(b){
+        var on = has(b.getAttribute('data-save'));
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        var t = b.querySelector('.save-txt'); if (t) t.textContent = on ? 'Saved' : 'Save';
+      });
+    }
+    function toggle(url, title){
+      if (has(url)) items = items.filter(function(x){ return x.url !== url; });
+      else items.push({ url: url, title: title || url });
+      store(); render();
+    }
+    document.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('[data-save]');
+      if (!b) return;
+      e.preventDefault();
+      toggle(b.getAttribute('data-save'), b.getAttribute('data-title'));
+    });
+    view.addEventListener('click', function(){
+      var open = list.hidden;
+      list.hidden = !open; view.setAttribute('aria-expanded', open ? 'true' : 'false'); view.textContent = open ? 'Hide' : 'View';
+    });
+    // Keep tabs in step when the list changes in another tab
+    window.addEventListener('storage', function(e){
+      if (e.key !== KEY) return;
+      try { items = JSON.parse(e.newValue || '[]') || []; } catch (x) { items = []; }
+      render();
+    });
+    render();
+  })();
 })();

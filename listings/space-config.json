@@ -16,7 +16,22 @@
     "Raffles City Tower",
     "Six Battery Road"
   ],
-  "business_park_words": ["Science Park", "International Business Park", "Changi Business Park", "CBP", "one-north", "Biopolis", "Biomedical Grove", "Media Circle", "Mediapolis", "Fusionopolis", "Galaxis", "Nexus", "Solaris", "Changi City"],
+  "business_park_words": [
+    "Science Park",
+    "International Business Park",
+    "Changi Business Park",
+    "CBP",
+    "one-north",
+    "Biopolis",
+    "Biomedical Grove",
+    "Media Circle",
+    "Mediapolis",
+    "Fusionopolis",
+    "Galaxis",
+    "Nexus",
+    "Solaris",
+    "Changi City"
+  ],
   "names": {
     "21 COLLYER QUAY (21 Collyer Quay)": "21 Collyer Quay",
     "ABI PLAZA (11 Keppel Road)": "ABI Plaza (11 Keppel Road)",
@@ -48,5 +63,17 @@
     "Six Battery Road": "6 Battery Road",
     "Bugis Village Offices- Victoria Street": "Victoria Street",
     "Bugis Village Offices- Queen Street": "Queen Street"
+  },
+  "geocode": {
+    "30/32 Tuas Ave 8": "30 Tuas Avenue 8",
+    "6 & 8 Changi Business Park": "6 Changi Business Park Avenue 1",
+    "2 & 4 Changi Business Park": "2 Changi Business Park Avenue 1",
+    "Chai Chee Block 750": "750 Chai Chee Road",
+    "Chai Chee Block 751": "751 Chai Chee Road",
+    "Chai Chee Block 750D": "750D Chai Chee Road",
+    "Chai Chee Block 750E": "750E Chai Chee Road",
+    "5 & 7 Gul Street 1": "5 Gul Street 1",
+    "8, 10, 12 Kallang Avenue": "8 Kallang Avenue",
+    "8 and 8A Biomedical Grove": "8 Biomedical Grove"
   }
 }
