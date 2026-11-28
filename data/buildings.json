@@ -9238,5 +9238,341 @@
     "population": {
       "planning_area": "Tuas"
     }
+  },
+  "2 Serangoon North Ave 5": {
+    "lat": 1.37239530452721,
+    "lon": 103.8691662354431,
+    "postal": "554911",
+    "found": "2 Serangoon North Avenue 5 Singapore 554911",
+    "query": "2 Serangoon North Ave 5",
+    "fetched": "2026-11-28",
+    "mrt": [
+      {
+        "name": "Ang Mo Kio",
+        "metres": 2160,
+        "walk_min": 31
+      },
+      {
+        "name": "Kovan",
+        "metres": 2200,
+        "walk_min": 35
+      }
+    ],
+    "travel": {
+      "Raffles Place": 43,
+      "Changi Airport": 69,
+      "Jurong East": 69,
+      "Woodlands Checkpoint": 60,
+      "Tuas Checkpoint": 104
+    },
+    "population": {
+      "planning_area": "Serangoon",
+      "residents": 116920,
+      "age_mix": {
+        "Under 20": 19280,
+        "20 to 64": 75140,
+        "65 and over": 22500
+      },
+      "households": 38086,
+      "top_industries": [
+        [
+          "Wholesale retail trade",
+          10210
+        ],
+        [
+          "Public admin education",
+          8487
+        ],
+        [
+          "Financial insurance services",
+          6751
+        ]
+      ]
+    }
+  },
+  "10 Changi South Street 3": {
+    "lat": 1.329281067093532,
+    "lon": 103.9656211003819,
+    "postal": "486147",
+    "found": "10 Changi South Street 3 Singapore 486147",
+    "query": "10 Changi South Street 3",
+    "fetched": "2026-11-28",
+    "mrt": [
+      {
+        "name": "Expo",
+        "metres": 680,
+        "walk_min": 16
+      },
+      {
+        "name": "Upper Changi",
+        "metres": 1380,
+        "walk_min": 28
+      }
+    ],
+    "travel": {
+      "Raffles Place": 44,
+      "Changi Airport": 34,
+      "Jurong East": 70,
+      "Woodlands Checkpoint": 123,
+      "Tuas Checkpoint": 101
+    },
+    "population": {
+      "planning_area": "Tampines",
+      "residents": 259900,
+      "age_mix": {
+        "Under 20": 48500,
+        "20 to 64": 173140,
+        "65 and over": 38260
+      },
+      "households": 83681,
+      "top_industries": [
+        [
+          "Public admin education",
+          19842
+        ],
+        [
+          "Transportation storage",
+          19154
+        ],
+        [
+          "Wholesale retail trade",
+          19091
+        ]
+      ]
+    }
+  },
+  "6 Marsiling Lane": {
+    "lat": 1.44569545277192,
+    "lon": 103.7785879974513,
+    "postal": "739145",
+    "found": "6 Marsiling Lane Singapore 739145",
+    "query": "6 Marsiling Lane",
+    "fetched": "2026-11-28",
+    "mrt": [
+      {
+        "name": "Woodlands North",
+        "metres": 800,
+        "walk_min": 20
+      },
+      {
+        "name": "Woodlands",
+        "metres": 1280,
+        "walk_min": 20
+      }
+    ],
+    "travel": {
+      "Raffles Place": 61,
+      "Changi Airport": 109,
+      "Jurong East": 37,
+      "Woodlands Checkpoint": 21,
+      "Tuas Checkpoint": 79
+    },
+    "population": {
+      "planning_area": "Woodlands",
+      "residents": 255140,
+      "age_mix": {
+        "Under 20": 55600,
+        "20 to 64": 173940,
+        "65 and over": 25600
+      },
+      "households": 78839,
+      "top_industries": [
+        [
+          "Manufacturing",
+          20793
+        ],
+        [
+          "Public admin education",
+          19575
+        ],
+        [
+          "Wholesale retail trade",
+          18793
+        ]
+      ]
+    }
+  },
+  "31 Jurong Port Road": {
+    "lat": 1.311976251934525,
+    "lon": 103.7201516958483,
+    "postal": "619115",
+    "found": "31 Jurong Port Road Jurong Logistics Hub Singapore 619115",
+    "query": "31 Jurong Port Road",
+    "fetched": "2026-11-28",
+    "mrt": [
+      {
+        "name": "Boon Lay",
+        "metres": 3330,
+        "walk_min": 59
+      },
+      {
+        "name": "Jurong East",
+        "metres": 3390,
+        "walk_min": 68
+      }
+    ],
+    "travel": {
+      "Raffles Place": 61,
+      "Changi Airport": 104,
+      "Jurong East": 35,
+      "Woodlands Checkpoint": 76,
+      "Tuas Checkpoint": 59
+    },
+    "population": {
+      "planning_area": "Jurong East",
+      "residents": 78590,
+      "age_mix": {
+        "Under 20": 13100,
+        "20 to 64": 50530,
+        "65 and over": 14960
+      },
+      "households": 27213,
+      "top_industries": [
+        [
+          "Wholesale retail trade",
+          6222
+        ],
+        [
+          "Manufacturing",
+          5722
+        ],
+        [
+          "Public admin education",
+          4979
+        ]
+      ]
+    }
+  },
+  "5A Toh Guan Road East": {
+    "lat": 1.339274717267626,
+    "lon": 103.7509649304861,
+    "postal": "608830",
+    "found": "5a Toh Guan Road East Singapore 608830",
+    "query": "5A Toh Guan Road East",
+    "fetched": "2026-11-28",
+    "mrt": [
+      {
+        "name": "Bukit Batok",
+        "metres": 1040,
+        "walk_min": 27
+      },
+      {
+        "name": "Jurong East",
+        "metres": 1150,
+        "walk_min": 17
+      }
+    ],
+    "travel": {
+      "Raffles Place": 45,
+      "Changi Airport": 92,
+      "Jurong East": 18,
+      "Woodlands Checkpoint": 58,
+      "Tuas Checkpoint": 56
+    },
+    "population": {
+      "planning_area": "Clementi",
+      "residents": 92000,
+      "age_mix": {
+        "Under 20": 17220,
+        "20 to 64": 56160,
+        "65 and over": 18620
+      },
+      "households": 33609,
+      "top_industries": [
+        [
+          "Public admin education",
+          7652
+        ],
+        [
+          "Wholesale retail trade",
+          6583
+        ],
+        [
+          "Financial insurance services",
+          4569
+        ]
+      ]
+    }
+  },
+  "76 Pioneer Road": {
+    "lat": 1.317931372444338,
+    "lon": 103.6536241208938,
+    "postal": "639577",
+    "found": "76 Pioneer Road Mapletree Pioneer Logistics Hub Singapore 639577",
+    "query": "76 Pioneer Road",
+    "fetched": "2026-11-28",
+    "mrt": [
+      {
+        "name": "Tuas Crescent",
+        "metres": 610,
+        "walk_min": 7
+      },
+      {
+        "name": "Gul Circle",
+        "metres": 650,
+        "walk_min": 12
+      }
+    ],
+    "travel": {
+      "Raffles Place": 55,
+      "Changi Airport": 99,
+      "Jurong East": 30,
+      "Woodlands Checkpoint": 68,
+      "Tuas Checkpoint": 25
+    },
+    "population": {
+      "planning_area": "Tuas"
+    }
+  },
+  "52 Tanjong Penjuru": {
+    "lat": 1.30390971195925,
+    "lon": 103.7368951913567,
+    "postal": "609034",
+    "found": "52 Tanjong Penjuru Cwt Logistics Hub 3 Singapore 609034",
+    "query": "52 Tanjong Penjuru",
+    "fetched": "2026-11-28",
+    "mrt": [
+      {
+        "name": "Jurong East",
+        "metres": 3250,
+        "walk_min": 62
+      },
+      {
+        "name": "Clementi",
+        "metres": 3370,
+        "walk_min": 58
+      }
+    ],
+    "travel": {
+      "Raffles Place": 59,
+      "Changi Airport": 102,
+      "Jurong East": 30,
+      "Woodlands Checkpoint": 70,
+      "Tuas Checkpoint": 69
+    },
+    "population": {
+      "planning_area": "Jurong East",
+      "residents": 78590,
+      "age_mix": {
+        "Under 20": 13100,
+        "20 to 64": 50530,
+        "65 and over": 14960
+      },
+      "households": 27213,
+      "top_industries": [
+        [
+          "Wholesale retail trade",
+          6222
+        ],
+        [
+          "Manufacturing",
+          5722
+        ],
+        [
+          "Public admin education",
+          4979
+        ]
+      ]
+    }
   }
 }

@@ -1,4 +1,50 @@
 Building,Area,Unit,Zoning (B1/B2),Type,Size,Asking PSF,Power,Ceiling Height (m),Floor Loading (),Cargo Lift,Passenger Lift,Loading Bays + Dock Levelers,Ramp Up / Flatted,Up to 20ft / 40ft (for Ramp Up),Carpark,Availability,Remarsk
+2 Serangoon North Ave 5,Central,#05-01,B1,Office,"6,764",,,3,12.5/5.0,4 X 3tons,2,7LB + 4 DL,Flatted,NA,Basement,Immediate,"Stand alone 8-storey industrial building with basement car park. Good corp image, fronting AMK Ave 3. CTE / TPE"
+2 Serangoon North Ave 5,Central,#06-01/01A/02A,B1,Warehouse,"19,446",,,5,12.5/5.0,4 X 3tons,2,7LB + 4 DL,Flatted,NA,Basement,Immediate,
+21 Serangoon North Ave 5,Central,#04-02,B1,Warehouse,"21,097",,,6.5,10,2 X 3tons,2,4 Trailer & 9 Lorries,Flatted,NA,,Immediate,"5-storey Light Industrial Building & Ancillary 7-storey office. Good corp image, close to CTE (AMK Flyover)"
+21 Serangoon North Ave 5,Central,#07-02/03,B1,Warehouse,"16,404",,,4.5,7.5,2 X 3tons,2,4 Trailer & 9 Lorries,Flatted,NA,,Immediate,
+21 Serangoon North Ave 5,Central,#04-01,B1,Office (aircon),"5,683",,,5,2.5,2 X 3tons,2,4 Trailer & 9 Lorries,Flatted,NA,,Immediate,
+21 Serangoon North Ave 5,Central,#05-01,B1,Office (aircon),"6,222",,,5,2.5,2 X 3tons,2,4 Trailer & 9 Lorries,Flatted,NA,,Immediate,
+97 Ubi Ave 4,Central,Whole Building,B2,Factory,"112,715",,,5.5/3.3,20.0/5.0,,,2 LB,Flatted,NA,,Dec-26,"4-storey light industrial factory building with ancillary office. Easy access to city centre and Changi Airport, about 0.66 km to Tai Seng MRT"
+10 Changi South Street 3,East,#04-01,B2,Office (aircon),"5,436",,,4.5,3.5,2 X 3tons,2,8LB,Flatted,NA,,Immediate,"Stand alone 5-storey warehouse building with 6-storey office block. Fronting Xilin Ave, 12 mins walk to Expo MRT"
+15 Changi South Street 2,East,#01-01,B2,Warehouse,"40,515",,,5.5 to 16,25-40,6 X 4tons,2,15LB + 15DL,Flatted,NA,Basement (22 lots),Immediate,Short-term lease. 3-storey warehouse cum 5-storey ancillary office with basement carpark. 5 mins walk to Expo MRT
+15 Changi South Street 2,East,Level 1,B2,Office (aircon),"5,500",,,2.7,5,6 X 4tons,2,NA,Flatted,NA,Basement (22 lots),Immediate,Short-term lease
+15 Changi South Street 2,East,Level 2,B2,Office (aircon),"13,384",,,2.7,5,6 X 4tons,2,NA,Flatted,NA,Basement (22 lots),Immediate,Short-term lease
+19 Senoko Loop,North,#01-01 / #02-01 / #02-00,B2,Warehouse + Office,"106,644",,,6 / 4,15 / 5,1,1,6LB + 6DL,Flatted,NA,,Apr-27,"4-storey office cum warehouse facility. #01-01 and #02-01 warehouse, #02-00 ancillary office, let together. SLE / BKE"
+19 Senoko Loop,North,#03-00,B2,Office,"8,793",,,4,5,1,1,NA,Flatted,NA,,Immediate,
+19 Senoko Loop,North,#03-01,B2,Office,"3,449",,,4,5,1,1,NA,Flatted,NA,,Immediate,
+6 Marsiling Lane,North,Block C #01-00,B2,Warehouse,"31,947",,,4.5,7.5,6,,6LB,Flatted,NA,,Immediate,3 warehouse blocks with a 2-storey ancillary office building. SLE / BKE
+3A Jalan Terusan,West,Whole Building,B2,Warehouse,"195,243",,,3 to 7,4 to 30,"4X1.5ton, 2X4tons",1,16LB + 16 DL,Flatted,NA,,Immediate,"5-storey warehouse cum ancillary office, near seaport. AYE"
+Jurong Logistics Hub - 31 Jurong Port Road,West,#02-20,B2,Warehouse,"5,113",,,6.2,22.5,,,2LB (shared),Ramp Up,40ft,,Apr-27,"8-storey ramp up warehouse with ancillary office block. In-house aircon canteen, ample parking, near seaport. West Coast Highway / AYE"
+Jurong Logistics Hub - 31 Jurong Port Road,West,#04-27/28,B2,Warehouse,"15,758",,,6.2,22.5,,,4LB,Ramp Up,40ft,,Feb-27,
+Jurong Logistics Hub - 31 Jurong Port Road,West,#01-12M,B2,Office,"1,442",,,3,5,Yes,,NA,Flatted,,,Immediate,
+Jurong Logistics Hub - 31 Jurong Port Road,West,#01-17M/18M,B2,Office,"8,224",,,3,5,Yes,,NA,Flatted,,,Nov-26,
+Jurong Logistics Hub - 31 Jurong Port Road,West,#01-21,B2,Office,"1,008",,,3,5,,,NA,Flatted,,,Immediate,
+Jurong Logistics Hub - 31 Jurong Port Road,West,#02-12M,B2,Office,"1,442",,,3,5,,,NA,Flatted,,,Jan-27,
+Jurong Logistics Hub - 31 Jurong Port Road,West,#03-11M,B2,Office,"1,528",,,3,5,,,NA,Flatted,,,Feb-27,
+Jurong Logistics Hub - 31 Jurong Port Road,West,#07-10M/11M/12M,B2,Office,"4,263",,,3,5,,,NA,Flatted,,,Immediate,
+30 Boon Lay Way,West,#01-04(A),B2,Warehouse,"20,753",,,5.5,15,2X4tons,,"3LB (dedicated), 4LB Shared",Flatted,,,Jul-27,Stand alone part 2-storey and single-storey warehouse cum 4-storey ancillary office with open yard. Walking distance to Jurong East MRT. PIE / AYE
+521 Bukit Batok Street 23,West,#03-E,B1,Warehouse,"13,175",,,7,15,2,1,NA,,,,Immediate,Stand-alone part 5 / part 7 storey light industrial building with ancillary office. Near Bukit Batok MRT
+521 Bukit Batok Street 23,West,#05-A + #05-01,B1,Warehouse + Office,"20,839",,,7 / 3.1,15 / 5,2,1,NA,,,,Immediate,"#05-A warehouse and #05-01 ancillary office, let together"
+521 Bukit Batok Street 23,West,#05-C,B1,Warehouse,"17,115",,,7,15,2,1,NA,,,,Immediate,
+521 Bukit Batok Street 23,West,#07-00,B1,Office,"1,905",,,3.1,5,2,1,NA,,,,Immediate,
+"25 Pandan Crescent, TIC Tech Centre",West,#01-03,B2,Warehouse,"31,798",,,7,20,3 X 3tons,6,6LB,Flatted,,Basement,Apr-27,"Stand alone 5-storey industrial building with 6-storey ancillary office block and basement carpark. Fronting West Coast Highway, in-house aircon canteen"
+"25 Pandan Crescent, TIC Tech Centre",West,#02-01/06,B2,Warehouse Aircon,"58,184",,,4.5,20,3 X 3tons,6,5LB,Flatted,,Basement,Feb-27,
+"25 Pandan Crescent, TIC Tech Centre",West,#03-03/04,B2,Warehouse Aircon,"13,802",,,4.5,12.5,3 X 3tons,6,5LB,Flatted,,Basement,Apr-27,
+"25 Pandan Crescent, TIC Tech Centre",West,#04-01/02,B2,Warehouse Aircon,"11,021",,,4.5,12.5,3 X 3tons,6,5LB,Flatted,,Basement,Nov-26,
+"25 Pandan Crescent, TIC Tech Centre",West,#04-03/04,B2,Warehouse Aircon,"14,025",,,4.5,12.5,3 X 3tons,6,5LB,Flatted,,Basement,Dec-26,
+"25 Pandan Crescent, TIC Tech Centre",West,#05-03,B2,Warehouse Aircon,"9,784",,,4.5,12.5,3 X 3tons,6,5LB,Flatted,,Basement,Immediate,
+"25 Pandan Crescent, TIC Tech Centre",West,#03-11/15,B2,Office,"11,497",,,3.5,4,3 X 3tons,6,NA,Flatted,,Basement,Immediate,
+"25 Pandan Crescent, TIC Tech Centre",West,#04-10/13,B2,Office,"13,756",,,3.5,4,3 X 3tons,6,NA,Flatted,,Basement,Immediate,
+"25 Pandan Crescent, TIC Tech Centre",West,#05-11/12/13,B2,Office,"7,497",,,3.5,4,3 X 3tons,6,NA,Flatted,,Basement,Apr-27,
+"25 Pandan Crescent, TIC Tech Centre",West,#06-15,B2,Office,"5,565",,,3.5,4,3 X 3tons,6,NA,Flatted,,Basement,Dec-26,
+4 Pandan Avenue,West,#04M,B2,Office,"25,248",,,4.85/6.62,4,,2,NA,Ramp Up,,,Immediate,5-storey ramp-up warehouse with ancillary office. AYE / West Coast Highway
+5B Toh Guan Road East,West,#01-03,B2,Warehouse,"54,632",,,10,30,,,8LB Dedicated,Ramp Up,,,Immediate,6-storey ramp-up warehouse. Close to Jurong Port and city centre. PIE
+5B Toh Guan Road East,West,#05-02,B2,Warehouse,"50,355",,,8,20,,,6LB Dedicated,Ramp Up,,,Immediate,
+5A Toh Guan Road East,West,#03-01,B2,Warehouse,"104,689",,,8,20,,,12LB Dedicated,Ramp Up,,,TBA,6-storey ramp-up warehouse. Close to Jurong Port and city centre. PIE
+Mapletree Pioneer Logistics Hub - 76 Pioneer Road,West,#03-01/02,B2,Warehouse,"62,718",,,8 (clear),20,,,10LB Dedicated,Ramp Up,,Rooftop,Apr-27,"5-storey ramp-up warehouse with rooftop parking, in-house canteen. Near Tuas Crescent and Gul Circle MRT. PIE / AYE"
+Mapletree Pioneer Logistics Hub - 76 Pioneer Road,West,#05-02,B2,Warehouse,"38,004",,,8 (clear),20,,,5LB Dedicated,Ramp Up,,Rooftop,Immediate,
+52 Tanjong Penjuru,West,#03-03/04,B2,Warehouse,"82,419",,,9,20,,,13LB Dedicated,Ramp Up,,,Dec-26,"5-storey ramp-up warehouse, near seaport. West Coast Highway / AYE"
 NTP+ @ New Tech Park,,#01,,,"1,206",,150A,,,,,,,,,Jun 26,Ideal for creative cafe concepts
 "151 Lorong Chuan, New Tech Park",,#04-06,B1,AirCon,"12,745",,,4.8,7.5,Yes,,,,,,Immediate,"New lifestyle mall with array of F&B options, supermarket, gym and foodcourt"
 "151 Lorong Chuan, New Tech Park",,#05-01B,B1,AirCon,"14,811",,,4.8,7.5,Yes,,,,,,Immediate,
