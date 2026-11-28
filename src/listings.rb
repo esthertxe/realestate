@@ -17,6 +17,7 @@ module Listings
   PHONE = "+6588008787"
   TYPES = { "residential" => "Residential", "industrial" => "Industrial", "commercial" => "Commercial" }
   STATUS = { "available" => "Available", "under-offer" => "Under offer", "sold" => "Sold", "let" => "Let" }
+  SIPS = system("which sips > /dev/null 2>&1")
   ARROW = "→"
 
   module_function
@@ -53,8 +54,8 @@ module Listings
       abort "#{f}: deal must be sale or lease" unless %w[sale lease].include?(l["deal"])
       l["status"] ||= "available"
       l["photos"] = Dir.glob("img/listings/#{l["slug"]}/*.jpg").sort.each_with_index.map { |p, i|
-        d = `sips -g pixelWidth -g pixelHeight "#{p}"`
-        { "src" => "/" + p, "w" => d[/pixelWidth: (\d+)/, 1], "h" => d[/pixelHeight: (\d+)/, 1],
+        d = SIPS ? `sips -g pixelWidth -g pixelHeight "#{p}"` : ""   # sips is macOS-only; elsewhere the sizes fall back below
+        { "src" => "/" + p, "w" => d[/pixelWidth: (\d+)/, 1] || "1600", "h" => d[/pixelHeight: (\d+)/, 1] || "1200",
           "alt" => (l["photo_alts"] || [])[i] || "Photo #{i + 1} of #{l["name"]}" }
       }
       l
