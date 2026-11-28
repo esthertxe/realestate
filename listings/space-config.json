@@ -1,0 +1,52 @@
+{
+  "_about": "Settings for listings/space.csv (industrial, business park and office space for lease). See listings/README.md.",
+  "as_at": "2026-11-27",
+  "sheet_csv_url": "",
+  "commercial_buildings": [
+    "21 Collyer Quay",
+    "ABI Plaza",
+    "Asia Square Tower 2",
+    "Bugis Village Offices- Victoria Street",
+    "Bugis Village Offices- Queen Street",
+    "CapitaGreen",
+    "CapitaSky",
+    "Capital Tower",
+    "Funan Office Tower One",
+    "PLUS",
+    "Raffles City Tower",
+    "Six Battery Road"
+  ],
+  "business_park_words": ["Science Park", "International Business Park", "Changi Business Park", "CBP", "one-north", "Biopolis", "Biomedical Grove", "Media Circle", "Mediapolis", "Fusionopolis", "Galaxis", "Nexus", "Solaris", "Changi City"],
+  "names": {
+    "21 COLLYER QUAY (21 Collyer Quay)": "21 Collyer Quay",
+    "ABI PLAZA (11 Keppel Road)": "ABI Plaza (11 Keppel Road)",
+    "ASIA SQUARE TOWER 2 (12 Marina View)": "Asia Square Tower 2 (12 Marina View)",
+    "BUGIS VILLAGE OFFICES- Victoria Street": "Bugis Village Offices- Victoria Street",
+    "BUGIS VILLAGE OFFICES- Queen Street": "Bugis Village Offices- Queen Street",
+    "CAPITAGREEN (138 Market Street)": "CapitaGreen (138 Market Street)",
+    "CAPITASKY (79 Robinson Road)": "CapitaSky (79 Robinson Road)",
+    "CAPITAL TOWER (168 Robinson Road)": "Capital Tower (168 Robinson Road)",
+    "FUNAN OFFICE TOWER ONE (107 North Bridge Road)": "Funan Office Tower One (107 North Bridge Road)",
+    "PLUS (20 Cecil Street)": "PLUS (20 Cecil Street)",
+    "RAFFLES CITY TOWER (250 North Bridge Road)": "Raffles City Tower (250 North Bridge Road)",
+    "SIX BATTERY ROAD": "Six Battery Road",
+    "Galaxis - BP ": "Galaxis - BP"
+  },
+  "addresses": {
+    "Nexus @one-north": "1 Fusionopolis Link",
+    "Solaris": "1 Fusionopolis Walk",
+    "Jurong Logistics Hub": "2 Jurong Port Road",
+    "Plaza 8 @ CBP": "1 Changi Business Park Crescent",
+    "Galaxis - BP": "1 Fusionopolis Place",
+    "Galaxis - Work Lofts": "1 Fusionopolis Place",
+    "ONE@Changi City": "1 Changi Business Park Central 1",
+    "West Park BizCentral": "1 Pioneer Sector 1",
+    "Ubi BizHub": "150 Ubi Avenue 4",
+    "Eightrium @ Changi Business Park": "15A Changi Business Park Central 1",
+    "NTP+ @ New Tech Park": "151 Lorong Chuan",
+    "Tampines Biz Hub Street 92": "11 Tampines Street 92",
+    "Six Battery Road": "6 Battery Road",
+    "Bugis Village Offices- Victoria Street": "Victoria Street",
+    "Bugis Village Offices- Queen Street": "Queen Street"
+  }
+}

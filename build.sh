@@ -44,7 +44,7 @@ if [ -f "$A/villa-dusk.jpg" ]; then
 fi
 
 # Listing photos: assets/listings/<slug>/ -> img/listings/<slug>/ (see listings/README.md)
-ruby -E UTF-8 -r ./src/listings.rb -e 'Listings.resize_photos'
+ruby -E UTF-8 -r ./src/listings.rb -e 'Listings.resize_photos; JTC.refresh'
 
 # Build each page: pull in the shared CSS/JS, inline images (and set real width/height),
 # and fill the For sale / For lease columns of the property-type pages with listing cards
@@ -55,10 +55,7 @@ ruby -E UTF-8 -r ./src/listings.rb -e '
   page = ARGV[0]
   html = File.read("src/#{page}.src.html", encoding: "UTF-8")
   html.gsub!(/\/\* @inline ([\w.-]+) \*\/\n/) { File.read("src/#{$1}", encoding: "UTF-8") }
-  html.gsub!(/<!-- @listings (\w+) (\w+)[^>]*-->\n(.*?)<!-- \/@listings -->/m) do
-    cards = Listings.cards_for(all, $1, $2)
-    cards.empty? ? $3 : "<div class=\"listing-grid\">\n#{cards}</div>\n"
-  end
+  html = Listings.fill_markers(html, all)
   html.gsub!(/<img([^>]*?)src="(assets\/build\/[^"]+)"([^>]*)>/) do
     pre, path, post = $1, $2, $3
     if File.exist?(path)

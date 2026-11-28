@@ -30,6 +30,9 @@ Website: https://www.esthertxe.com/
 - Commercial (offices, shops, other commercial space): https://www.esthertxe.com/commercial.html
 Each page covers selling, buying, leasing out and renting, the key rules (stamp duty, Seller's Stamp Duty, GST, bank loan limits, approved use, minimum rental periods) and how to ask for current listings.
 
+## Listings: https://www.esthertxe.com/listings.html
+About 900 industrial, business park, warehouse, office and commercial units for lease in Singapore, each with its own page (size, asking rent per sq ft, zoning, availability and building specifications such as ceiling height, floor loading, lifts and loading bays). Industrial pages also show the JTC industrial rental and price indices (SingStat tables M212171 and M212181). Asking rents are indicative and may exclude GST and service charge.
+
 ## Process
 1. Understand: goals, timeline, finances and current property position.
 2. Analyse: figures for each option, including costs, cash flow, loan and likely outcomes.

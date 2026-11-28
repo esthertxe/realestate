@@ -477,7 +477,7 @@ address{font-style:normal}
 .gallery-more{position:absolute;inset:auto .6rem .6rem auto;background:rgba(44,43,39,.85);color:#f8f3ed;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;padding:.4rem .65rem}
 .gallery-all{margin-top:.75rem;font-size:.85rem;display:flex;flex-wrap:wrap;gap:.25rem .9rem}
 .gallery-all a{color:var(--muted)}
-.gallery-empty{background:var(--card);padding:2.5rem 1.5rem;text-align:center;color:var(--muted)}
+.gallery-empty{background:var(--card);padding:1.25rem 1.5rem;text-align:center;color:var(--muted)}
 .listing-main{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:2.5rem clamp(2rem,5vw,5rem);align-items:start}
 .listing-main .hd{margin:0 0 1.25rem}
 .highlights{display:flex;flex-wrap:wrap;gap:.5rem;margin:.75rem 0 2.25rem}
@@ -507,6 +507,43 @@ body.has-bar{padding-bottom:4.5rem}
 @media (max-width:900px){.listing-main{grid-template-columns:1fr}.facts-card{position:static}}
 @media (max-width:640px){.gallery,.gallery-2,.gallery-3,.gallery-4,.gallery-5{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:7.5rem}.gallery a:first-child,.gallery-2 a:nth-child(2),.gallery-4 a:nth-child(4){grid-column:1 / -1;grid-row:span 2}.gallery-2 a:nth-child(2),.gallery-4 a:nth-child(4){grid-row:auto}.gallery a:nth-child(n+4){display:none}.gallery-1{grid-auto-rows:15rem}.gallery-1 a:first-child{grid-row:auto}.listing-bar span{display:none}}
 @media print{.listing-bar{display:none}}
+
+/* ---------- SPACE LISTINGS (text cards, filters, JTC charts) ---------- */
+.listing-text{border-top:2px solid var(--olive);background:var(--card);padding:1rem 1.1rem 1.1rem;gap:.3rem}
+.listing-text[hidden]{display:none}
+.listing-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.4rem}
+.listing-tags span{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--line);padding:.2rem .45rem;color:var(--muted)}
+.listing-text .listing-badge{position:static;font-size:.68rem;padding:.2rem .45rem}
+.listing-text h4{font-weight:500;font-size:1.08rem;line-height:1.3}
+.listing-text h4 a{text-decoration:none}
+.listing-text h4 a::after{content:"";position:absolute;inset:0}
+.listing-text{position:relative}
+.listing-text:hover h4 a{color:var(--olive)}
+.listing-unit{font-size:.92rem}
+.listing-text .listing-price{font-size:1.35rem;margin-top:.35rem}
+.listing-meta{color:var(--muted);font-size:.88rem}
+.listing-all{margin-top:1.5rem}
+.listing-results{margin-top:1.75rem}
+.filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem 1.5rem;padding:1.5rem;background:var(--card)}
+.filters .f-q{grid-column:span 2}
+.filters-foot{grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;border-top:1px solid var(--line);padding-top:1rem}
+.filters-foot span{font-weight:500}
+.filters .btn{min-height:2.6rem;padding:.55rem 1rem}
+@media (max-width:900px){.filters{grid-template-columns:1fr 1fr}.filters .f-q{grid-column:1 / -1}}
+@media (max-width:480px){.filters{padding:1.1rem;gap:.9rem 1rem}}
+.jtc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:1rem}
+.jtc-tile{border-top:1px solid var(--line);padding-top:1rem}
+.jtc-val{font-family:var(--serif);font-style:italic;font-weight:600;font-size:2rem;line-height:1.1;color:var(--olive);margin-top:.25rem}
+.jtc-val span{font-family:var(--sans);font-style:normal;font-weight:400;font-size:.8rem;color:var(--muted);margin-left:.35rem}
+.spark{display:block;width:100%;height:4.5rem;color:var(--olive);margin:.5rem 0}
+.jtc-chg{display:flex;gap:1.25rem;font-size:.9rem;font-weight:500}
+.jtc-chg small{font-weight:400;color:var(--muted);font-size:.8rem}
+.listing-numbers .jtc-grid{max-width:48rem}
+.table-scroll{overflow-x:auto}
+.res.units{min-width:36rem;width:100%}
+.res.units th,.res.units td{text-align:left;white-space:nowrap;padding-right:1rem}
+.res.units thead th{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:500;border-top:0}
+.res.units a{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -519,6 +556,7 @@ body.has-bar{padding-bottom:4.5rem}
 <ul class="nav-links">
   <li><a href="index.html#start">Start here</a></li>
   <li><a href="index.html#properties" aria-current="page">Properties</a></li>
+  <li><a href="listings.html">Listings</a></li>
   <li><a href="calculators.html">Calculators</a></li>
   <li><a href="index.html#services">Services</a></li>
   <li><a href="index.html#process">Process</a></li>
@@ -577,6 +615,67 @@ body.has-bar{padding-bottom:4.5rem}
     </div>
   </section>
 
+  <section class="sec" id="market" aria-labelledby="market-h" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="hd" id="market-h">Industrial market <em>at a glance</em></h2>
+      <p class="desc">JTC indices, last 12 quarters</p>
+    </div>
+    <div class="jtc-grid">
+    <div class="jtc-tile">
+  <p class="eyebrow">Rental index · All industrial</p>
+  <p class="jtc-val">114.4 <span>2026 3Q</span></p>
+  <svg class="spark" viewBox="0 0 280 72" role="img" aria-label="Rental index, All industrial: 2023 4Q to 2026 3Q, from 106.4 to 114.4"><polyline points="4.0,68.0 28.7,53.6 53.5,44.8 78.2,42.4 102.9,38.4 127.6,33.6 152.4,27.2 177.1,22.4 201.8,17.6 226.5,13.6 251.3,8.8 276.0,4.0" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="276.0" cy="4.0" r="3.5" fill="currentColor"/></svg>
+  <p class="jtc-chg"><span>+0.5% <small>on the quarter</small></span><span>+2.1% <small>on the year</small></span></p>
+</div>
+<div class="jtc-tile">
+  <p class="eyebrow">Rental index · Multiple-user factory</p>
+  <p class="jtc-val">115.0 <span>2026 3Q</span></p>
+  <svg class="spark" viewBox="0 0 280 72" role="img" aria-label="Rental index, Multiple-user factory: 2023 4Q to 2026 3Q, from 107.3 to 115.0"><polyline points="4.0,68.0 28.7,56.4 53.5,43.1 78.2,37.2 102.9,33.9 127.6,31.4 152.4,23.1 177.1,19.0 201.8,17.3 226.5,12.3 251.3,6.5 276.0,4.0" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="276.0" cy="4.0" r="3.5" fill="currentColor"/></svg>
+  <p class="jtc-chg"><span>+0.3% <small>on the quarter</small></span><span>+1.6% <small>on the year</small></span></p>
+</div>
+<div class="jtc-tile">
+  <p class="eyebrow">Rental index · Warehouse</p>
+  <p class="jtc-val">109.1 <span>2026 3Q</span></p>
+  <svg class="spark" viewBox="0 0 280 72" role="img" aria-label="Rental index, Warehouse: 2023 4Q to 2026 3Q, from 100.7 to 109.1"><polyline points="4.0,68.0 28.7,52.8 53.5,49.0 78.2,48.2 102.9,41.3 127.6,36.8 152.4,33.7 177.1,26.9 201.8,17.7 226.5,16.2 251.3,12.4 276.0,4.0" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="276.0" cy="4.0" r="3.5" fill="currentColor"/></svg>
+  <p class="jtc-chg"><span>+1.0% <small>on the quarter</small></span><span>+2.8% <small>on the year</small></span></p>
+</div>
+<div class="jtc-tile">
+  <p class="eyebrow">Rental index · Business Park</p>
+  <p class="jtc-val">123.8 <span>2026 3Q</span></p>
+  <svg class="spark" viewBox="0 0 280 72" role="img" aria-label="Rental index, Business Park: 2023 4Q to 2026 3Q, from 118.0 to 123.8"><polyline points="4.0,68.0 28.7,40.4 53.5,41.5 78.2,44.8 102.9,42.6 127.6,27.2 152.4,10.6 177.1,13.9 201.8,8.4 226.5,4.0 251.3,5.1 276.0,4.0" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="276.0" cy="4.0" r="3.5" fill="currentColor"/></svg>
+  <p class="jtc-chg"><span>+0.1% <small>on the quarter</small></span><span>+0.7% <small>on the year</small></span></p>
+</div>
+<div class="jtc-tile">
+  <p class="eyebrow">Rental index · Single-user factory</p>
+  <p class="jtc-val">117.4 <span>2026 3Q</span></p>
+  <svg class="spark" viewBox="0 0 280 72" role="img" aria-label="Rental index, Single-user factory: 2023 4Q to 2026 3Q, from 108.2 to 117.4"><polyline points="4.0,68.0 28.7,52.0 53.5,42.3 78.2,44.3 102.9,43.7 127.6,37.4 152.4,33.9 177.1,28.3 201.8,22.8 226.5,15.1 251.3,9.6 276.0,4.0" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="276.0" cy="4.0" r="3.5" fill="currentColor"/></svg>
+  <p class="jtc-chg"><span>+0.7% <small>on the quarter</small></span><span>+3.1% <small>on the year</small></span></p>
+</div>
+<div class="jtc-tile">
+  <p class="eyebrow">Price index · All industrial</p>
+  <p class="jtc-val">114.9 <span>2026 3Q</span></p>
+  <svg class="spark" viewBox="0 0 280 72" role="img" aria-label="Price index, All industrial: 2023 4Q to 2026 3Q, from 102.9 to 114.9"><polyline points="4.0,67.0 28.7,68.0 53.5,61.7 78.2,59.1 102.9,48.1 127.6,39.7 152.4,31.8 177.1,28.1 201.8,20.3 226.5,13.4 251.3,9.8 276.0,4.0" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="276.0" cy="4.0" r="3.5" fill="currentColor"/></svg>
+  <p class="jtc-chg"><span>+1.0% <small>on the quarter</small></span><span>+4.2% <small>on the year</small></span></p>
+</div>
+<div class="jtc-tile">
+  <p class="eyebrow">Price index · Multiple-user factory</p>
+  <p class="jtc-val">124.4 <span>2026 3Q</span></p>
+  <svg class="spark" viewBox="0 0 280 72" role="img" aria-label="Price index, Multiple-user factory: 2023 4Q to 2026 3Q, from 108.5 to 124.4"><polyline points="4.0,68.0 28.7,66.0 53.5,58.3 78.2,55.1 102.9,46.7 127.6,37.8 152.4,29.8 177.1,29.4 201.8,20.1 226.5,11.6 251.3,9.6 276.0,4.0" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="276.0" cy="4.0" r="3.5" fill="currentColor"/></svg>
+  <p class="jtc-chg"><span>+1.1% <small>on the quarter</small></span><span>+5.3% <small>on the year</small></span></p>
+</div>
+<div class="jtc-tile">
+  <p class="eyebrow">Price index · Single-user factory</p>
+  <p class="jtc-val">95.9 <span>2026 3Q</span></p>
+  <svg class="spark" viewBox="0 0 280 72" role="img" aria-label="Price index, Single-user factory: 2023 4Q to 2026 3Q, from 90.1 to 95.9"><polyline points="4.0,59.4 28.7,68.0 53.5,65.1 78.2,63.2 102.9,43.2 127.6,39.3 152.4,35.5 177.1,17.4 201.8,20.2 226.5,21.2 251.3,11.6 276.0,4.0" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="276.0" cy="4.0" r="3.5" fill="currentColor"/></svg>
+  <p class="jtc-chg"><span>+0.8% <small>on the quarter</small></span><span>+1.5% <small>on the year</small></span></p>
+</div>
+
+    </div>
+    <p class="calc-note">Index, 4th quarter 2012 = 100. Source: JTC, via <a href="https://tablebuilder.singstat.gov.sg/table/TS/M212171" rel="noopener">SingStat Table Builder</a> (tables M212171 and M212181), updated 22/10/2026. Market-wide figures, not a valuation of any unit.</p>
+  </div>
+</section>
+
   <section class="sec" id="listings" aria-labelledby="listings-h" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head">
@@ -594,11 +693,52 @@ body.has-bar{padding-bottom:4.5rem}
         </div>
         <div class="listing-col" id="for-lease">
           <h3 class="eyebrow">For lease</h3>
-                    <div class="listing-empty">
-            <p>No industrial listings for lease are shown here yet. Tell me the size, area and budget you have in mind and I will share what is available.</p>
-            <a class="btn btn-olive" href="https://wa.me/6588008787?text=Hi%20Esther%2C%20I%27m%20looking%20for%20industrial%20property%20for%20lease." rel="noopener">Ask for listings for lease</a>
-          </div>
-          
+          <div class="listing-grid">
+<article class="listing listing-text">
+  <p class="listing-tags"><span>Industrial (B1)</span><span>B1</span><span>West</span></p>
+  <h4><a href="/industrial/1-bukit-batok-street-22-01-02.html">1 Bukit Batok Street 22</a></h4>
+  <p class="listing-unit">#01-02 · 1,178 sq ft</p>
+  <p class="listing-price">S$2.70 psf / month</p>
+  <p class="listing-meta">about S$3,181 a month · Immediate</p>
+</article>
+<article class="listing listing-text">
+  <p class="listing-tags"><span>Food factory</span><span>West</span></p>
+  <h4><a href="/industrial/1-buroh-lane-2m-04.html">1 Buroh Lane</a></h4>
+  <p class="listing-unit">#2M-04 · 2,562 sq ft</p>
+  <p class="listing-price">S$1.60 psf / month</p>
+  <p class="listing-meta">about S$4,099 a month · Immediate</p>
+</article>
+<article class="listing listing-text">
+  <p class="listing-tags"><span>Business park</span></p>
+  <h4><a href="/industrial/1-changi-business-park-avenue-1-02-02.html">1 Changi Business Park Avenue 1</a></h4>
+  <p class="listing-unit">#02-02 · 3,505 sq ft</p>
+  <p class="listing-price">S$5.00 psf / month</p>
+  <p class="listing-meta">about S$17,525 a month · From 1 January 2026</p>
+</article>
+<article class="listing listing-text">
+  <p class="listing-tags"><span>Industrial (B2)</span><span>B2</span><span>Central</span></p>
+  <h4><a href="/industrial/1-kallang-way-2a-04-01.html">1 Kallang Way 2A</a></h4>
+  <p class="listing-unit">#04-01 · 11,453 sq ft</p>
+  <p class="listing-price">S$1.90 psf / month</p>
+  <p class="listing-meta">about S$21,761 a month · Immediate</p>
+</article>
+<article class="listing listing-text">
+  <p class="listing-tags"><span>Business park</span></p>
+  <h4><a href="/industrial/1-science-park-drive-10-01-10.html">1 Science Park Drive</a></h4>
+  <p class="listing-unit">#10-01/10 · 3,318 sq ft</p>
+  <p class="listing-price">S$8.00 psf / month</p>
+  <p class="listing-meta">about S$26,544 a month · Immediate</p>
+</article>
+<article class="listing listing-text">
+  <p class="listing-tags"><span>Warehouse</span><span>B2</span></p>
+  <h4><a href="/industrial/1-tuas-ave-4-vna-warehouse-space.html">1 Tuas Ave 4</a></h4>
+  <p class="listing-unit">VNA warehouse space · 51,950 sq ft</p>
+  <p class="listing-price">S$1.80 psf / month</p>
+  <p class="listing-meta">about S$93,510 a month · Immediate</p>
+</article>
+</div>
+<p class="listing-all"><a class="btn btn-olive" href="/listings.html#page=industrial&amp;deal=lease">See all 842 for lease</a></p>
+
         </div>
       </div>
     </div>

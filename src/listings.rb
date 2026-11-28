@@ -9,6 +9,8 @@ require "json"
 require "cgi"
 require "date"
 require "fileutils"
+require_relative "space"
+require_relative "jtc"
 
 module Listings
   SITE = "https://www.esthertxe.com"
@@ -43,7 +45,7 @@ module Listings
   end
 
   def load(preview)
-    Dir.glob("listings/*.json").sort.map { |f|
+    Dir.glob("listings/*.json").reject { |f| File.basename(f) == "space-config.json" }.sort.map { |f|
       next if File.basename(f).start_with?("_") && !preview
       l = JSON.parse(File.read(f, encoding: "UTF-8"))
       l["slug"] ||= File.basename(f, ".json")
@@ -56,27 +58,55 @@ module Listings
           "alt" => (l["photo_alts"] || [])[i] || "Photo #{i + 1} of #{l["name"]}" }
       }
       l
-    }.compact
+    }.compact + Space.load
   end
 
   def path(l) "/#{l["type"]}/#{l["slug"]}.html" end
-  def price_text(l) lease?(l) ? "#{money(l["price"])} / month" : money(l["price"]) end
-  def psf(l) (!lease?(l) && l["size_sqft"].to_i > 0) ? "S$#{num((l["price"].to_f / l["size_sqft"].to_f).round)} psf" : nil end
+  def psf_text(v) "S$#{format("%.2f", v)} psf" end
+  def price_text(l)
+    return "#{psf_text(l["psf"])} / month" if l["psf"]
+    return "Rent on request" if lease?(l) && l["price"].to_i <= 0
+    lease?(l) ? "#{money(l["price"])} / month" : money(l["price"])
+  end
+  # Second figure next to the price: price psf for a sale, the rough monthly rent for space priced psf
+  def psf(l)
+    return "about #{money(l["price"])} a month" if l["psf"]
+    (!lease?(l) && l["size_sqft"].to_i > 0) ? "S$#{num((l["price"].to_f / l["size_sqft"].to_f).round)} psf" : nil
+  end
 
   def meta_line(l)
     [l["subtype"], (l["size_sqft"] ? "#{num(l["size_sqft"])} sq ft" : nil),
-     (l["bedrooms"] ? "#{l["bedrooms"]} bed" : nil), l["district"]].compact.join(" · ")
+     (l["bedrooms"] ? "#{l["bedrooms"]} bed" : nil), l["district"] || l["region"]].compact.join(" · ")
   end
 
-  def card(l)
+  # Attributes the listings page filters on
+  def data_attrs(l)
+    text = [l["name"], l["address"], l["subtype"], l["region"], l["district"], l["remarks"]].compact.join(" ").downcase
+    %(data-page="#{l["type"]}" data-deal="#{l["deal"]}" data-kind="#{h(l["subtype"])}" data-zone="#{h(l["zoning"])}" data-region="#{h(l["region"] || l["district"])}" data-size="#{l["size_sqft"].to_i}" data-psf="#{l["psf"] || ""}" data-price="#{l["price"].to_i}" data-status="#{l["status"]}" data-text="#{h(text)}")
+  end
+
+  def card(l, attrs: false)
+    badge = l["status"] == "available" ? "" : %(<span class="listing-badge">#{STATUS[l["status"]]}</span>)
+    extra = attrs ? " " + data_attrs(l) : ""
+    if l["photos"].empty? && l["space"]
+      tags = [l["subtype"], l["zoning"], l["region"]].compact.map { |t| "<span>#{h(t)}</span>" }.join
+      return <<~C
+        <article class="listing listing-text"#{extra}>
+          <p class="listing-tags">#{tags}#{badge}</p>
+          <h4><a href="#{path(l)}">#{h(l["building"])}</a></h4>
+          <p class="listing-unit">#{h(l["unit"])} · #{num(l["size_sqft"])} sq ft</p>
+          <p class="listing-price">#{h(price_text(l))}</p>
+          <p class="listing-meta">#{h([l["psf"] ? psf(l) : nil, l["available"]].compact.join(" · "))}</p>
+        </article>
+      C
+    end
     img = if (p = l["photos"].first)
       %(<img src="#{p["src"]}" width="#{p["w"]}" height="#{p["h"]}" alt="#{h(p["alt"])}" loading="lazy">)
     else
       %(<span class="listing-ph" aria-hidden="true">Photos on request</span>)
     end
-    badge = l["status"] == "available" ? "" : %(<span class="listing-badge">#{STATUS[l["status"]]}</span>)
     <<~C
-      <article class="listing">
+      <article class="listing"#{extra}>
         <a class="listing-img" href="#{path(l)}" tabindex="-1">#{img}#{badge}</a>
         <div class="listing-body">
           <p class="listing-price">#{h(price_text(l))}</p>
@@ -87,14 +117,31 @@ module Listings
     C
   end
 
-  # Cards for one column of a type page; available listings first.
-  def cards_for(all, type, deal)
-    all.select { |l| l["type"] == type && l["deal"] == deal }
-       .sort_by { |l| [l["status"] == "available" ? 0 : 1, l["name"]] }
-       .map { |l| card(l) }.join
+  def sort_key(l) [l["status"] == "available" ? 0 : 1, l["photos"].empty? ? 1 : 0, l["psf"] || l["price"].to_i > 0 ? 0 : 1, l["name"]] end
+
+  # Cards for one column of a type page: the first few, then a link to the rest on the listings page.
+  def cards_for(all, type, deal, limit = 6)
+    list = all.select { |l| l["type"] == type && l["deal"] == deal }.sort_by { |l| sort_key(l) }
+    return ["", ""] if list.empty?
+    more = list.size > limit ? %(<p class="listing-all"><a class="btn btn-olive" href="/listings.html#page=#{type}&amp;deal=#{deal}">See all #{num(list.size)} #{deal == "lease" ? "for lease" : "for sale"}</a></p>\n) : ""
+    pick = list.uniq { |l| l["building_full"] || l["slug"] }.first(limit)  # one per building, for variety
+    [pick.map { |l| card(l) }.join, more]
+  end
+
+  # Fill the build markers in a page: <!-- @listings TYPE DEAL --> columns and <!-- @jtc --> market charts
+  def fill_markers(html, all)
+    html = html.gsub(/<!-- @listings (\w+) (\w+)[^>]*-->\n(.*?)<!-- \/@listings -->/m) do
+      empty = $3; cards, more = cards_for(all, $1, $2)
+      cards.empty? ? empty : "<div class=\"listing-grid\">\n#{cards}</div>\n#{more}"
+    end
+    html.gsub("<!-- @jtc -->") { JTC.market_section }
   end
 
   def facts(l)
+    return [["Asking rent", l["psf"] ? "#{psf_text(l["psf"])} a month" : "On request"]] +
+           (l["psf"] ? [["Monthly rent, roughly", money(l["price"])]] : []) +
+           [["Size", "#{num(l["size_sqft"])} sq ft"], ["Type", l["subtype"]], ["Available", l["available"]], ["Region", l["region"]]]
+             .reject { |_, v| v.nil? } + l["specs"] if l["space"]
     rows = []
     rows << [lease?(l) ? "Rent" : "Asking price", price_text(l)]
     rows << ["Price per sq ft", psf(l)] if psf(l)
@@ -126,8 +173,23 @@ module Listings
     [rows, money(r + r * dep_m + duty)]
   end
 
+  ZONES = { "B1" => "Business 1 (B1): clean and light industry, warehousing and similar uses",
+            "B2" => "Business 2 (B2): general and special industry, warehousing and similar uses" }
+
   def faqs(l)
     q = []
+    if l["space"]
+      q << ["What is the asking rent for #{l["name"]}?", l["psf"] ?
+        "#{psf_text(l["psf"])} a month, roughly #{money(l["price"])} a month for #{num(l["size_sqft"])} sq ft. GST and any service charge may apply on top." :
+        "The rent is available on request."]
+      q << ["How big is the space?", "#{num(l["size_sqft"])} sq ft."]
+      q << ["Where is #{l["building"]}?", [l["address"], l["region"] ? "#{l["region"]} region" : nil].compact.join(", ") + ", Singapore."] if l["address"] || l["region"]
+      q << ["When is it available?", "#{l["available"]}."] if l["available"]
+      q << ["What is the space zoned for?", "It is zoned #{ZONES[l["zoning"].upcase]}. The business you plan must fit the unit's approved use; check with JTC or URA before you commit."] if l["zoning"]
+      q << ["How do I arrange a viewing?", "Message Esther on WhatsApp or call +65 8800 8787 to arrange a viewing."]
+      q << ["How can I check Esther's registration?", "Search R060284E on the Council for Estate Agencies (CEA) public register at www.cea.gov.sg."]
+      return q
+    end
     if lease?(l)
       q << ["What is the rent for #{l["name"]}?", "#{price_text(l)}#{l["lease_months"] ? ", for a lease of #{l["lease_months"]} months" : ""}."]
     else
@@ -151,9 +213,9 @@ module Listings
       "description" => l["summary"] || meta_line(l), "datePosted" => l["listed"] || l["updated"],
       "dateModified" => l["updated"], "inLanguage" => "en-SG",
       "image" => l["photos"].map { |p| SITE + p["src"] },
-      "offers" => { "@type" => "Offer", "price" => l["price"].to_i, "priceCurrency" => "SGD", "availability" => status_avail,
+      "offers" => { "@type" => "Offer", "price" => (l["price"].to_i > 0 ? l["price"].to_i : nil), "priceCurrency" => "SGD", "availability" => status_avail,
                     "businessFunction" => lease?(l) ? "http://purl.org/goodrelations/v1#LeaseOut" : "http://purl.org/goodrelations/v1#Sell",
-                    "offeredBy" => { "@id" => SITE + "/#esther-txe" } },
+                    "offeredBy" => { "@id" => SITE + "/#esther-txe" } }.compact,
       "contentLocation" => { "@type" => "Place", "name" => l["name"],
                              "address" => { "@type" => "PostalAddress", "streetAddress" => l["address"], "postalCode" => l["postal_code"], "addressCountry" => "SG" }.compact },
       "breadcrumb" => { "@id" => url + "#breadcrumb" }
@@ -172,14 +234,21 @@ module Listings
     type_name = TYPES[l["type"]]
     deal_word = lease?(l) ? "For lease" : "For sale"
     url = SITE + path(l)
-    title = "#{l["name"]}, #{l["subtype"]} #{deal_word.downcase}, #{price_text(l)} | Esther Txe"
-    desc = l["summary"] || "#{l["subtype"]} #{deal_word.downcase} at #{l["address"]}: #{price_text(l)}. #{meta_line(l)}. Esther Txe, CEA R060284E."
-    wa = "https://wa.me/6588008787?text=" + enc("Hi Esther, is #{l["name"]} (#{l["address"]}) #{lease?(l) ? "for lease" : "for sale"} at #{price_text(l)} still available?")
-    maps = "https://www.google.com/maps/search/?api=1&query=" + enc([l["name"], l["address"], "Singapore"].compact.join(", "))
-    og_img = l["photos"].first ? SITE + l["photos"].first["src"] : SITE + "/og-image.jpg"
+    if l["space"]
+      title = "#{l["name"]}, #{l["subtype"]} for lease, #{num(l["size_sqft"])} sq ft | Esther Txe"
+      desc = "#{l["subtype"]} for lease at #{[l["building"], l["address"]].compact.uniq.join(", ")}, unit #{l["unit"]}: #{num(l["size_sqft"])} sq ft, #{price_text(l).sub(" / month", " a month")}. #{l["available"] ? "Available: #{l["available"]}. " : ""}Esther Txe, CEA R060284E."
+      wa = "https://wa.me/6588008787?text=" + enc("Hi Esther, I'm interested in #{l["building"]} #{l["unit"]} (#{num(l["size_sqft"])} sq ft, #{l["subtype"].downcase}). Is it still available?")
+    else
+      title = "#{l["name"]}, #{l["subtype"]} #{deal_word.downcase}, #{price_text(l)} | Esther Txe"
+      desc = l["summary"] || "#{l["subtype"]} #{deal_word.downcase} at #{l["address"]}: #{price_text(l)}. #{meta_line(l)}. Esther Txe, CEA R060284E."
+      wa = "https://wa.me/6588008787?text=" + enc("Hi Esther, is #{l["name"]} (#{l["address"]}) #{lease?(l) ? "for lease" : "for sale"} at #{price_text(l)} still available?")
+    end
+    maps = "https://www.google.com/maps/search/?api=1&query=" + enc([l["space"] ? l["building"] : l["name"], l["address"], "Singapore"].compact.uniq.join(", "))
+    abs = ->(src) { src.start_with?("http") ? src : SITE + src }
+    og_img = l["photos"].first ? abs.(l["photos"].first["src"]) : SITE + "/og-image.jpg"
 
     gallery = if l["photos"].empty?
-      %(<div class="gallery-empty"><p>Photos are available on request.</p></div>)
+      %(<div class="gallery-empty"><p>Photos are available on request#{l["space"] ? ": message me for photos and floor plans of this unit" : ""}.</p></div>)
     else
       shown = l["photos"].first(5)
       more = l["photos"].size - shown.size
@@ -193,10 +262,17 @@ module Listings
 
     fact_rows = facts(l).map { |k, v| %(<div><dt>#{h(k)}</dt><dd>#{h(v)}</dd></div>) }.join("\n            ")
     highlights = (l["highlights"] || []).map { |x| "<li>#{h(x)}</li>" }.join
-    desc_html = (l["description"] || []).map { |p| "<p>#{h(p)}</p>" }.join("\n          ")
+    paras = (l["description"] || []).dup
+    if l["space"]
+      paras.unshift("#{l["subtype"]}#{l["subtype"] =~ /space\z/i ? "" : " space"} of #{num(l["size_sqft"])} sq ft at #{[l["building"], l["address"]].compact.uniq.join(", ")}, unit #{l["unit"]}#{l["zoning"] ? ", zoned #{l["zoning"]}" : ""}#{l["region"] ? ", in the #{l["region"]} region" : ""}.")
+      paras << "Asking rents are per square foot a month and may not include GST or service charge. Please check the approved use with JTC or URA before you commit."
+    end
+    desc_html = paras.map { |p| "<p>#{h(p)}</p>" }.join("\n          ")
     facilities = (l["facilities"] || []).map { |x| "<li>#{h(x)}</li>" }.join
 
-    numbers = if lease?(l)
+    numbers = if l["space"]
+      l["type"] == "industrial" ? JTC.listing_block(l) : ""
+    elsif lease?(l)
       mi = move_in(l)
       if mi
         rows, total = mi
@@ -227,9 +303,35 @@ module Listings
       %(<details><summary>#{h(qq)}<span class="ico" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span></summary><p>#{h(a)}</p></details>)
     }.join("\n          ")
 
-    similar = all.reject { |o| o["slug"] == l["slug"] }.select { |o| o["type"] == l["type"] && o["deal"] == l["deal"] && o["status"] == "available" }.first(3)
+    others = all.reject { |o| o["slug"] == l["slug"] }.select { |o| o["type"] == l["type"] && o["deal"] == l["deal"] && o["status"] == "available" }
+    similar = if l["space"]
+      # Same type, within 40% of the size, other buildings; same region first, then closest in size
+      others.select { |o| o["space"] && o["subtype"] == l["subtype"] && o["building_full"] != l["building_full"] &&
+                          (o["size_sqft"] - l["size_sqft"]).abs <= l["size_sqft"] * 0.4 }
+            .sort_by { |o| [o["region"] && o["region"] == l["region"] ? 0 : 1, (o["size_sqft"] - l["size_sqft"]).abs] }.first(4)
+    else
+      others.first(3)
+    end
+    same_bldg = l["space"] ? all.select { |o| o["space"] && o["building_full"] == l["building_full"] && o["slug"] != l["slug"] }.sort_by { |o| o["unit"] } : []
+    bldg_html = same_bldg.empty? ? "" : <<~B
+      <section class="sec" aria-labelledby="bldg-h" style="padding-top:0">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 class="hd" id="bldg-h">Other units <em>in #{h(l["building"])}</em></h2>
+            <p class="desc">#{same_bldg.size} more for lease</p>
+          </div>
+          <div class="table-scroll"><table class="res units">
+            <thead><tr><th scope="col">Unit</th><th scope="col">Type</th><th scope="col">Size</th><th scope="col">Asking rent</th><th scope="col">Available</th></tr></thead>
+            <tbody>
+            #{same_bldg.first(30).map { |o| %(<tr><th scope="row"><a href="#{path(o)}">#{h(o["unit"])}</a></th><td>#{h(o["subtype"])}</td><td>#{num(o["size_sqft"])} sq ft</td><td>#{o["psf"] ? psf_text(o["psf"]) : "On request"}</td><td>#{h(o["available"] || "–")}</td></tr>) }.join("\n      ")}
+            </tbody>
+          </table></div>
+          #{same_bldg.size > 30 ? %(<p class="listing-all"><a href="/listings.html#q=#{enc(l["building"].downcase)}">See all #{same_bldg.size + 1} units in #{h(l["building"])}</a></p>) : ""}
+        </div>
+      </section>
+    B
     similar_html = similar.empty? ?
-      %(<p class="listing-none">Looking for something similar? <a href="/#{l["type"]}.html">See #{type_name.downcase} property</a> or ask me for current options.</p>) :
+      %(<p class="listing-none">Looking for something similar? <a href="/listings.html#page=#{l["type"]}&amp;deal=#{l["deal"]}">See all #{type_name.downcase} listings</a> or ask me for current options.</p>) :
       %(<div class="listing-grid">#{similar.map { |o| card(o) }.join}</div>)
 
     status_chip = l["status"] == "available" ? "" : %(<span class="status-chip">#{STATUS[l["status"]]}</span>)
@@ -264,9 +366,7 @@ module Listings
       #{json_ld(l)}
       </script>
       #{shell[:fonts]}
-      <style>
-      #{shell[:css]}
-      </style>
+      <link rel="stylesheet" href="/static/site.css?v=#{shell[:ver]}">
       </head>
       <body class="has-bar">
       <a class="skip" href="#main">Skip to content</a>
@@ -277,7 +377,8 @@ module Listings
             <a class="brand" href="/">Esther Txe</a>
       <ul class="nav-links">
         <li><a href="/#start">Start here</a></li>
-        <li><a href="/#properties" aria-current="page">Properties</a></li>
+        <li><a href="/#properties">Properties</a></li>
+  <li><a href="/listings.html" aria-current="page">Listings</a></li>
         <li><a href="/calculators.html">Calculators</a></li>
         <li><a href="/#services">Services</a></li>
         <li><a href="/#process">Process</a></li>
@@ -312,7 +413,7 @@ module Listings
           <div class="wrap listing-main">
             <div>
               #{highlights.empty? ? "" : %(<h2 class="eyebrow">Highlights</h2><ul class="highlights">#{highlights}</ul>)}
-              <h2 class="hd" id="details-h">About <em>this property</em></h2>
+              <h2 class="hd" id="details-h">About <em>this #{l["space"] ? "space" : "property"}</em></h2>
               <div class="listing-desc">
                 #{desc_html}
               </div>
@@ -336,10 +437,11 @@ module Listings
 
         #{numbers.empty? ? "" : %(<section class="sec" id="numbers" aria-labelledby="numbers-h" style="padding-top:0"><div class="wrap listing-numbers">\n#{numbers}</div></section>)}
 
+        #{bldg_html}
         <section class="sec" aria-labelledby="lfaq-h" style="padding-top:0">
           <div class="wrap">
             <div class="sec-head">
-              <h2 class="hd" id="lfaq-h">Questions <em>about this property</em></h2>
+              <h2 class="hd" id="lfaq-h">Questions <em>about this #{l["space"] ? "space" : "property"}</em></h2>
               <p class="desc">#{h(l["name"])}</p>
             </div>
             <div class="acc listing-faq">
@@ -370,7 +472,7 @@ module Listings
 
       </main>
 
-      #{shell[:footer].sub("</div>\n</footer>", %(  <p>Listing details as at #{h(Date.parse(l["updated"]).strftime("%-d %B %Y"))}. Photos and details are for reference only; please check them before you commit.</p>\n  </div>\n</footer>))}
+      #{shell[:footer].sub("</div>\n</footer>", %(  <p>Listing details as at #{h(Date.parse(l["updated"]).strftime("%-d %B %Y"))}. #{l["space"] ? "Indicative only: asking rents are per sq ft a month and may exclude GST and service charge; check the approved use with JTC or URA." : "Photos and details are for reference only; please check them before you commit."}</p>\n  </div>\n</footer>))}
 
       <div class="listing-bar" role="region" aria-label="Contact about this listing">
         <p><strong>#{h(price_text(l))}</strong> <span>#{h(l["name"])}</span></p>
@@ -380,23 +482,127 @@ module Listings
 
       <div id="print-report" aria-hidden="true"></div>
 
-      <script>
-      #{shell[:js]}
-      </script>
+      <script src="/static/site.js?v=#{shell[:ver]}"></script>
       </body>
       </html>
     HTML
   end
 
-  # Build every listing page and the sitemap. Returns the listings.
+  # Searchable page of every listing: /listings.html. Filters run in the browser; the hash keeps them (#page=industrial&deal=lease).
+  def index_page(all, shell)
+    list = all.sort_by { |l| sort_key(l) }
+    opts = ->(vals) { vals.compact.uniq.sort.map { |v| %(<option value="#{h(v)}">#{h(v)}</option>) }.join }
+    kinds = opts.(list.map { |l| l["subtype"] })
+    regions = opts.(list.map { |l| l["region"] || l["district"] })
+    as_at = list.map { |l| l["updated"] }.compact.max
+    desc = "#{num(list.size)} property listings in Singapore: industrial, business park, office, commercial and residential space for sale and lease. Search by type, zoning, region and size. Esther Txe, CEA R060284E."
+    <<~HTML
+      <!doctype html>
+      <html lang="en">
+      <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+      <title>Property Listings for Sale &amp; Lease, Singapore | Esther Txe</title>
+      <meta name="description" content="#{h(desc)}">
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+      <link rel="canonical" href="#{SITE}/listings.html">
+      <meta name="color-scheme" content="light dark">
+      <meta name="theme-color" content="#2c2b27">
+      <meta property="og:type" content="website">
+      <meta property="og:url" content="#{SITE}/listings.html">
+      <meta property="og:title" content="Property Listings for Sale &amp; Lease, Singapore | Esther Txe">
+      <meta property="og:description" content="#{h(desc)}">
+      <meta property="og:image" content="#{SITE}/og-image.jpg">
+      <script type="application/ld+json">
+      #{JSON.pretty_generate({ "@context" => "https://schema.org", "@graph" => [
+        { "@type" => "CollectionPage", "@id" => "#{SITE}/listings.html#webpage", "url" => "#{SITE}/listings.html", "name" => "Property listings for sale and lease",
+          "description" => desc, "inLanguage" => "en-SG", "dateModified" => as_at, "author" => { "@id" => SITE + "/#esther-txe" } },
+        { "@type" => "BreadcrumbList", "itemListElement" => [
+          { "@type" => "ListItem", "position" => 1, "name" => "Home", "item" => SITE + "/" },
+          { "@type" => "ListItem", "position" => 2, "name" => "Listings", "item" => "#{SITE}/listings.html" }] }] })}
+      </script>
+      #{shell[:fonts]}
+      <link rel="stylesheet" href="/static/site.css?v=#{shell[:ver]}">
+      </head>
+      <body>
+      <a class="skip" href="#main">Skip to content</a>
+      <header class="page-head on-dark">
+        <div class="page-head-in">
+          #{nav(shell, "listings")}
+          <div class="page-title">
+            <p class="crumbs"><a href="/">Home</a> <span aria-hidden="true">/</span> Listings</p>
+            <h1>Property listings <em>for sale &amp; lease</em></h1>
+            <p class="page-lead">#{num(list.size)} listings across industrial, business park, office and commercial space#{list.any? { |l| l["type"] == "residential" } ? " and homes" : ""}. Search and filter below, then message me about any unit.</p>
+          </div>
+        </div>
+      </header>
+      <main id="main" tabindex="-1">
+        <section class="sec" aria-label="Listings">
+          <div class="wrap">
+            <form class="filters" id="filters" role="search" onsubmit="return false">
+              <div class="f f-q"><label for="fq">Search</label><input id="fq" name="q" type="search" placeholder="Building, street or area" autocomplete="off"></div>
+              <div class="f"><label for="fpage">Property</label><span class="sel"><select id="fpage" name="page"><option value="">All</option><option value="industrial">Industrial</option><option value="commercial">Commercial</option><option value="residential">Residential</option></select></span></div>
+              <div class="f"><label for="fdeal">For</label><span class="sel"><select id="fdeal" name="deal"><option value="">Sale or lease</option><option value="sale">Sale</option><option value="lease">Lease</option></select></span></div>
+              <div class="f"><label for="fkind">Type</label><span class="sel"><select id="fkind" name="kind"><option value="">Any type</option>#{kinds}</select></span></div>
+              <div class="f"><label for="fzone">Zoning</label><span class="sel"><select id="fzone" name="zone"><option value="">Any</option><option>B1</option><option>B2</option></select></span></div>
+              <div class="f"><label for="fregion">Region</label><span class="sel"><select id="fregion" name="region"><option value="">Any region</option>#{regions}</select></span></div>
+              <div class="f"><label for="fmin">Min size (sq ft)</label><input id="fmin" name="min" inputmode="numeric" autocomplete="off"></div>
+              <div class="f"><label for="fmax">Max size (sq ft)</label><input id="fmax" name="max" inputmode="numeric" autocomplete="off"></div>
+              <div class="f"><label for="fsort">Sort</label><span class="sel"><select id="fsort" name="sort"><option value="">Recommended</option><option value="size-asc">Size: small to large</option><option value="size-desc">Size: large to small</option><option value="psf-asc">Rent psf: low to high</option><option value="psf-desc">Rent psf: high to low</option></select></span></div>
+              <p class="filters-foot"><span id="fcount" aria-live="polite">#{num(list.size)} listings</span> <button class="btn btn-outline" type="reset" id="freset">Clear filters</button></p>
+            </form>
+            <div class="listing-grid listing-results" id="results">
+      #{list.map { |l| card(l, attrs: true) }.join}
+            </div>
+            <p class="listing-none" id="fnone" hidden>No listings match these filters. <a href="https://wa.me/6588008787?text=#{enc("Hi Esther, I'm looking for space and couldn't find a match on your site.")}" rel="noopener">Tell me what you need</a> and I will look for you.</p>
+            <p class="listing-all"><button class="btn btn-olive" type="button" id="fmore">Show more</button></p>
+            <p class="calc-note">Listing details as at #{as_at ? h(Date.parse(as_at).strftime("%-d %B %Y")) : "–"}. Indicative only: asking rents are per sq ft a month and may exclude GST and service charge. Check the approved use with JTC or URA before you commit.</p>
+          </div>
+        </section>
+      </main>
+      #{shell[:footer]}
+      <script>
+      #{File.read("src/listings-filter.js", encoding: "UTF-8")}
+      </script>
+      <script src="/static/site.js?v=#{shell[:ver]}"></script>
+      </body>
+      </html>
+    HTML
+  end
+
+  def nav(shell, current)
+    items = [["/#start", "Start here", nil], ["/#properties", "Properties", "properties"], ["/listings.html", "Listings", "listings"],
+             ["/calculators.html", "Calculators", nil], ["/#services", "Services", nil], ["/#faq", "FAQ", nil], ["#contact", "Contact", nil]]
+    links = items.map { |href, label, key| %(<li><a href="#{href}"#{key == current ? ' aria-current="page"' : ""}>#{label}</a></li>) }.join("\n  ")
+    <<~N.chomp
+      <nav class="nav" aria-label="Main">
+            <a class="brand" href="/">Esther Txe</a>
+      <ul class="nav-links">
+        #{links}
+      </ul>
+            <div class="nav-meta">
+              <a class="phone" href="tel:#{PHONE}">+65 8800 8787</a>
+              <span>Based in Singapore</span>
+            </div>
+            <a class="btn btn-white" href="https://wa.me/6588008787" rel="noopener">WhatsApp</a>
+          </nav>
+    N
+  end
+
+  # Build every listing page, /listings.html, the shared /static files and the sitemap. Returns the listings.
   def build(preview)
     all = load(preview)
     calc = File.read("src/calculators.src.html", encoding: "UTF-8")
+    css = File.read("src/styles.css", encoding: "UTF-8")
+    js = File.read("src/site.js", encoding: "UTF-8")
+    FileUtils.mkdir_p("static")
+    File.write("static/site.css", css)
+    File.write("static/site.js", js)
+    require "digest"
     shell = {
       fonts: calc[/<link rel="preconnect".*?rel="stylesheet">/m],
       footer: calc[/<footer class="foot">.*?<\/footer>/m],
-      css: File.read("src/styles.css", encoding: "UTF-8"),
-      js: File.read("src/site.js", encoding: "UTF-8")
+      ver: Digest::MD5.hexdigest(css + js)[0, 8]
     }
     # Remove pages of listings that no longer exist
     TYPES.keys.each do |t|
@@ -405,8 +611,9 @@ module Listings
     all.each do |l|
       Dir.mkdir(l["type"]) unless Dir.exist?(l["type"])
       File.write(path(l)[1..-1], page(l, all, shell))
-      puts "#{path(l)[1..-1]}"
     end
+    File.write("listings.html", index_page(all, shell))
+    puts "listings.html and #{all.size} listing pages"
     write_sitemap(all.reject { |l| l["slug"].start_with?("_") })
     all
   end
@@ -414,6 +621,7 @@ module Listings
   def write_sitemap(listings)
     old = File.exist?("sitemap.xml") ? File.read("sitemap.xml", encoding: "UTF-8") : ""
     pages = old.scan(%r{<url>\s*<loc>([^<]+)</loc>\s*<lastmod>([^<]+)</lastmod>\s*</url>}).reject { |u, _| u =~ %r{\.com/(residential|industrial|commercial)/} }
+    pages << ["#{SITE}/listings.html", listings.map { |l| l["updated"] }.compact.max] unless pages.any? { |u, _| u.end_with?("/listings.html") } || listings.empty?
     pages += listings.map { |l| [SITE + path(l), l["updated"]] }
     xml = %(<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n)
     pages.each { |u, d| xml << "  <url>\n    <loc>#{u}</loc>\n    <lastmod>#{d}</lastmod>\n  </url>\n" }

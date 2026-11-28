@@ -63,3 +63,30 @@ Optional. Leave out anything you don't have and that row won't appear:
 ## Previewing
 
 Files starting with `_` (`_sample-condo.json`, `_sample-room.json`) are made-up samples that show the format. They are only built with `PREVIEW=1 ./build.sh`, for checking the layout locally. Run a plain `./build.sh` before committing, so the samples don't end up on the type pages.
+
+## Industrial, business park and office space (`space.csv`)
+
+The units for lease come from `listings/space.csv`, one row per unit, exported from the listings spreadsheet. The build turns every row into a page under `/industrial/` or `/commercial/`, puts it in the search on `/listings.html`, and adds the first few to the Industrial and Commercial pages.
+
+To update the units:
+
+1. Export the spreadsheet as CSV with these columns: Building, Area, Unit, Zoning (B1/B2), Type, Size, Asking PSF, Power, Ceiling Height (m), Floor Loading (kN/m2), Cargo Lift, Passenger Lift, Loading Bays + Dock Levelers, Ramp Up / Flatted, Up to 20ft / 40ft (for Ramp Up), Carpark, Availability, Remarks, Photos.
+2. **Delete the REIT / landlord column before saving it here.** This repository is public, so anything in it can be read by anyone. The build ignores that column anyway, but it must not be committed.
+3. Save the file over `listings/space.csv`, update `as_at` in `listings/space-config.json`, then run `./build.sh`.
+
+How the rows are read:
+
+- Building-level fields (Area, lifts, loading bays, ramp, container access, car park, power) only need to be on the first row of each building; they carry down.
+- Size and Asking PSF can be text such as `5175sqft` or `$1.65`. "Call Us" or a blank PSF shows "Rent on request".
+- The rough monthly rent is size × asking PSF.
+- Availability: "Immediate", a date, "1Q 2026" and so on are shown as written; "Under nego" marks the unit as under offer.
+- Rows without a size are skipped.
+- Photos: plain image links or Google Drive file links (shared publicly), separated by commas.
+
+`listings/space-config.json` holds:
+- `as_at`: the date the data is correct to
+- `commercial_buildings`: the CBD offices that go under Commercial rather than Industrial
+- `names`: tidier display names, e.g. `CAPITAGREEN (138 Market Street)` becomes `CapitaGreen (138 Market Street)`
+- `addresses`: street addresses for buildings whose name doesn't include one
+
+The JTC rental and price index charts come from SingStat (tables M212171 and M212181). The build refreshes them automatically once a week and keeps a copy in `data/`.
