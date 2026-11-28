@@ -9,3 +9,6 @@ img/listings/_*/
 residential/_*.html
 industrial/_*.html
 commercial/_*.html
+
+# REIT vacancy PDFs (landlord data, never commit)
+REITS/

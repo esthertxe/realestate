@@ -11,6 +11,7 @@ require "open3"
 require "date"
 require "fileutils"
 require "tmpdir"
+require_relative "fetched"
 
 module Geo
   module_function
@@ -75,7 +76,7 @@ module Geo
     2 * r * Math.asin(Math.sqrt(x))
   end
 
-  def fresh?(file, days) File.exist?(file) && Time.now - File.mtime(file) < days * 86_400 end
+  def fresh?(file, days) Fetched.fresh?(file, days) end
 
   # ---------- shared datasets ----------
   def mrt_exits
@@ -91,6 +92,7 @@ module Geo
         end
         raise "MRT exits download not ready" unless url
         File.write(MRT_FILE, http_get(url, {}, 60))
+        Fetched.mark(MRT_FILE)
       end
       JSON.parse(File.read(MRT_FILE))["features"].map { |f|
         props = f["properties"]
@@ -117,6 +119,7 @@ module Geo
         end
         raise "no bus stops returned" if all.empty?
         File.write(BUS_FILE, JSON.generate(all))
+        Fetched.mark(BUS_FILE)
       end
       JSON.parse(File.read(BUS_FILE))
     end
@@ -147,6 +150,7 @@ module Geo
               cached = { "month" => m, "stops" => sums.map { |k, (a, b)| [k, [(a.to_f / wk).round, (b.to_f / we).round]] }.to_h }
             end
             File.write(PV_FILE, JSON.generate(cached))
+            Fetched.mark(PV_FILE)
             break
           rescue StandardError => e
             warn "Bus volumes for #{m}: #{e.message}"

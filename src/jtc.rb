@@ -7,6 +7,7 @@ require "json"
 require "net/http"
 require "uri"
 require "cgi"
+require_relative "fetched"
 
 module JTC
   module_function
@@ -19,7 +20,7 @@ module JTC
   def refresh
     TABLES.each do |kind, id|
       f = file(kind)
-      next if File.exist?(f) && Time.now - File.mtime(f) < MAX_AGE
+      next if Fetched.fresh?(f, MAX_AGE / 86_400)
       begin
         uri = URI("https://tablebuilder.singstat.gov.sg/api/table/tabledata/#{id}?limit=3000")
         res = Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: 15, read_timeout: 30) { |http|
@@ -30,6 +31,7 @@ module JTC
         raise "no rows" unless j.dig("Data", "row").is_a?(Array) && !j["Data"]["row"].empty?
         Dir.mkdir("data") unless Dir.exist?("data")
         File.write(f, res.body)
+        Fetched.mark(f)
         puts "JTC #{kind} index updated (data to #{latest_key(j)})"
       rescue StandardError => e
         warn "JTC #{kind} index: could not refresh (#{e.message}); #{File.exist?(f) ? "using the cached copy" : "chart left out"}"

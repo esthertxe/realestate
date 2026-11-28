@@ -125,7 +125,7 @@ module Listings
     C
   end
 
-  def sort_key(l) [l["status"] == "available" ? 0 : 1, l["photos"].empty? ? 1 : 0, l["psf"] || l["price"].to_i > 0 ? 0 : 1, l["name"]] end
+  def sort_key(l) [l["status"] == "available" ? 0 : 1, l["photos"].empty? ? 1 : 0, l["psf"] || l["price"].to_i > 0 ? 0 : 1, l["name"], l["slug"]] end
 
   # Cards for one column of a type page: the first few, then a link to the rest on the listings page.
   def cards_for(all, type, deal, limit = 6)
@@ -316,11 +316,11 @@ module Listings
       # Same type, within 40% of the size, other buildings; same region first, then closest in size
       others.select { |o| o["space"] && o["subtype"] == l["subtype"] && o["building_full"] != l["building_full"] &&
                           (o["size_sqft"] - l["size_sqft"]).abs <= l["size_sqft"] * 0.4 }
-            .sort_by { |o| [o["region"] && o["region"] == l["region"] ? 0 : 1, (o["size_sqft"] - l["size_sqft"]).abs] }.first(4)
+            .sort_by { |o| [o["region"] && o["region"] == l["region"] ? 0 : 1, (o["size_sqft"] - l["size_sqft"]).abs, o["slug"]] }.first(4)
     else
       others.first(3)
     end
-    same_bldg = l["space"] ? all.select { |o| o["space"] && o["building_full"] == l["building_full"] && o["slug"] != l["slug"] }.sort_by { |o| o["unit"] } : []
+    same_bldg = l["space"] ? all.select { |o| o["space"] && o["building_full"] == l["building_full"] && o["slug"] != l["slug"] }.sort_by { |o| [o["unit"], o["slug"]] } : []
     bldg_html = same_bldg.empty? ? "" : <<~B
       <section class="sec" aria-labelledby="bldg-h" style="padding-top:0">
         <div class="wrap">
