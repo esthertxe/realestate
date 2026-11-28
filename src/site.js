@@ -271,7 +271,7 @@
     return rows;
   }
   function notesOf(ids){ return ids.map(function(id){ var n = $(id); return n && !n.hidden ? n.textContent.trim() : ''; }).filter(Boolean); }
-  var CONTACT_LINES = ['Esther Txe', 'CEA R060284E', 'esthertxe@gmail.com', '(65) 8800 8787'];
+  var CONTACT_LINES = ['Esther Txe', 'CEA R060284E', 'List International Realty Pte Ltd', 'Agency Licence L3010762D', 'esthertxe@gmail.com', '(65) 8800 8787'];
   var DISCLAIMER = 'Information in this document is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding.';
   var BANK = 'Estimate only. The final loan amount and purchase price are subject to the bank\'s approval, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included in the loan figures. MAS rules and IRAS rates checked on 26 November 2026.';
 
@@ -374,14 +374,19 @@
       });
     }
     function contact(x, yy, align){
-      CONTACT_LINES.forEach(function(l, i){ font(i ? 'normal' : 'bold', 9.5, INK); doc.text(l, x, yy + i * 4.6, { align: align }); });
+      CONTACT_LINES.forEach(function(l, i){ font(i ? 'normal' : 'bold', 9, INK); doc.text(l, x, yy + i * 4.3, { align: align }); });
     }
 
     // Header: title and date on the left, contact block on the right
-    contact(X1, 18, 'right');
-    font('bold', 17, INK); var h0 = d.head[0].toUpperCase(); doc.text(h0, X0, 27);
-    var tw = doc.getTextWidth(h0 + ' ');
-    font('italic', 17, OLIVE, 'times'); doc.text(d.head[1], X0 + tw, 27);
+    contact(X1, 13, 'right');
+    // Title on the left, shrunk if needed so it never runs into the contact block on the right
+    var h0 = d.head[0].toUpperCase(), size = 17, tw, w1;
+    do {
+      font('bold', size, INK); tw = doc.getTextWidth(h0 + ' ');
+      font('italic', size, OLIVE, 'times'); w1 = doc.getTextWidth(d.head[1]);
+    } while (tw + w1 > 100 && (size -= 1) > 10);
+    font('bold', size, INK); doc.text(h0, X0, 27);
+    font('italic', size, OLIVE, 'times'); doc.text(d.head[1], X0 + tw, 27);
     font('normal', 9, GREY); doc.text(plain(d.sub || ('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com')), X0, 33.5);
     y = 37; rule(y, OLIVE, .5); y += 9;
 
@@ -407,7 +412,7 @@
     room(36);
     rule(y, RULE, .2); y += 5;
     para(DISCLAIMER, 8, GREY, 'normal', 3.6);
-    y += 2.5; room(26);
+    y += 2.5; room(32);
     font('normal', 9, INK); doc.text('To go through these numbers together, contact me:', X0, y); y += 5.5;
     contact(X0, y, 'left');
     return doc;

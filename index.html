@@ -53,6 +53,7 @@
         "identifier": "R060284E",
         "recognizedBy": {"@type": "GovernmentOrganization", "name": "Council for Estate Agencies", "alternateName": "CEA", "url": "https://www.cea.gov.sg"}
       },
+      "worksFor": {"@type": "RealEstateAgent", "@id": "https://www.esthertxe.com/#agency", "name": "List International Realty Pte Ltd", "identifier": {"@type": "PropertyValue", "propertyID": "CEA estate agent licence number", "value": "L3010762D"}},
       "sameAs": ["https://wa.me/6588008787"]
     },
     {
@@ -63,6 +64,7 @@
       "image": "https://www.esthertxe.com/og-image.jpg",
       "description": "Singapore property advisory covering property investment, property gains analysis, decoupling, rental yield, mortgage affordability and lifestyle planning.",
       "founder": {"@id": "https://www.esthertxe.com/#esther-txe"},
+      "parentOrganization": {"@id": "https://www.esthertxe.com/#agency"},
       "employee": {"@id": "https://www.esthertxe.com/#esther-txe"},
       "telephone": "+6588008787",
       "email": "mailto:esthertxe@gmail.com",
@@ -630,7 +632,7 @@ body.has-bar{padding-bottom:4.5rem}
       <h1>Singapore property advisory <em>with clear numbers</em></h1>
       <p class="hero-lead">I help you weigh what a property will cost, earn and leave behind, before you commit.</p>
     </div>
-    <div class="chip-row"><span class="cea-chip">CEA Registration No. R060284E</span></div>
+    <div class="chip-row"><span class="cea-chip">CEA Registration No. R060284E</span> <span class="cea-chip">List International Realty Pte Ltd · L3010762D</span></div>
   </div>
 </header>
 
@@ -730,7 +732,8 @@ body.has-bar{padding-bottom:4.5rem}
         <p>I am Esther Txe, a CEA-registered property advisor in Singapore. Whether you are upgrading, restructuring ownership or building a rental portfolio, I show the calculations behind each option and explain them in plain language.</p>
         <dl class="meta">
           <div><dt>Registered:</dt><dd>CEA R060284E</dd></div>
-          <div><dt>Focus:</dt><dd>Singapore residential</dd></div>
+          <div><dt>Agency:</dt><dd>List International Realty Pte Ltd (L3010762D)</dd></div>
+          <div><dt>Focus:</dt><dd>Singapore residential, industrial and commercial</dd></div>
         </dl>
       </div>
       <figure class="portrait">
@@ -857,6 +860,7 @@ body.has-bar{padding-bottom:4.5rem}
   <div class="wrap">
     <div class="foot-top">
       <p>Esther Txe · Property Advisor, Singapore · CEA Registration No. R060284E</p>
+      <p>List International Realty Pte Ltd · CEA Licence No. L3010762D</p>
     </div>
     <p class="disc">Information on this site is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding.</p>
     <p>Stamp duty rates last checked against IRAS: 26 November 2026.</p>
@@ -1144,7 +1148,7 @@ body.has-bar{padding-bottom:4.5rem}
     return rows;
   }
   function notesOf(ids){ return ids.map(function(id){ var n = $(id); return n && !n.hidden ? n.textContent.trim() : ''; }).filter(Boolean); }
-  var CONTACT_LINES = ['Esther Txe', 'CEA R060284E', 'esthertxe@gmail.com', '(65) 8800 8787'];
+  var CONTACT_LINES = ['Esther Txe', 'CEA R060284E', 'List International Realty Pte Ltd', 'Agency Licence L3010762D', 'esthertxe@gmail.com', '(65) 8800 8787'];
   var DISCLAIMER = 'Information in this document is general in nature and is not legal, tax or financial advice. Figures are illustrative; please consult the relevant professionals before deciding.';
   var BANK = 'Estimate only. The final loan amount and purchase price are subject to the bank\'s approval, including its own credit assessment, income documents and valuation of the property. Stamp duty, legal fees and other costs are not included in the loan figures. MAS rules and IRAS rates checked on 26 November 2026.';
 
@@ -1247,14 +1251,19 @@ body.has-bar{padding-bottom:4.5rem}
       });
     }
     function contact(x, yy, align){
-      CONTACT_LINES.forEach(function(l, i){ font(i ? 'normal' : 'bold', 9.5, INK); doc.text(l, x, yy + i * 4.6, { align: align }); });
+      CONTACT_LINES.forEach(function(l, i){ font(i ? 'normal' : 'bold', 9, INK); doc.text(l, x, yy + i * 4.3, { align: align }); });
     }
 
     // Header: title and date on the left, contact block on the right
-    contact(X1, 18, 'right');
-    font('bold', 17, INK); var h0 = d.head[0].toUpperCase(); doc.text(h0, X0, 27);
-    var tw = doc.getTextWidth(h0 + ' ');
-    font('italic', 17, OLIVE, 'times'); doc.text(d.head[1], X0 + tw, 27);
+    contact(X1, 13, 'right');
+    // Title on the left, shrunk if needed so it never runs into the contact block on the right
+    var h0 = d.head[0].toUpperCase(), size = 17, tw, w1;
+    do {
+      font('bold', size, INK); tw = doc.getTextWidth(h0 + ' ');
+      font('italic', size, OLIVE, 'times'); w1 = doc.getTextWidth(d.head[1]);
+    } while (tw + w1 > 100 && (size -= 1) > 10);
+    font('bold', size, INK); doc.text(h0, X0, 27);
+    font('italic', size, OLIVE, 'times'); doc.text(d.head[1], X0 + tw, 27);
     font('normal', 9, GREY); doc.text(plain(d.sub || ('Prepared on ' + d.today + ' with the calculators at www.esthertxe.com')), X0, 33.5);
     y = 37; rule(y, OLIVE, .5); y += 9;
 
@@ -1280,7 +1289,7 @@ body.has-bar{padding-bottom:4.5rem}
     room(36);
     rule(y, RULE, .2); y += 5;
     para(DISCLAIMER, 8, GREY, 'normal', 3.6);
-    y += 2.5; room(26);
+    y += 2.5; room(32);
     font('normal', 9, INK); doc.text('To go through these numbers together, contact me:', X0, y); y += 5.5;
     contact(X0, y, 'left');
     return doc;
